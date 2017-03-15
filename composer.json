@@ -1,0 +1,20 @@
+{
+    "name": "helsingborg-stad/api-alarm-manager",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kristoffer Svanmark",
+            "email": "kristoffer.svanmark@knowit.se"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/helsingborg-stad/acf-export-manager.git"
+        }
+    ],
+    "require": {
+        "helsingborg-stad/acf-export-manager": ">=1.0.0"
+    }
+}
