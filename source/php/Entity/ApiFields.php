@@ -192,7 +192,6 @@ class ApiFields
      *
      * @return  object|null
      */
-
     public function renameTaxonomies($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {
@@ -218,7 +217,6 @@ class ApiFields
      *
      * @return  object|null
      */
-
     public function getTaxonomyCallback($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {
@@ -248,36 +246,33 @@ class ApiFields
      *
      * @return  object|null
      */
-    public function locationData($object, $field_name, $request)
+    public function getStation($object, $field_name, $request)
     {
-        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+        $returnValue = self::getFieldGetMetaData($object, $field_name, $request);
 
-        if (is_int($return_value) || is_string($return_value) && ! empty($return_value)) {
-            $location_id = intval($return_value);
+        if (is_a($returnValue, 'WP_Post')) {
+            $stationId = $returnValue->ID;
         } else {
             return null;
         }
 
-        $location = get_post($location_id);
+        $station = get_post($stationId);
 
-        if (! $location) {
+        if (!$station) {
             return null;
         }
 
-        $parent = ! empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
-        $location_data['id']                = $location_id;
-        $location_data['title']             = $location->post_title;
-        $location_data['parent']            = $parent;
-        $location_data['content']           = $location->post_content;
-        $location_data['street_address']    = get_post_meta($location_id, 'street_address', true);
-        $location_data['postal_code']       = get_post_meta($location_id, 'postal_code', true);
-        $location_data['city']              = get_post_meta($location_id, 'city', true);
-        $location_data['country']           = get_post_meta($location_id, 'country', true);
-        $location_data['formatted_address'] = get_post_meta($location_id, 'formatted_address', true);
-        $location_data['latitude']          = get_post_meta($location_id, 'latitude', true);
-        $location_data['longitude']         = get_post_meta($location_id, 'longitude', true);
-
-        return $location_data;
+        return array(
+            'id' => $station->ID,
+            'contal_id' => get_field('station_id', $station->ID),
+            'title' => $station->post_title,
+            'content' => $station->post_content,
+            'address' => array(
+                'street' => get_field('street_address', $station->ID),
+                'postal_code' => get_field('postal_code', $station->ID),
+                'city' => get_field('city', $station->ID)
+            )
+        );
     }
 
     /**
@@ -293,5 +288,15 @@ class ApiFields
     {
         $object[$field_name]['plain_text'] = strip_tags(html_entity_decode($object[$field_name]['rendered']));
         return $object[$field_name];
+    }
+
+    public function stringRenderedPlainGetCallback($object, $field_name, $request)
+    {
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+
+        return $object[$field_name] = array(
+            'rendered' => $return_value,
+            'plain_text' => strip_tags(html_entity_decode($return_value))
+        );
     }
 }

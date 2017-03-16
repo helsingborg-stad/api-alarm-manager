@@ -34,5 +34,91 @@ class AlarmFields extends \ApiAlarmManager\Entity\ApiFields
                 'schema'          => null,
             )
         );
+
+        // Station
+        register_rest_field(
+            $this->postType,
+            'station',
+            array(
+                'get_callback' => array($this, 'getStation'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing a station object.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Meta
+        register_rest_field(
+            $this->postType,
+            'type',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm type.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'extend',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm extend level.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'address',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm address.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'address_description',
+            array(
+                'get_callback' => array($this, 'stringRenderedPlainGetCallback'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm address description.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'place',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm type.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
     }
 }

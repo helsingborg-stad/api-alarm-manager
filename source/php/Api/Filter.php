@@ -49,7 +49,11 @@ class Filter
     public function removeResponseKeys($response, $post, $request)
     {
         //Common keys
-        $keys = array('author', 'acf', 'guid', 'type', 'link', 'template', 'meta', 'taxonomy', 'menu_order');
+        $keys = array('author', 'acf', 'guid', 'link', 'template', 'meta', 'taxonomy', 'menu_order');
+
+        if ($post->post_type !== 'alarm') {
+            $keys[] = 'type';
+        }
 
         //Do filtering
         $response->data = array_filter($response->data, function ($k) use ($keys) {
