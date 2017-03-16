@@ -18,7 +18,9 @@ class App
         new Api\Filter();
         new Api\PostTypes();
         new Api\Linking();
+
         new Api\AlarmFields();
+        new Api\StationFields();
 
         // Misc
         new Admin();
