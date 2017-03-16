@@ -27,5 +27,18 @@ class Stations extends \ApiAlarmManager\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
+
+        $this->addTableColumn('cb', '<input type="checkbox">');
+        $this->addTableColumn('title', __('Title', 'api-alarm-manager'));
+
+        $this->addTableColumn('station_id', __('Station ID', 'api-alarm-manager'), true, function ($column, $postId) {
+            echo get_field('station_id', $postId);
+        });
+
+        $this->addTableColumn('city', __('City', 'api-alarm-manager'), true, function ($column, $postId) {
+            echo get_field('city', $postId);
+        });
+
+        $this->addTableColumn('date', __('Date'));
     }
 }

@@ -27,5 +27,25 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
+
+        $this->addTableColumn('cb', '<input type="checkbox">');
+        $this->addTableColumn('title', __('Title', 'api-alarm-manager'));
+
+        $this->addTableColumn('place', __('Place', 'api-alarm-manager'), true, function ($column, $postId) {
+            echo get_field('place', $postId);
+        });
+
+        $this->addTableColumn('station', __('Station', 'api-alarm-manager'), true, function ($column, $postId) {
+            $station = get_field('station', $postId);
+
+            if (!$station) {
+                echo __('n/a', 'api-alarm-manager');
+                return;
+            }
+
+            echo '<a href="' . get_edit_post_link($station) . '">' . get_the_title($station) . '</a>';
+        });
+
+        $this->addTableColumn('date', __('Date'));
     }
 }
