@@ -10,6 +10,11 @@ class App
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
+        // Post types
+        new PostTypes\Alarms();
+        new PostTypes\Stations();
+
+        // Misc
         new Admin();
     }
 
