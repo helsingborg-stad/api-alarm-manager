@@ -34,13 +34,13 @@ class Filter
      * Force the usage of wordpress api
      * @return void
      */
-    public function redirectToApi()
+    public static function redirectToApi()
     {
         if (php_sapi_name() === 'cli') {
             return;
         }
 
-        if (!is_admin() && strpos($this->currentUrl(), rtrim(rest_url(), "/")) === false && $this->currentUrl() == rtrim(home_url(), "/")) {
+        if (!is_admin() && strpos(self::currentUrl(), rtrim(rest_url(), "/")) === false && self::currentUrl() == rtrim(home_url(), "/")) {
             wp_redirect(rest_url());
             exit;
         }
@@ -64,7 +64,7 @@ class Filter
         return $response;
     }
 
-    public function currentUrl()
+    public static function currentUrl()
     {
         $currentURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
         $currentURL .= $_SERVER["SERVER_NAME"];
