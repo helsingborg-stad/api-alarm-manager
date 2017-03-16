@@ -3,6 +3,22 @@
     "title": "Contal FTP",
     "fields": [
         {
+            "placement": "left",
+            "endpoint": 0,
+            "key": "field_58ca63e750b0b",
+            "label": "FTP Connection",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
             "message": "The FTP-connection should be set to where the alarm xml-files are hosted.",
             "esc_html": 0,
             "new_lines": "wpautop",
@@ -135,11 +151,119 @@
             "name": "ftp_mode",
             "type": "radio",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
                         "field": "field_58ca5d6bafadc",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": "\/",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_58ca67ba79c52",
+            "label": "FTP folder",
+            "name": "ftp_folder",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_58ca5d6bafadc",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "placement": "left",
+            "endpoint": 0,
+            "key": "field_58ca66e350b0c",
+            "label": "FTP Auto import",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "message": "The FTP auto import will run in intervals according to the below setting. The auto import will automatically check for new alarms in the contal ftp and import these.",
+            "esc_html": 0,
+            "new_lines": "wpautop",
+            "key": "field_58ca678179c51",
+            "label": "FTP Auto import",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": 0,
+            "message": "",
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "key": "field_58ca670c50b0d",
+            "label": "Activate auto import",
+            "name": "auto_import_active",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": 10,
+            "min": 1,
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "minutes",
+            "key": "field_58ca672650b0e",
+            "label": "Import interval",
+            "name": "import_interval",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_58ca670c50b0d",
                         "operator": "==",
                         "value": "1"
                     }
