@@ -135,6 +135,8 @@ class Importer
             }
 
             $data = $xml->Alarm;
+
+            // Check if alarm has any filter words in it
             $filters = \ApiAlarmManager\Admin\Options::getFilters();
             $filters = implode('|', $filters);
 
