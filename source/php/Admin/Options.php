@@ -15,5 +15,24 @@ class Options
                 'capability'    => 'edit_users'
             ));
         }
+
+        add_action('admin_init', function () {
+            \ApiAlarmManager\Admin\Options::getFilters();
+        });
+    }
+
+    /**
+     * Get alarm filter keywords
+     * @return array
+     */
+    public static function getFilters()
+    {
+        $filters = get_field('alarm_filters', 'option');
+
+        foreach ($filters as &$filter) {
+            $filter = $filter['keyword'];
+        }
+
+        return $filter;
     }
 }

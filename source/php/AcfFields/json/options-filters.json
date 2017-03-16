@@ -1,0 +1,81 @@
+[{
+    "key": "group_58ca5f387fb86",
+    "title": "Filters",
+    "fields": [
+        {
+            "message": "Alarm filters are used to avoid importing of alarms containing unwanted keywords. For example: Suicide Note: Adding a new filter keyword will remove any existing alarms containing the keyword.",
+            "esc_html": 0,
+            "new_lines": "wpautop",
+            "key": "field_58ca5f3d8b5ea",
+            "label": "About filters",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "sub_fields": [
+                {
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "key": "field_58ca5fae8b5ec",
+                    "label": "Keyword",
+                    "name": "keyword",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                }
+            ],
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add keyword",
+            "collapsed": "",
+            "key": "field_58ca5f798b5eb",
+            "label": "Filters",
+            "name": "alarm_filters",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "alarm-manager-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+
