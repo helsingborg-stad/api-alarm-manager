@@ -3,16 +3,18 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_58ca3def60074',
-    'title' => __('Station', 'event-manager'),
+    'title' => 'Station',
     'fields' => array(
         0 => array(
-            'message' => '',
-            'esc_html' => 0,
-            'new_lines' => '',
+            'default_value' => '',
+            'maxlength' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
             'key' => 'field_58ca3e0e4973f',
             'label' => __('Station ID', 'event-manager'),
-            'name' => '',
-            'type' => 'message',
+            'name' => 'station_id',
+            'type' => 'text',
             'instructions' => '',
             'required' => 0,
             'conditional_logic' => 0,
@@ -97,5 +99,7 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
+    'local' => 'php',
+    'modified' => 1489671888,
 ));
 }

@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_58ca5ce582e3b',
-    'title' => __('Contal FTP', 'event-manager'),
+    'title' => 'Contal FTP',
     'fields' => array(
         0 => array(
             'placement' => 'left',
@@ -65,7 +65,7 @@
             'append' => '',
             'key' => 'field_58ca5d45afadb',
             'label' => __('Server', 'event-manager'),
-            'name' => 'server',
+            'name' => 'ftp_server',
             'type' => 'text',
             'instructions' => '',
             'required' => 1,
@@ -92,7 +92,7 @@
             'append' => '',
             'key' => 'field_58ca5d9eafadd',
             'label' => __('Username', 'event-manager'),
-            'name' => 'username',
+            'name' => 'ftp_username',
             'type' => 'text',
             'instructions' => '',
             'required' => 0,
@@ -119,7 +119,7 @@
             'append' => '',
             'key' => 'field_58ca5dacafade',
             'label' => __('Password', 'event-manager'),
-            'name' => 'password',
+            'name' => 'ftp_password',
             'type' => 'text',
             'instructions' => '',
             'required' => 0,
@@ -238,7 +238,7 @@
             'ui_off_text' => '',
             'key' => 'field_58ca670c50b0d',
             'label' => __('Activate auto import', 'event-manager'),
-            'name' => 'auto_import_active',
+            'name' => 'ftp_auto_import',
             'type' => 'true_false',
             'instructions' => '',
             'required' => 0,
@@ -259,7 +259,7 @@
             'append' => __('minutes', 'event-manager'),
             'key' => 'field_58ca672650b0e',
             'label' => __('Import interval', 'event-manager'),
-            'name' => 'import_interval',
+            'name' => 'ftp_import_interval',
             'type' => 'number',
             'instructions' => '',
             'required' => 0,
@@ -296,5 +296,7 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
+    'local' => 'php',
+    'modified' => 1489671894,
 ));
 }

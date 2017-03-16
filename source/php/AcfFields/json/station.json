@@ -3,13 +3,15 @@
     "title": "Station",
     "fields": [
         {
-            "message": "",
-            "esc_html": 0,
-            "new_lines": "",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
             "key": "field_58ca3e0e4973f",
             "label": "Station ID",
-            "name": "",
-            "type": "message",
+            "name": "station_id",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -93,6 +95,8 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": ""
+    "description": "",
+    "local": "php",
+    "modified": 1489671888
 }]
 

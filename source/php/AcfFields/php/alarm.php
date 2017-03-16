@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_58ca423c4016f',
-    'title' => __('Alarm', 'event-manager'),
+    'title' => 'Alarm',
     'fields' => array(
         0 => array(
             'message' => '',
@@ -256,5 +256,7 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
+    'local' => 'php',
+    'modified' => 1489671906,
 ));
 }

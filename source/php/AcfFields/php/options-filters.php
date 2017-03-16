@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_58ca5f387fb86',
-    'title' => __('Filters', 'event-manager'),
+    'title' => 'Filters',
     'fields' => array(
         0 => array(
             'message' => __('Alarm filters are used to avoid importing of alarms containing unwanted keywords. For example: Suicide Note: Adding a new filter keyword will remove any existing alarms containing the keyword.', 'event-manager'),
@@ -31,7 +31,7 @@
                     'prepend' => '',
                     'append' => '',
                     'key' => 'field_58ca5fae8b5ec',
-                    'label' => __('Keyword', 'event-manager'),
+                    'label' => 'Keyword',
                     'name' => 'keyword',
                     'type' => 'text',
                     'instructions' => '',
@@ -47,10 +47,10 @@
             'min' => 0,
             'max' => 0,
             'layout' => 'table',
-            'button_label' => __('Add keyword', 'event-manager'),
+            'button_label' => 'Add keyword',
             'collapsed' => '',
             'key' => 'field_58ca5f798b5eb',
-            'label' => __('Filters', 'event-manager'),
+            'label' => 'Filters',
             'name' => 'alarm_filters',
             'type' => 'repeater',
             'instructions' => '',
@@ -80,5 +80,7 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
+    'local' => 'php',
+    'modified' => 1489671900,
 ));
 }
