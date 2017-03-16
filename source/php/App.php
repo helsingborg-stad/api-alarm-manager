@@ -25,6 +25,9 @@ class App
         // Misc
         new Admin\General();
         new Admin\Options();
+
+        // Importer
+        new Importer();
     }
 
     /**
