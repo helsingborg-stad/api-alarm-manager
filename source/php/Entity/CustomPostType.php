@@ -35,7 +35,7 @@ abstract class CustomPostType
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
 
         add_action('admin_head', array($this, 'removeMedia'));
-        //add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
+        add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
         //add_filter('post_updated_messages', array($this, 'postPublishedMsg'));
     }
 
