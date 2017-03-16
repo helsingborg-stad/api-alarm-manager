@@ -161,15 +161,15 @@ abstract class PostManager
         $post['post_type'] = $this->post_type;
         $post['meta_input'] = $meta;
 
-        // Check if duplicate by matching "_event_manager_uid" meta value
-        if (isset($meta['_event_manager_uid'])) {
+        // Check if duplicate by matching "_alarm_manager_uid" meta value
+        if (isset($meta['_alarm_manager_uid'])) {
             $duplicate = self::get(
                 1,
                 array(
                     'relation' => 'OR',
                     array(
-                        'key' => '_event_manager_uid',
-                        'value' => $meta['_event_manager_uid'],
+                        'key' => '_alarm_manager_uid',
+                        'value' => $meta['_alarm_manager_uid'],
                         'compare' => '='
                     )
                 ),
