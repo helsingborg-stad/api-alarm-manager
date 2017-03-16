@@ -6,8 +6,61 @@ class Importer
 {
     public function __construct()
     {
+        add_action('cron_import_alarms', array($this, 'import'));
+        add_filter('cron_schedules', array($this, 'cronSchedules'));
+
         if (isset($_GET['alarmimport'])) {
             add_action('init', array($this, 'import'));
+        }
+
+        add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
+    }
+
+    /**
+     * Add interval to schedules
+     * @param  array $schedules
+     * @return array
+     */
+    public function cronSchedules($schedules)
+    {
+        if (!get_field('ftp_auto_import', 'option')) {
+            return $schedules;
+        }
+
+        $intervalMinutes = get_field('ftp_import_interval', 'option');
+        $intervalKey = $intervalMinutes . 'min';
+
+        if (!isset($schedules[$intervalKey])) {
+            $schedules[$intervalKey] = array(
+                'interval' => $intervalMinutes * 60,
+                'display' => __('Once every ' . $intervalMinutes . ' minutes')
+            );
+        }
+
+        return $schedules;
+    }
+
+    /**
+     * Schedule import
+     * @param  int $postId
+     * @return void
+     */
+    public function scheduleImportCron($postId)
+    {
+        if ($postId !== 'options' || get_current_screen()->id !== 'alarm_page_alarm-manager-options') {
+            return;
+        }
+
+        if (!get_field('ftp_auto_import', 'option')) {
+            wp_clear_scheduled_hook('cron_import_alarms');
+            return;
+        }
+
+        $intervalMinutes = get_field('ftp_import_interval', 'option');
+
+        wp_clear_scheduled_hook('cron_import_alarms');
+        if (!wp_next_scheduled('cron_import_alarms')) {
+            wp_schedule_event(time(), $intervalMinutes . 'min', 'cron_import_alarms');
         }
     }
 
