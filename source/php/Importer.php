@@ -135,6 +135,22 @@ class Importer
             }
 
             $data = $xml->Alarm;
+            $filters = \ApiAlarmManager\Admin\Options::getFilters();
+            $filters = implode('|', $filters);
+
+            $continue = false;
+
+            foreach ($data as $item) {
+                foreach ($item as $field => $value) {
+                    if (preg_match('/(' . $filters . ')/i', $value)) {
+                        $continue = true;
+                    }
+                }
+            }
+
+            if ($continue) {
+                continue;
+            }
 
             // Create/update station
             $station = new \ApiAlarmManager\Station();

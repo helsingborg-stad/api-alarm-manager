@@ -33,6 +33,6 @@ class Options
             $filter = $filter['keyword'];
         }
 
-        return $filter;
+        return $filters;
     }
 }
