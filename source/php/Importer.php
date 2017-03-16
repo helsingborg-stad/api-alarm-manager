@@ -129,62 +129,86 @@ class Importer
     {
         foreach (glob($fromFolder . '*.{xml,XML}', GLOB_BRACE) as $file) {
             $xml = @simplexml_load_file($file);
+
             if (!$xml) {
                 error_log('Could not read xml-file: ' . $file);
                 continue;
             }
 
-            $data = $xml->Alarm;
-
-            // Check if alarm has any filter words in it
-            $filters = \ApiAlarmManager\Admin\Options::getFilters();
-            $filters = implode('|', $filters);
-
-            $continue = false;
-
-            foreach ($data as $item) {
-                foreach ($item as $field => $value) {
-                    if (preg_match('/(' . $filters . ')/i', $value)) {
-                        $continue = true;
-                    }
-                }
-            }
-
-            if ($continue) {
+            if ($this->isMatchingKeywordFilter($xml)) {
                 continue;
             }
 
-            // Create/update station
-            $station = new \ApiAlarmManager\Station();
-            $station->post_title = (string)$data->Place . ' ' . (string)$data->Station;
-            $station->_alarm_manager_uid = (string)$data->Station;
-            $station->station_id = (string)$data->Station;
-            $station->city = (string)$data->Place;
-            $station->save();
-
-            // Create/update alarm
-            $alarm = new \ApiAlarmManager\Alarm();
-            $alarm->post_title = (string)$data->HtText;
-            $alarm->post_content = (string)$data->Comment;
-            $alarm->post_date = (string)$xml->SendTime;
-            $alarm->_alarm_manager_uid = (string)$data->IDNumber;
-            $alarm->type = (string)$data->PresGrp;
-            $alarm->extend = (string)$data->Extend;
-            $alarm->station = $station->ID;
-            $alarm->address = (string)$data->Address;
-            $alarm->place = (string)$data->Place;
-            $alarm->address_description = (string)$data->AddressDescription;
-            $alarm->coordinate_x = (string)$data->{"RT90-X"};
-            $alarm->coordinate_y = (string)$data->{"RT90-Y"};
-            $alarm->zone = (string)$data->Zone;
-            $alarm->to_zone = (string)$data->ToZone;
-            $alarm->save();
+            $this->createOrUpdate($xml);
 
             // Remove xml-file when done
             if ($removeFile) {
                 unlink($file);
             }
         }
+    }
+
+    /**
+     * Create or update post for alarm
+     * @param  object $xml
+     * @return bool
+     */
+    public function createOrUpdate($xml)
+    {
+        $data = $xml->Alarm;
+
+        // Create/update station
+        $station = new \ApiAlarmManager\Station();
+        $station->post_title = (string)$data->Place . ' ' . (string)$data->Station;
+        $station->_alarm_manager_uid = (string)$data->Station;
+        $station->station_id = (string)$data->Station;
+        $station->city = (string)$data->Place;
+        $station->save();
+
+        // Create/update alarm
+        $alarm = new \ApiAlarmManager\Alarm();
+        $alarm->post_title = (string)$data->HtText;
+        $alarm->post_content = (string)$data->Comment;
+        $alarm->post_date = (string)$xml->SendTime;
+        $alarm->_alarm_manager_uid = (string)$data->IDNumber;
+        $alarm->type = (string)$data->PresGrp;
+        $alarm->extend = (string)$data->Extend;
+        $alarm->station = $station->ID;
+        $alarm->address = (string)$data->Address;
+        $alarm->place = (string)$data->Place;
+        $alarm->address_description = (string)$data->AddressDescription;
+        $alarm->coordinate_x = (string)$data->{"RT90-X"};
+        $alarm->coordinate_y = (string)$data->{"RT90-Y"};
+        $alarm->zone = (string)$data->Zone;
+        $alarm->to_zone = (string)$data->ToZone;
+        $alarm->save();
+
+        return true;
+    }
+
+    /**
+     * Check if any data matches any keyword filter
+     * @param  object  $xml
+     * @return boolean
+     */
+    public function isMatchingKeywordFilter($xml)
+    {
+        $data = $xml->Alarm;
+
+        $filters = \ApiAlarmManager\Admin\Options::getFilters();
+        $filters = implode('|', $filters);
+
+        $continue = false;
+
+        foreach ($data as $item) {
+            foreach ($item as $field => $value) {
+                if (preg_match('/(' . $filters . ')/i', $value)) {
+                    $continue = true;
+                }
+            }
+        }
+
+        return $continue;
     }
 
     /**
