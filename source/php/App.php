@@ -14,6 +14,12 @@ class App
         new PostTypes\Alarms();
         new PostTypes\Stations();
 
+        // Api
+        new Api\Filter();
+        new Api\PostTypes();
+        new Api\Linking();
+        new Api\AlarmFields();
+
         // Misc
         new Admin();
     }
