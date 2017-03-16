@@ -250,8 +250,8 @@ class ApiFields
     {
         $returnValue = self::getFieldGetMetaData($object, $field_name, $request);
 
-        if (is_a($returnValue, 'WP_Post')) {
-            $stationId = $returnValue->ID;
+        if ($returnValue) {
+            $stationId = $returnValue;
         } else {
             return null;
         }

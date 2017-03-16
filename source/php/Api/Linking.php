@@ -18,7 +18,7 @@ class Linking
      */
     public function addAlarmStation($response, $post, $request)
     {
-        $station = get_field('station', $post->ID);
+        $station = get_post(get_field('station', $post->ID));
 
         if ($station) {
             $response->add_link(
