@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_58ca423c4016f',
-    'title' => 'Alarm',
+    'title' => __('Alarm', 'event-manager'),
     'fields' => array(
         0 => array(
             'message' => '',
@@ -90,7 +90,7 @@
             ),
             'allow_null' => 0,
             'multiple' => 0,
-            'return_format' => 'object',
+            'return_format' => 'id',
             'ui' => 1,
             'key' => 'field_58ca42fb04ce3',
             'label' => __('Station', 'event-manager'),
@@ -256,7 +256,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'php',
-    'modified' => 1489671906,
 ));
 }

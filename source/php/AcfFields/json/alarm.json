@@ -84,7 +84,7 @@
             "taxonomy": [],
             "allow_null": 0,
             "multiple": 0,
-            "return_format": "object",
+            "return_format": "id",
             "ui": 1,
             "key": "field_58ca42fb04ce3",
             "label": "Station",
@@ -249,8 +249,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "php",
-    "modified": 1489671906
+    "description": ""
 }]
 
