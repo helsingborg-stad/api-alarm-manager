@@ -1,8 +1,8 @@
 <?php
 
-namespace ApiAlarmManager;
+namespace ApiAlarmManager\Admin;
 
-class Admin
+class General
 {
     public function __construct()
     {

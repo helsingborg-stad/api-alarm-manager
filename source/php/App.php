@@ -23,7 +23,8 @@ class App
         new Api\StationFields();
 
         // Misc
-        new Admin();
+        new Admin\General();
+        new Admin\Options();
     }
 
     /**
