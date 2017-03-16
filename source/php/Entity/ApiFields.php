@@ -264,14 +264,12 @@ class ApiFields
 
         return array(
             'id' => $station->ID,
-            'contal_id' => get_field('station_id', $station->ID),
+            'station_id' => get_field('station_id', $station->ID),
             'title' => $station->post_title,
             'content' => $station->post_content,
-            'address' => array(
-                'street' => get_field('street_address', $station->ID),
-                'postal_code' => get_field('postal_code', $station->ID),
-                'city' => get_field('city', $station->ID)
-            )
+            'street_address' => get_field('street_address', $station->ID),
+            'postal_code' => get_field('postal_code', $station->ID),
+            'city' => get_field('city', $station->ID)
         );
     }
 

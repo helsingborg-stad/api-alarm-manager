@@ -109,6 +109,34 @@ class AlarmFields extends \ApiAlarmManager\Entity\ApiFields
 
         register_rest_field(
             $this->postType,
+            'coordinate_x',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm address.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'coordinate_y',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing the alarm address.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
             'place',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
