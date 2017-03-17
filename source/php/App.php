@@ -13,6 +13,8 @@ class App
         // Post types
         new PostTypes\Alarms();
         new PostTypes\Stations();
+        new PostTypes\BigDisturbance();
+        new PostTypes\SmallDisturbance();
 
         // Api
         new Api\Filter();
