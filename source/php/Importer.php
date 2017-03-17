@@ -166,6 +166,8 @@ class Importer
         $station->save();
 
         // Create/update alarm
+        $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"}, (string)$data->{"RT90-Y"});
+
         $alarm = new \ApiAlarmManager\Alarm();
         $alarm->post_title = (string)$data->HtText;
         $alarm->post_content = (string)$data->Comment;
@@ -177,8 +179,8 @@ class Importer
         $alarm->address = (string)$data->Address;
         $alarm->place = (string)$data->Place;
         $alarm->address_description = (string)$data->AddressDescription;
-        $alarm->coordinate_x = (string)$data->{"RT90-X"};
-        $alarm->coordinate_y = (string)$data->{"RT90-Y"};
+        $alarm->coordinate_x = $coordinates[0];
+        $alarm->coordinate_y = $coordinates[1];
         $alarm->zone = (string)$data->Zone;
         $alarm->to_zone = (string)$data->ToZone;
         $alarm->save();
