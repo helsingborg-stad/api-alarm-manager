@@ -20,6 +20,7 @@ class App
         new Api\Linking();
 
         new Api\AlarmFields();
+        new Api\AlarmFilters();
         new Api\StationFields();
 
         // Misc
