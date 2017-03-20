@@ -24,6 +24,8 @@ class App
         new Api\AlarmFields();
         new Api\AlarmFilters();
         new Api\StationFields();
+        new Api\SmallDisturbanceFields();
+        new Api\BigDisturbanceFields();
 
         // Misc
         new Admin\General();
