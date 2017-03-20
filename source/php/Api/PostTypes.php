@@ -18,7 +18,7 @@ class PostTypes
     {
         global $wp_post_types;
 
-        $post_types = array('alarm', 'station');
+        $post_types = array('alarm', 'station', 'big-disturbance', 'small-disturbance');
 
         if (is_array($post_types) && !empty($post_types)) {
             foreach ($post_types as $post_type) {
@@ -35,7 +35,7 @@ class PostTypes
     {
         global $wp_post_types;
 
-        $post_types = array('post','page','comments');
+        $post_types = array('post', 'page', 'comments');
 
         if (is_array($post_types) && !empty($post_types)) {
             foreach ($post_types as $post_type) {
