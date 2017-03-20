@@ -42,7 +42,8 @@ $acfExportManager->autoExport(array(
     'station' => 'group_58ca3def60074',
     'alarm' => 'group_58ca423c4016f',
     'options-ftp' => 'group_58ca5ce582e3b',
-    'options-filters' => 'group_58ca5f387fb86'
+    'options-filters' => 'group_58ca5f387fb86',
+    'disturbance-alarm' => 'group_58cf8618bda6a'
 ));
 $acfExportManager->import();
 
