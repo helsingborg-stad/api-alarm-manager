@@ -73,10 +73,10 @@ class Importer
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
 
         if (!$destination) {
-            return false;
+            throw new \Error('Destination folder missing');
         }
 
-        //$this->downloadFromFtp($destination);
+        $this->downloadFromFtp($destination);
         $this->importFromXml($destination);
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
