@@ -77,7 +77,7 @@ class Importer
         }
 
         $this->downloadFromFtp($destination);
-        $this->importFromXml($destination);
+        $this->importFromXml($destination, true);
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
