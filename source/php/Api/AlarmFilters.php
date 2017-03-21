@@ -9,6 +9,35 @@ class AlarmFilters
         add_filter('rest_alarm_query', array($this, 'place'), 10, 2);
         add_filter('rest_alarm_query', array($this, 'station'), 10, 2);
         add_filter('rest_alarm_query', array($this, 'coordinates'), 10, 2);
+        add_filter('rest_alarm_query', array($this, 'dates'), 10, 2);
+    }
+
+    /**
+     * Filter alarms by date
+     * @param  array           $args
+     * @param  WP_REST_Request $request
+     * @return array
+     */
+    public function dates($args, $request)
+    {
+        if ((!isset($request['date_from']) || empty($request['date_from'])) && (!isset($request['date_to']) || empty($request['date_to']))) {
+            return $args;
+        }
+
+        $dateQuery = array('inclusive' => true);
+        if (isset($request['date_from']) && !empty($request['date_from'])) {
+            $dateQuery['after'] = $request['date_from'];
+        }
+
+        if (isset($request['date_to']) && !empty($request['date_to'])) {
+            $dateQuery['before'] = $request['date_to'];
+        }
+
+        $args['date_query'] = array(
+            $dateQuery
+        );
+
+        return $args;
     }
 
     /**
