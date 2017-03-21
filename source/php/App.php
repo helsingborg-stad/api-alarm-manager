@@ -19,6 +19,7 @@ class App
         // Api
         new Api\Filter();
         new Api\PostTypes();
+        new Api\Places();
         new Api\Linking();
 
         new Api\AlarmFields();
