@@ -42,6 +42,11 @@ class SmallDisturbanceFields extends \ApiAlarmManager\Entity\ApiFields
                 'get_callback' => function ($object, $field_name, $request, $formatted = true) {
                     $alarmIds = get_field('alarm_connection', $object['id']);
                     $alarms = array();
+
+                    if (!is_array($alarmIds)) {
+                        return $alarms;
+                    }
+
                     foreach ($alarmIds as $alarmId) {
                         $alarms[$alarmId] = array(
                             'title' => get_the_title($alarmId),
