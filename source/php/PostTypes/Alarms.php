@@ -31,15 +31,13 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'api-alarm-manager'));
 
-        $this->addTableColumn('place', __('Place', 'api-alarm-manager'), true, function ($column, $postId) {
-            echo get_field('place', $postId);
-        });
+        $this->addTableColumn('taxonomy-place', __('Place', 'api-alarm-manager'));
 
         $this->addTableColumn('station', __('Station', 'api-alarm-manager'), true, function ($column, $postId) {
             $station = get_field('station', $postId);
 
             if (!$station) {
-                echo __('n/a', 'api-alarm-manager');
+                echo '<span class="screen-reader-text">Inga kategorier</span><span aria-hidden="true">—</span>';
                 return;
             }
 

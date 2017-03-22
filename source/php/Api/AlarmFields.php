@@ -114,7 +114,7 @@ class AlarmFields extends \ApiAlarmManager\Entity\ApiFields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing the alarm address.',
+                    'description' => 'Field containing the x-coordinate for this alarm.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -128,7 +128,7 @@ class AlarmFields extends \ApiAlarmManager\Entity\ApiFields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing the alarm address.',
+                    'description' => 'Field containing the y-coordinate for this alarm.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -139,10 +139,11 @@ class AlarmFields extends \ApiAlarmManager\Entity\ApiFields
             $this->postType,
             'place',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'get_callback' => function ($object, $field_name, $request, $formatted = true) {
+                    return wp_get_post_terms($object['id'], 'place');
+                },
                 'schema' => array(
-                    'description' => 'Field containing the alarm type.',
+                    'description' => 'Field containing alarm place taxonomy terms.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )

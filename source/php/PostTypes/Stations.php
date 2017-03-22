@@ -32,12 +32,14 @@ class Stations extends \ApiAlarmManager\Entity\CustomPostType
         $this->addTableColumn('title', __('Title', 'api-alarm-manager'));
 
         $this->addTableColumn('station_id', __('Station ID', 'api-alarm-manager'), true, function ($column, $postId) {
-            echo get_field('station_id', $postId);
+            echo get_field('station_id', $postId) ? get_field('station_id', $postId) : '<span class="screen-reader-text">Inga kategorier</span><span aria-hidden="true">—</span>';
         });
 
         $this->addTableColumn('city', __('City', 'api-alarm-manager'), true, function ($column, $postId) {
-            echo get_field('city', $postId);
+            echo get_field('city', $postId) ? get_field('city', $postId) : '<span class="screen-reader-text">Inga kategorier</span><span aria-hidden="true">—</span>';
         });
+
+        $this->addTableColumn('taxonomy-place', __('Places', 'api-alarm-manager'));
 
         $this->addTableColumn('date', __('Date'));
     }

@@ -6,7 +6,7 @@ class AlarmFilters
 {
     public function __construct()
     {
-        add_filter('rest_alarm_query', array($this, 'place'), 10, 2);
+        //add_filter('rest_alarm_query', array($this, 'place'), 10, 2);
         add_filter('rest_alarm_query', array($this, 'station'), 10, 2);
         add_filter('rest_alarm_query', array($this, 'coordinates'), 10, 2);
         add_filter('rest_alarm_query', array($this, 'dates'), 10, 2);
@@ -52,14 +52,25 @@ class AlarmFilters
             return $args;
         }
 
-        $args['meta_key'] = 'place';
-        $args['meta_value'] = $request['place'];
+        $field = 'slug';
+        if (is_numeric($request['place'])) {
+            $field = 'term_id';
+        }
+
+        $args['tax_query'] = array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'place',
+                'field' => $field,
+                'terms' => $request['place']
+            )
+        );
 
         return $args;
     }
 
     /**
-     * Get alarms by place
+     * Get alarms by station
      * @param  array           $args
      * @param  WP_REST_Request $request
      * @return array

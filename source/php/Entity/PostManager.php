@@ -36,7 +36,8 @@ abstract class PostManager
         'post_parent',
         'menu_order',
         'post_mime_type',
-        'guid'
+        'guid',
+        'tax_input'
     );
 
     /**

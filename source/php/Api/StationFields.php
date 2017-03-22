@@ -90,5 +90,20 @@ class StationFields extends \ApiAlarmManager\Entity\ApiFields
                 )
             )
         );
+
+        register_rest_field(
+            $this->postType,
+            'place',
+            array(
+                'get_callback' => function ($object, $field_name, $request, $formatted = true) {
+                    return wp_get_post_terms($object['id'], 'place');
+                },
+                'schema' => array(
+                    'description' => 'Field containing alarm place taxonomy terms.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
     }
 }

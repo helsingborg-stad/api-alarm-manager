@@ -16,10 +16,13 @@ class App
         new PostTypes\BigDisturbance();
         new PostTypes\SmallDisturbance();
 
+        // Taxonomies
+        new Taxonomies\Place();
+
         // Api
         new Api\Filter();
         new Api\PostTypes();
-        new Api\Places();
+        new Api\Taxonomies();
         new Api\Linking();
 
         new Api\AlarmFields();

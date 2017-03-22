@@ -10,7 +10,7 @@ class Importer
         add_filter('cron_schedules', array($this, 'cronSchedules'));
 
         if (isset($_GET['alarmimport'])) {
-            add_action('init', array($this, 'import'));
+            add_action('init', array($this, 'import'), 100);
         }
 
         add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
@@ -76,8 +76,8 @@ class Importer
             throw new \Error('Destination folder missing');
         }
 
-        $this->downloadFromFtp($destination);
-        $this->importFromXml($destination, true);
+        //$this->downloadFromFtp($destination);
+        $this->importFromXml($destination);
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
@@ -165,6 +165,10 @@ class Importer
         $station->city = (string)$data->Place;
         $station->save();
 
+        if (is_string(@(string)$data->Place)) {
+            wp_set_object_terms($station->ID, (string)$data->Place, 'place', false);
+        }
+
         // Create/update alarm
         $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"}, (string)$data->{"RT90-Y"});
 
@@ -173,17 +177,22 @@ class Importer
         $alarm->post_content = (string)$data->Comment;
         $alarm->post_date = (string)$xml->SendTime;
         $alarm->_alarm_manager_uid = (string)$data->IDNumber;
+        $alarm->case_id = (string)$data->IDNumber;
         $alarm->type = (string)$data->PresGrp;
         $alarm->extend = (string)$data->Extend;
         $alarm->station = $station->ID;
         $alarm->address = (string)$data->Address;
-        $alarm->place = (string)$data->Place;
+        $alarm->city = (string)$data->Place;
         $alarm->address_description = (string)$data->AddressDescription;
         $alarm->coordinate_x = $coordinates[0];
         $alarm->coordinate_y = $coordinates[1];
         $alarm->zone = (string)$data->Zone;
         $alarm->to_zone = (string)$data->ToZone;
         $alarm->save();
+
+        if (is_string(@(string)$data->Place)) {
+            wp_set_object_terms($alarm->ID, (string)$data->Place, 'place', false);
+        }
 
         return true;
     }
