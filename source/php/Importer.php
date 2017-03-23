@@ -99,6 +99,8 @@ class Importer
     public function downloadFromFtp(string $destination) : bool
     {
         $ftp = ftp_connect($this->getFtpDetails('server'));
+
+        wp_cache_delete('api-alarm-manager-last-import', 'options');
         $lastImport = get_option('api-alarm-manager-last-import');
 
         // Try to login

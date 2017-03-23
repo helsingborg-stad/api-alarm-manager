@@ -68,6 +68,8 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             $button  = '<div class="import-buttons actions">';
 
             if (get_field('ftp_enabled', 'option') === true) {
+                wp_cache_delete('api-alarm-manager-last-import', 'options');
+
                 if (!get_option('api-alarm-manager-importing')) {
                     $button .= '<button type="button" class="button-primary extraspace" data-action="start-alarm-import">' . __('Start alarm import', 'api-alarm-manager') . '</button>';
                 } else {
