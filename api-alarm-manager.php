@@ -24,7 +24,16 @@ define('APIALARMMANAGER_TEMPLATE_PATH', APIALARMMANAGER_PATH . 'templates/');
 
 load_plugin_textdomain('api-alarm-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
-require_once APIALARMMANAGER_PATH . 'vendor/autoload.php';
+// Autoload from plugin
+if (file_exists(APIALARMMANAGER_PATH . 'vendor/autoload.php')) {
+    require_once APIALARMMANAGER_PATH . 'vendor/autoload.php';
+}
+
+// Autoload from ABSPATH
+if (file_exists(dirname(ABSPATH) . '/vendor/autoload.php')) {
+    require_once dirname(ABSPATH) . '/vendor/autoload.php';
+}
+
 require_once APIALARMMANAGER_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once APIALARMMANAGER_PATH . 'Public.php';
 
