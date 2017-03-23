@@ -71,7 +71,7 @@ class Importer
     public function import()
     {
         ini_set('max_execution_time', 60*5);
-        update_option('api-alarm-manager-importing', true);
+        update_option('api-alarm-manager-importing', 'yes');
 
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
 
@@ -82,7 +82,7 @@ class Importer
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
-        update_option('api-alarm-manager-importing', false);
+        delete_option('api-alarm-manager-importing');
         update_option('api-alarm-manager-last-import', time());
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
