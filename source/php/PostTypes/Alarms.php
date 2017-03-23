@@ -9,6 +9,9 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         add_filter('views_edit-alarm', array($this, 'addImportButtons'));
         add_action('wp_ajax_schedule_import', array($this, 'ajaxScheduleSingleImport'));
 
+        add_action('rss_item', array($this, 'rssFields'));
+        add_action('rss2_item', array($this, 'rssFields'));
+
         parent::__construct(
             __('Alarms', 'api-alarm-manager'),
             __('Alarm', 'api-alarm-manager'),
@@ -48,6 +51,36 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         });
 
         $this->addTableColumn('date', __('Date'));
+    }
+
+    public function rssFields()
+    {
+        if (get_post_type() !== 'alarm') {
+            return;
+        }
+
+        $fields = array(
+            'alarm_id',
+            'case_id',
+            'type',
+            'extend',
+            'station',
+            'address',
+            'city',
+            'address_description',
+            'coordinate_x',
+            'coordinate_y',
+            'zone',
+            'to_zone'
+        );
+
+        $postId = get_the_ID();
+
+        foreach ($fields as $field) {
+            if ($value = get_field($field, $postId)) {
+                echo '<' . $field . '>' . $value . '</' . $field . '>' . "\n";
+            }
+        }
     }
 
     public function ajaxScheduleSingleImport()
