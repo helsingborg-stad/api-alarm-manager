@@ -52,7 +52,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
 
     public function ajaxScheduleSingleImport()
     {
-        wp_schedule_single_event(time(), 'cron_import_alarms');
+        wp_schedule_single_event(time() + 10, 'cron_import_alarms');
         echo 'hej på dig din lille graj';
         wp_die();
     }
