@@ -70,6 +70,7 @@ class Importer
      */
     public function import()
     {
+        update_option('api-alarm-manager-importing', true);
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
 
         if (!$destination) {
@@ -79,6 +80,7 @@ class Importer
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
+        update_option('api-alarm-manager-importing', false);
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
 

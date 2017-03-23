@@ -53,7 +53,8 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
     public function ajaxScheduleSingleImport()
     {
         wp_schedule_single_event(time() + 10, 'cron_import_alarms');
-        echo 'hej på dig din lille graj';
+        update_option('api-alarm-manager-importing', true);
+        echo 'true';
         wp_die();
     }
 
@@ -67,7 +68,12 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             $button  = '<div class="import-buttons actions">';
 
             if (get_field('ftp_enabled', 'option') === true) {
-                $button .= '<div class="button-primary extraspace" data-action="start-alarm-import">' . __('Import alarms', 'api-alarm-manager') . '</div>';
+                if (!get_option('api-alarm-manager-importing')) {
+                    $button .= '<button type="button" class="button-primary extraspace" data-action="start-alarm-import">' . __('Start alarm import', 'api-alarm-manager') . '</button>';
+                } else {
+                    $button .= '<button type="button" class="button-primary extraspace" disabled>' . __('Importing alarms', 'api-alarm-manager') . '…</button>';
+                }
+
             }
 
             $button .= '</div>';

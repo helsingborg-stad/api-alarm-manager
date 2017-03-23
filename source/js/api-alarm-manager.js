@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
         };
 
         $.post(ajaxurl, data, function (response) {
-            alert(response);
+            $(this).removeAttr('data-action').prop('disabled', true).text(apiAlarmManagerLang.importing);
             return;
         });
     });
