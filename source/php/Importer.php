@@ -4,6 +4,8 @@ namespace ApiAlarmManager;
 
 class Importer
 {
+    public $importStarted = null;
+
     public function __construct()
     {
         add_action('cron_import_alarms', array($this, 'import'));
@@ -72,6 +74,7 @@ class Importer
     {
         ini_set('max_execution_time', 60*5);
         update_option('api-alarm-manager-importing', 'yes');
+        $this->importStarted = time();
 
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
 
@@ -83,7 +86,7 @@ class Importer
         $this->importFromXml($destination, true);
 
         delete_option('api-alarm-manager-importing');
-        update_option('api-alarm-manager-last-import', time());
+        update_option('api-alarm-manager-last-import', $this->importStarted);
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
