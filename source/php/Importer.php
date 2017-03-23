@@ -81,6 +81,8 @@ class Importer
         $this->importFromXml($destination, true);
 
         update_option('api-alarm-manager-importing', false);
+        update_option('api-alarm-manager-last-import', time());
+
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
 
@@ -92,6 +94,7 @@ class Importer
     public function downloadFromFtp(string $destination) : bool
     {
         $ftp = ftp_connect($this->getFtpDetails('server'));
+        $lastImport = get_option('api-alarm-manager-last-import');
 
         // Try to login
         if (!ftp_login($ftp, $this->getFtpDetails('username'), $this->getFtpDetails('password'))) {
@@ -103,12 +106,16 @@ class Importer
             ftp_pasv($ftp, true);
         }
 
-        $files = ftp_nlist($ftp, $this->getFtpDetails('folder'));
+        $files = ftp_nlist($ftp, '-rt ' . $this->getFtpDetails('folder'));
         if (!is_array($files)) {
             throw new \Exception('Could not list alarms from ftp.');
         }
 
         foreach ($files as $file) {
+            if ($lastImport && $lastImport > ftp_mdtm($ftp, trailingslashit($this->getFtpDetails('folder')) . $file)) {
+                break;
+            }
+
             ftp_get(
                 $ftp,
                 $destination . $file,
