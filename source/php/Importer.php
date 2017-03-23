@@ -51,14 +51,14 @@ class Importer
             return;
         }
 
+        wp_clear_scheduled_hook('cron_import_alarms');
+
         if (!get_field('ftp_auto_import', 'option')) {
-            wp_clear_scheduled_hook('cron_import_alarms');
             return;
         }
 
         $intervalMinutes = get_field('ftp_import_interval', 'option');
 
-        wp_clear_scheduled_hook('cron_import_alarms');
         if (!wp_next_scheduled('cron_import_alarms')) {
             wp_schedule_event(time(), $intervalMinutes . 'min', 'cron_import_alarms');
         }
