@@ -193,7 +193,8 @@ class Importer
         $alarm->post_content = (string)$data->Comment;
         $alarm->post_date = (string)$xml->SendTime;
         $alarm->_alarm_manager_uid = (string)$data->IDNumber;
-        $alarm->case_id = (string)$data->IDNumber;
+        $alarm->alarm_id = (string)$data->CaseID;
+        $alarm->case_id = (string)$data->CaseID;
         $alarm->type = (string)$data->PresGrp;
         $alarm->extend = (string)$data->Extend;
         $alarm->station = $station->ID;
