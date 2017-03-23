@@ -10,6 +10,8 @@ class App
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
+        add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+
         // Post types
         new PostTypes\Alarms();
         new PostTypes\Stations();
@@ -37,6 +39,11 @@ class App
 
         // Importer
         new Importer();
+    }
+
+    public function enqueueScripts()
+    {
+        wp_enqueue_script('api-alarm-manager', APIALARMMANAGER_URL . '/dist/js/api-alarm-manager.min.js', array('jquery'), '1.0.0', true);
     }
 
     /**

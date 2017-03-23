@@ -6,6 +6,9 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
 {
     public function __construct()
     {
+        add_filter('views_edit-alarm', array($this, 'addImportButtons'));
+        add_action('wp_ajax_schedule_import', array($this, 'ajaxScheduleSingleImport'));
+
         parent::__construct(
             __('Alarms', 'api-alarm-manager'),
             __('Alarm', 'api-alarm-manager'),
@@ -37,7 +40,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             $station = get_field('station', $postId);
 
             if (!$station) {
-                echo '<span class="screen-reader-text">Inga kategorier</span><span aria-hidden="true">—</span>';
+                echo '<span class="screen-reader-text">' . __('No stations', 'api-alarm-manager') . '</span><span aria-hidden="true">—</span>';
                 return;
             }
 
@@ -45,5 +48,33 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         });
 
         $this->addTableColumn('date', __('Date'));
+    }
+
+    public function ajaxScheduleSingleImport()
+    {
+        wp_schedule_single_event(time(), 'cron_import_alarms');
+        echo 'hej på dig din lille graj';
+        wp_die();
+    }
+
+    /**
+     * Add buttons to start parsing xcap and Cbis
+     * @return void
+     */
+    public function addImportButtons($views)
+    {
+        if (current_user_can('administrator')) {
+            $button  = '<div class="import-buttons actions">';
+
+            if (get_field('ftp_enabled', 'option') === true) {
+                $button .= '<div class="button-primary extraspace" data-action="start-alarm-import">' . __('Import alarms', 'api-alarm-manager') . '</div>';
+            }
+
+            $button .= '</div>';
+
+            $views['import-buttons'] = $button;
+        }
+
+        return $views;
     }
 }

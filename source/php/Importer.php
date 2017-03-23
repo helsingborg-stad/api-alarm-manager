@@ -76,8 +76,8 @@ class Importer
             throw new \Error('Destination folder missing');
         }
 
-        //$this->downloadFromFtp($destination);
-        $this->importFromXml($destination);
+        $this->downloadFromFtp($destination);
+        $this->importFromXml($destination, true);
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
