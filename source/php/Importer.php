@@ -70,7 +70,9 @@ class Importer
      */
     public function import()
     {
+        ini_set('max_execution_time', 60*5);
         update_option('api-alarm-manager-importing', true);
+
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
 
         if (!$destination) {
