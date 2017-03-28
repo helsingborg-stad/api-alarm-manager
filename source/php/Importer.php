@@ -198,7 +198,7 @@ class Importer
         $alarm->type = (string)$data->PresGrp;
         $alarm->extend = (string)$data->Extend;
         $alarm->station = $station->ID;
-        $alarm->address = (string)$data->Address;
+        $alarm->address = $this->formatAddress((string)$data->Address);
         $alarm->city = (string)$data->Place;
         $alarm->address_description = (string)$data->AddressDescription;
         $alarm->coordinate_x = $coordinates[0];
@@ -212,6 +212,23 @@ class Importer
         }
 
         return true;
+    }
+
+    /**
+     * Unpersonalizes and formats address
+     * @param  string       $address       The unformatted address
+     * @param  bool|boolean $unpersonalize To unpersonalize or not
+     * @return string                      Formatted & unpersonalized address
+     */
+    public function formatAddress(string $address, bool $unpersonalize = true) : string
+    {
+        $parts = \ApiAlarmManager\Helper\Address::gmapsGetAddressComponents($address);
+        $streetBefore = $parts->street;
+        $parts->street = trim(preg_replace('/(\d+)(\s)?(trappor|tr|[a-z]+)?/i', '', $parts->street));
+
+        $parts->formatted_address = str_replace($streetBefore, $parts->street, $parts->formatted_address);
+
+        return $parts->formatted_address;
     }
 
     /**
