@@ -223,6 +223,12 @@ class Importer
     public function formatAddress(string $address, bool $unpersonalize = true) : string
     {
         $parts = \ApiAlarmManager\Helper\Address::gmapsGetAddressComponents($address);
+
+        // Bail if no parts
+        if (!isset($parts->formatted_address)) {
+            return trim(preg_replace('/(\d+)(\s)?(trappor|tr|[a-z]+)?/i', '', $address));
+        }
+
         $streetBefore = $parts->street;
         $parts->street = trim(preg_replace('/(\d+)(\s)?(trappor|tr|[a-z]+)?/i', '', $parts->street));
 
