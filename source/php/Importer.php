@@ -4,6 +4,8 @@ namespace ApiAlarmManager;
 
 class Importer
 {
+    public $importStarted = null;
+
     public function __construct()
     {
         add_action('cron_import_alarms', array($this, 'import'));
@@ -51,14 +53,14 @@ class Importer
             return;
         }
 
+        wp_clear_scheduled_hook('cron_import_alarms');
+
         if (!get_field('ftp_auto_import', 'option')) {
-            wp_clear_scheduled_hook('cron_import_alarms');
             return;
         }
 
         $intervalMinutes = get_field('ftp_import_interval', 'option');
 
-        wp_clear_scheduled_hook('cron_import_alarms');
         if (!wp_next_scheduled('cron_import_alarms')) {
             wp_schedule_event(time(), $intervalMinutes . 'min', 'cron_import_alarms');
         }
@@ -70,7 +72,10 @@ class Importer
      */
     public function import()
     {
-        update_option('api-alarm-manager-importing', true);
+        ini_set('max_execution_time', 60*5);
+        update_option('api-alarm-manager-importing', 'yes');
+        $this->importStarted = time();
+
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
 
         if (!$destination) {
@@ -80,8 +85,8 @@ class Importer
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
-        update_option('api-alarm-manager-importing', false);
-        update_option('api-alarm-manager-last-import', time());
+        delete_option('api-alarm-manager-importing');
+        update_option('api-alarm-manager-last-import', $this->importStarted);
 
         \ApiAlarmManager\Api\Filter::redirectToApi();
     }
@@ -94,6 +99,8 @@ class Importer
     public function downloadFromFtp(string $destination) : bool
     {
         $ftp = ftp_connect($this->getFtpDetails('server'));
+
+        wp_cache_delete('api-alarm-manager-last-import', 'options');
         $lastImport = get_option('api-alarm-manager-last-import');
 
         // Try to login
@@ -186,7 +193,8 @@ class Importer
         $alarm->post_content = (string)$data->Comment;
         $alarm->post_date = (string)$xml->SendTime;
         $alarm->_alarm_manager_uid = (string)$data->IDNumber;
-        $alarm->case_id = (string)$data->IDNumber;
+        $alarm->alarm_id = (string)$data->CaseID;
+        $alarm->case_id = (string)$data->CaseID;
         $alarm->type = (string)$data->PresGrp;
         $alarm->extend = (string)$data->Extend;
         $alarm->station = $station->ID;
