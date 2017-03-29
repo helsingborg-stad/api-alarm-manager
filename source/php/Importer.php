@@ -85,10 +85,11 @@ class Importer
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
-        delete_option('api-alarm-manager-importing');
+        update_option('api-alarm-manager-importing', 0);
         update_option('api-alarm-manager-last-import', $this->importStarted);
 
-        \ApiAlarmManager\Api\Filter::redirectToApi();
+        wp_send_json('true');
+        exit;
     }
 
     /**
