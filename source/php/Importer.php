@@ -78,7 +78,6 @@ class Importer
         }
 
         ini_set('max_execution_time', 60*5);
-        update_option('api-alarm-manager-importing', true);
         $this->importStarted = time();
 
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
@@ -127,6 +126,10 @@ class Importer
         foreach ($files as $file) {
             if ($lastImport && $lastImport > ftp_mdtm($ftp, trailingslashit($this->getFtpDetails('folder')) . $file)) {
                 break;
+            }
+
+            if (!get_option('api-alarm-manager-importing', false)) {
+                update_option('api-alarm-manager-importing', true);
             }
 
             ftp_get(
