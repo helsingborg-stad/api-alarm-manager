@@ -72,6 +72,11 @@ class Importer
      */
     public function import()
     {
+        if (get_option('api-alarm-manager-importing', false)) {
+            wp_send_json('false, already running');
+            exit;
+        }
+
         ini_set('max_execution_time', 60*5);
         update_option('api-alarm-manager-importing', true);
         $this->importStarted = time();
