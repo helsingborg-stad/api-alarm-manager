@@ -5,6 +5,7 @@ namespace ApiAlarmManager;
 class Importer
 {
     public $importStarted = null;
+    public $remoteNewestFile;
 
     public function __construct()
     {
@@ -90,7 +91,7 @@ class Importer
         $this->importFromXml($destination, true);
 
         update_option('api-alarm-manager-importing', false);
-        update_option('api-alarm-manager-last-import', $this->importStarted);
+        update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
 
         wp_send_json('true');
         exit;
@@ -123,13 +124,27 @@ class Importer
             throw new \Exception('Could not list alarms from ftp.');
         }
 
+        $skipped = 0;
         foreach ($files as $file) {
-            if ($lastImport && $lastImport > ftp_mdtm($ftp, trailingslashit($this->getFtpDetails('folder')) . $file)) {
-                break;
+            $modtime = ftp_mdtm($ftp, trailingslashit($this->getFtpDetails('folder')) . $file);
+
+            if ($lastImport && $lastImport > $modtime) {
+                $skipped++;
+
+                // Break if skipped more than 5
+                if ($skipped > 5) {
+                    break;
+                }
+
+                continue;
             }
 
             if (!get_option('api-alarm-manager-importing', false)) {
                 update_option('api-alarm-manager-importing', true);
+            }
+
+            if (empty($this->remoteNewestFile) || $modtime > $this->remoteNewestFile) {
+                $this->remoteNewestFile = $modtime;
             }
 
             ftp_get(
