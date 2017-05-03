@@ -1,0 +1,85 @@
+[
+    {
+        "name": "drola/coordinate-transformation-library",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/drola/coordinate-transformation-library.git",
+            "reference": "ba7aae296333cc516c748cfac7cc2eb8c2c909b8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drola/coordinate-transformation-library/zipball/ba7aae296333cc516c748cfac7cc2eb8c2c909b8",
+            "reference": "ba7aae296333cc516c748cfac7cc2eb8c2c909b8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.1"
+        },
+        "time": "2016-10-10T10:03:34+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Drola\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "CC BY-NC-SA 3.0"
+        ],
+        "authors": [
+            {
+                "name": "Matjaz Drolc",
+                "email": "mdrolc@gmail.com"
+            },
+            {
+                "name": "David Gustafsson",
+                "email": "david.gustafsson@xelera.se"
+            }
+        ],
+        "description": "Transform coordinates between swedish RT90, SWEREF99 and WGS8"
+    },
+    {
+        "name": "helsingborg-stad/acf-export-manager",
+        "version": "1.0.8",
+        "version_normalized": "1.0.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/helsingborg-stad/acf-export-manager.git",
+            "reference": "74dd5b1948fb8e4a87e53068a98a301bab87a612"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/helsingborg-stad/acf-export-manager/zipball/74dd5b1948fb8e4a87e53068a98a301bab87a612",
+            "reference": "74dd5b1948fb8e4a87e53068a98a301bab87a612",
+            "shasum": ""
+        },
+        "time": "2017-04-10T07:10:26+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "AcfExportManager\\": "src"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kristoffer Svanmark",
+                "email": "kristoffer.svanmark@knowit.se"
+            }
+        ],
+        "description": "ACF Export Manager is a extension that let's you automatically export specified your ACF fields on save.",
+        "support": {
+            "source": "https://github.com/helsingborg-stad/acf-export-manager/tree/1.0.8",
+            "issues": "https://github.com/helsingborg-stad/acf-export-manager/issues"
+        }
+    }
+]
