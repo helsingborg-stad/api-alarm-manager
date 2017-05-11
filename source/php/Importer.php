@@ -192,7 +192,15 @@ class Importer
             $xml = @simplexml_load_file($file);
 
             if (!$xml) {
-                error_log('Could not read xml-file: ' . $file);
+                if (is_numeric($xmlErrors = get_option('api-event-manager-xml-error'))) {
+                    update_option('api-event-manager-xml-error', ($xmlErrors+1));
+                } else {
+                    update_option('api-event-manager-xml-error', ($xmlErrors+1));
+                }
+
+                if (WP_DEBUG) {
+                    error_log('Could not read xml-file: ' . $file);
+                }
                 continue;
             }
 
