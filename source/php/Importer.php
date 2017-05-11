@@ -195,7 +195,7 @@ class Importer
                 if (is_numeric($xmlErrors = get_option('api-event-manager-xml-error'))) {
                     update_option('api-event-manager-xml-error', ($xmlErrors+1));
                 } else {
-                    update_option('api-event-manager-xml-error', ($xmlErrors+1));
+                    update_option('api-event-manager-xml-error', 1);
                 }
 
                 if (WP_DEBUG) {
