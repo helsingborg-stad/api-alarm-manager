@@ -15,6 +15,7 @@
         }
     ],
     "require": {
-        "helsingborg-stad/acf-export-manager": ">=1.0.0"
+        "helsingborg-stad/acf-export-manager": ">=1.0.0",
+        "drola/coordinate-transformation-library": "dev-master"
     }
 }
