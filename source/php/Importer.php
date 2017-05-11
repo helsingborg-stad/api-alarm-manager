@@ -7,6 +7,8 @@ class Importer
     public $importStarted = null;
     public $remoteNewestFile;
 
+    private $excecutionTime = 600; //Execution time in minutes
+
     public function __construct()
     {
         add_action('cron_import_alarms', array($this, 'import'));
@@ -73,12 +75,14 @@ class Importer
      */
     public function import()
     {
-        if (get_option('api-alarm-manager-importing', false)) {
+
+        //Check if running (using transient)
+        if (get_transient('api-alarm-manager-importing')) {
             wp_send_json('false, already running');
             exit;
         }
 
-        ini_set('max_execution_time', 60*5);
+        ini_set('max_execution_time', $this->excecutionTime);
         $this->importStarted = time();
 
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
@@ -90,8 +94,9 @@ class Importer
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
-        update_option('api-alarm-manager-importing', false);
+        //Mark as done
         update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
+        delete_transient('api-alarm-manager-importing');
 
         wp_send_json('true');
         exit;
@@ -121,6 +126,7 @@ class Importer
 
         $files = ftp_nlist($ftp, '-rt ' . $this->getFtpDetails('folder'));
         if (!is_array($files)) {
+            $this->alertSiteAdmin("import");
             throw new \Exception('Could not list alarms from ftp.');
         }
 
@@ -139,8 +145,8 @@ class Importer
                 continue;
             }
 
-            if (!get_option('api-alarm-manager-importing', false)) {
-                update_option('api-alarm-manager-importing', true);
+            if (!get_transient('api-alarm-manager-importing')) {
+                set_transient('api-alarm-manager-importing', true, $this->excecutionTime);
             }
 
             if (empty($this->remoteNewestFile) || $modtime > $this->remoteNewestFile) {
@@ -158,6 +164,21 @@ class Importer
         ftp_close($ftp);
 
         return true;
+    }
+
+    /**
+     * Alerts the site admin that alarms could not be retrived
+     * @return bool
+     */
+
+    public function alertSiteAdmin($type = "import")
+    {
+        $alerted = get_transient('api-alarm-manager-alerted-' . $type);
+
+        if ($alerted != true) {
+            wp_mail(bloginfo('admin_email'),  __("Alarm manager: Could not ", 'api-alarm-manager') . $type, __("Alarm manager could not execute the last action with success. Action may be required to resolve this issue.", 'api-alarm-manager'));
+            set_transient('api-alarm-manager-alerted-' . $type, true, 12 * HOUR_IN_SECONDS);
+        }
     }
 
     /**
