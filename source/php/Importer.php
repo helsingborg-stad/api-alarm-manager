@@ -231,7 +231,12 @@ class Importer
         }
 
         // Create/update alarm
-        $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"}, (string)$data->{"RT90-Y"});
+        if (class_exists('\\Drola\\CoordinateTransformationLibrary\\Transform')) {
+            $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"}, (string)$data->{"RT90-Y"});
+        } else {
+            $this->alertSiteAdmin("coordinates");
+            $coordinates = array("","");
+        }
 
         $alarm = new \ApiAlarmManager\Alarm();
         $alarm->post_title = (string)$data->HtText;
