@@ -31,7 +31,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
                 ),
                 'hierarchical'         => false,
                 'exclude_from_search'  => false,
-                'supports'             => array('title', 'revisions', 'editor', 'thumbnail'),
+                'supports'             => array('title', 'revisions', 'editor', 'thumbnail', 'author'),
             )
         );
 
