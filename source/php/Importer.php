@@ -235,10 +235,10 @@ class Importer
             $station->station_id = (string)$data->Station;
             $station->city = (string)$data->Place;
             $station->save();
-        }
 
-        if (is_string(@(string)$data->Place)) {
-            wp_set_object_terms($station->ID, (string)$data->Place, 'place', false);
+            if (is_string(@(string)$data->Place)) {
+                wp_set_object_terms($station->ID, (string)$data->Place, 'place', false);
+            }
         }
 
         // Create/update alarm
