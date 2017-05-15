@@ -11,6 +11,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
 
         add_action('rss_item', array($this, 'rssFields'));
         add_action('rss2_item', array($this, 'rssFields'));
+        add_filter('the_title_rss', array($this, 'rssTitle'));
 
         parent::__construct(
             __('Alarms', 'api-alarm-manager'),
@@ -81,6 +82,17 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
                 echo '<' . $field . '>' . $value . '</' . $field . '>' . "\n";
             }
         }
+    }
+
+    public function rssTitle($title)
+    {
+        global $post;
+
+        if (empty(get_field('city', $post->ID))) {
+            return $title;
+        }
+
+        return $title . ' (' . get_field('city', $post->ID) . ')';
     }
 
     public function ajaxScheduleSingleImport()
