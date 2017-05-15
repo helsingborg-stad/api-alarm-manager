@@ -91,6 +91,25 @@ class Importer
             throw new \Error('Destination folder missing');
         }
 
+        /**
+         * Remove content from all alarms previous to this version
+         * @since 0.2.11
+         */
+        if (!get_option('api-alarm-manager-updated-content', false)) {
+            $alarms = get_posts(array(
+                'post_type' => 'alarm',
+            ));
+
+            foreach ($alarms as $alarm) {
+                wp_update_post(array(
+                    'ID' => $alarm->ID,
+                    'post_content' => null
+                ));
+            }
+
+            add_option('api-alarm-manager-updated-content', true);
+        }
+
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
@@ -251,7 +270,6 @@ class Importer
 
         $alarm = new \ApiAlarmManager\Alarm();
         $alarm->post_title = (string)$data->HtText;
-        $alarm->post_content = (string)$data->Comment;
         $alarm->post_date = (string)$xml->SendTime;
         $alarm->_alarm_manager_uid = (string)$data->IDNumber;
         $alarm->alarm_id = (string)$data->CaseID;
