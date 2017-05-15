@@ -98,6 +98,7 @@ class Importer
         if (!get_option('api-alarm-manager-updated-content', false)) {
             $alarms = get_posts(array(
                 'post_type' => 'alarm',
+                'posts_per_page' => -1
             ));
 
             foreach ($alarms as $alarm) {
@@ -253,7 +254,7 @@ class Importer
             $station->_alarm_manager_uid = (string)$data->Station;
             $station->station_id = (string)$data->Station;
             $station->city = (string)$data->Place;
-            $station->save();
+            $station->save(array('post_title', 'post_content'));
 
             if (is_string(@(string)$data->Place)) {
                 wp_set_object_terms($station->ID, (string)$data->Place, 'place', false);
