@@ -127,11 +127,16 @@ abstract class PostManager
 
     /**
      * Saves the event and it's data
+     * @var nonSyncFields  Fields to discard when updating existing post
      * @return integer The inserted/updated post id
      */
-    public function save()
+    public function save(array $nonSyncFields = array())
     {
         $this->beforeSave();
+
+        $nonSyncFields = array_filter($nonSyncFields, function ($item) {
+            return strtolower($item) !== 'id';
+        });
 
         // Arrays for holding save data
         $post = array();
@@ -180,6 +185,10 @@ abstract class PostManager
 
         // Update if duplicate
         if (isset($duplicate->ID)) {
+            $post = array_filter($post, function ($key) use ($nonSyncFields) {
+                return !in_array($key, $nonSyncFields);
+            }, ARRAY_FILTER_USE_KEY);
+
             $post['ID'] = $duplicate->ID;
             $this->ID = wp_update_post($post);
             $isDuplicate = true;
