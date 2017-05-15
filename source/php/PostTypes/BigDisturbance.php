@@ -29,8 +29,16 @@ class BigDisturbance extends \ApiAlarmManager\Entity\CustomPostType
         );
 
         add_filter('acf/fields/post_object/query/name=alarm_connection', array($this, 'alarmConnection'), 10, 3);
+        add_filter('acf/fields/post_object/result/name=alarm_connection', array($this, 'alarmConnectionResult'), 10, 4);
     }
 
+    /**
+     * Arguments of the query to get alarm connections
+     * @param  array  $args   Arguments
+     * @param  array  $field  Acf field
+     * @param  int    $postId The current postid
+     * @return array          Modified arguments
+     */
     public function alarmConnection($args, $field, $postId)
     {
         $args['date_query'] = array(
@@ -44,5 +52,23 @@ class BigDisturbance extends \ApiAlarmManager\Entity\CustomPostType
         $args['order'] = 'DESC';
 
         return $args;
+    }
+
+    /**
+     * Add info to the title of the alarm in dropdown for connections
+     * @param  string $title   Default title
+     * @param  WP_Post $post   Post object for the alarm
+     * @param  array   $field  Acf Field
+     * @param  int     $postId Current posts id
+     * @return string          Modified title
+     */
+    public function alarmConnectionResult($title, $post, $field, $postId)
+    {
+        $address = '';
+        if (get_field('address', $post->ID)) {
+            $address = ' (' . get_field('address', $post->ID) . ')';
+        }
+
+        return date('Y-m-d H:i', strtotime($post->post_date)) . ': <strong>' . $title . '</strong>' . $address;
     }
 }
