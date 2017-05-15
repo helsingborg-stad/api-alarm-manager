@@ -27,5 +27,22 @@ class BigDisturbance extends \ApiAlarmManager\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
+
+        add_filter('acf/fields/post_object/query/name=alarm_connection', array($this, 'alarmConnection'), 10, 3);
+    }
+
+    public function alarmConnection($args, $field, $postId)
+    {
+        $args['date_query'] = array(
+            array(
+                'after'     => 'midnight 2 days ago',  // or '-2 days'
+                'inclusive' => true,
+            )
+        );
+
+        $args['orderby'] = 'date';
+        $args['order'] = 'DESC';
+
+        return $args;
     }
 }
