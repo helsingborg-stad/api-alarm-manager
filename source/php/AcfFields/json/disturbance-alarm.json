@@ -12,7 +12,7 @@
             "return_format": "id",
             "ui": 1,
             "key": "field_58cf862dd2cfc",
-            "label": "Alarm connections",
+            "label": "Alarm connection",
             "name": "alarm_connection",
             "type": "post_object",
             "instructions": "If this distrurbance could be connected to specific alarm(s) - add them here.",

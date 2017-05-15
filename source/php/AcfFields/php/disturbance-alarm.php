@@ -16,7 +16,7 @@
             'return_format' => 'id',
             'ui' => 1,
             'key' => 'field_58cf862dd2cfc',
-            'label' => __('Alarm connections', 'event-manager'),
+            'label' => __('Alarm connection', 'event-manager'),
             'name' => 'alarm_connection',
             'type' => 'post_object',
             'instructions' => __('If this distrurbance could be connected to specific alarm(s) - add them here.', 'event-manager'),
