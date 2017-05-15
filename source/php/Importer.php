@@ -227,12 +227,15 @@ class Importer
         $data = $xml->Alarm;
 
         // Create/update station
-        $station = new \ApiAlarmManager\Station();
-        $station->post_title = (string)$data->Place . ' ' . (string)$data->Station;
-        $station->_alarm_manager_uid = (string)$data->Station;
-        $station->station_id = (string)$data->Station;
-        $station->city = (string)$data->Place;
-        $station->save();
+        $station = null;
+        if (strlen((string)$data->Station) > 0) {
+            $station = new \ApiAlarmManager\Station();
+            $station->post_title = (string)$data->Place . ' ' . (string)$data->Station;
+            $station->_alarm_manager_uid = (string)$data->Station;
+            $station->station_id = (string)$data->Station;
+            $station->city = (string)$data->Place;
+            $station->save();
+        }
 
         if (is_string(@(string)$data->Place)) {
             wp_set_object_terms($station->ID, (string)$data->Place, 'place', false);
@@ -255,7 +258,7 @@ class Importer
         $alarm->case_id = (string)$data->CaseID;
         $alarm->type = (string)$data->PresGrp;
         $alarm->extend = (string)$data->Extend;
-        $alarm->station = $station->ID;
+        $alarm->station = is_a($station, '\ApiAlarmManager\Station') ? $station->ID : $station;
         $alarm->address = $this->formatAddress((string)$data->Address);
         $alarm->city = (string)$data->Place;
         $alarm->address_description = (string)$data->AddressDescription;
