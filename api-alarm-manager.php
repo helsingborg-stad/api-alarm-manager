@@ -54,7 +54,8 @@ $acfExportManager->autoExport(array(
     'options-filters'        => 'group_58ca5f387fb86',
     'disturbance-alarm'      => 'group_58cf8618bda6a',
     'options-google-geocode' => 'group_58da566ac8a91',
-    'options-rss'            => 'group_591aafe3cd78b'
+    'options-rss'            => 'group_591aafe3cd78b',
+    'options-templates'      => 'group_591ab89a6e9f5'
 ));
 $acfExportManager->import();
 
