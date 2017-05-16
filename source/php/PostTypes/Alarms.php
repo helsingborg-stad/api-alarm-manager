@@ -105,7 +105,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             return $permalink;
         }
 
-        return trailingslashit($url) . '#' . $post->ID;
+        return trailingslashit($url) . '#alarm-' . $post->ID;
     }
 
     public function ajaxScheduleSingleImport()
