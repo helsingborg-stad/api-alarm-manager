@@ -12,6 +12,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         add_action('rss_item', array($this, 'rssFields'));
         add_action('rss2_item', array($this, 'rssFields'));
         add_filter('the_title_rss', array($this, 'rssTitle'));
+        add_filter('the_permalink_rss', array($this, 'rssPermalink'));
 
         parent::__construct(
             __('Alarms', 'api-alarm-manager'),
@@ -93,6 +94,18 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         }
 
         return $title . ' (' . get_field('city', $post->ID) . ')';
+    }
+
+    public function rssPermalink($permalink)
+    {
+        global $post;
+        $url = get_field('rss_permalink', 'option');
+
+        if (empty($url)) {
+            return $permalink;
+        }
+
+        return trailingslashit($url) . '#' . $post->ID;
     }
 
     public function ajaxScheduleSingleImport()

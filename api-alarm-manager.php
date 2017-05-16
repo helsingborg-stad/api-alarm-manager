@@ -48,12 +48,13 @@ $acfExportManager = new \AcfExportManager\AcfExportManager();
 $acfExportManager->setTextdomain('event-manager');
 $acfExportManager->setExportFolder(APIALARMMANAGER_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
-    'station' => 'group_58ca3def60074',
-    'alarm' => 'group_58ca423c4016f',
-    'options-ftp' => 'group_58ca5ce582e3b',
-    'options-filters' => 'group_58ca5f387fb86',
-    'disturbance-alarm' => 'group_58cf8618bda6a',
-    'options-google-geocode' => 'group_58da566ac8a91'
+    'station'                => 'group_58ca3def60074',
+    'alarm'                  => 'group_58ca423c4016f',
+    'options-ftp'            => 'group_58ca5ce582e3b',
+    'options-filters'        => 'group_58ca5f387fb86',
+    'disturbance-alarm'      => 'group_58cf8618bda6a',
+    'options-google-geocode' => 'group_58da566ac8a91',
+    'options-rss'            => 'group_591aafe3cd78b'
 ));
 $acfExportManager->import();
 

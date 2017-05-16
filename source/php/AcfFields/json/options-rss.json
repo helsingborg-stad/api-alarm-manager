@@ -1,0 +1,40 @@
+[{
+    "key": "group_591aafe3cd78b",
+    "title": "RSS",
+    "fields": [
+        {
+            "default_value": "",
+            "placeholder": "",
+            "key": "field_591aaff0aca87",
+            "label": "RSS Permalink",
+            "name": "rss_permalink",
+            "type": "url",
+            "instructions": "The hash for specific alarms will be appended automatically",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "alarm-manager-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+
