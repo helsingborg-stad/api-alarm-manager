@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Api Alarm Manager\n"
-"POT-Creation-Date: 2017-03-22 15:02+0100\n"
+"POT-Creation-Date: 2017-05-16 11:25+0200\n"
 "PO-Revision-Date: 2017-03-22 14:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: api-alarm-manager.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -22,62 +22,62 @@ msgstr ""
 
 #: source/php/AcfFields/php/alarm.php:6
 #: source/php/AcfFields/php/disturbance-alarm.php:6
-#: source/php/PostTypes/Alarms.php:11
+#: source/php/PostTypes/Alarms.php:19
 msgid "Alarm"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:13
+#: source/php/AcfFields/php/alarm.php:15
 msgid "Alarm ID"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:32
+#: source/php/AcfFields/php/alarm.php:34
 msgid "Case ID"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:51
+#: source/php/AcfFields/php/alarm.php:53
 msgid "Typ"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:75
+#: source/php/AcfFields/php/alarm.php:77
 msgid "Extend"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:98 source/php/PostTypes/Alarms.php:36
+#: source/php/AcfFields/php/alarm.php:100 source/php/PostTypes/Alarms.php:44
 #: source/php/PostTypes/Stations.php:11
 msgid "Station"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:117
+#: source/php/AcfFields/php/alarm.php:119
 msgid "Adress"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:136
+#: source/php/AcfFields/php/alarm.php:138
 #: source/php/AcfFields/php/station.php:72 source/php/PostTypes/Stations.php:38
 msgid "City"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:155
+#: source/php/AcfFields/php/alarm.php:157
 msgid "Address description"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:174
+#: source/php/AcfFields/php/alarm.php:176
 msgid "X-Coordinate"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:193
+#: source/php/AcfFields/php/alarm.php:195
 msgid "Y-Coordinate"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:212
+#: source/php/AcfFields/php/alarm.php:214
 msgid "Zone"
 msgstr ""
 
-#: source/php/AcfFields/php/alarm.php:231
+#: source/php/AcfFields/php/alarm.php:233
 msgid "To zone"
 msgstr ""
 
 #: source/php/AcfFields/php/disturbance-alarm.php:19
-msgid "Alarm connections"
+msgid "Alarm connection"
 msgstr ""
 
 #: source/php/AcfFields/php/disturbance-alarm.php:22
@@ -162,6 +162,18 @@ msgstr ""
 msgid "Import interval"
 msgstr ""
 
+#: source/php/AcfFields/php/options-rss.php:6
+msgid "RSS"
+msgstr ""
+
+#: source/php/AcfFields/php/options-rss.php:12
+msgid "RSS Permalink"
+msgstr ""
+
+#: source/php/AcfFields/php/options-rss.php:15
+msgid "The hash for specific alarms will be appended automatically"
+msgstr ""
+
 #: source/php/AcfFields/php/station.php:15 source/php/PostTypes/Stations.php:34
 msgid "Station ID"
 msgstr ""
@@ -182,6 +194,18 @@ msgstr ""
 #: source/php/Admin/Options.php:12
 msgctxt "Alarm manager options"
 msgid "Options"
+msgstr ""
+
+#: source/php/Admin/Templates.php:31
+msgid "Create from template"
+msgstr ""
+
+#: source/php/Admin/Templates.php:32
+msgid "Select template…"
+msgstr ""
+
+#: source/php/App.php:51 source/php/PostTypes/Alarms.php:134
+msgid "Importing alarms"
 msgstr ""
 
 #: source/php/Entity/CustomPostType.php:52
@@ -229,32 +253,51 @@ msgstr ""
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:217
+#: source/php/Entity/PostManager.php:226
 msgid "Could not create folder"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:217
+#: source/php/Entity/PostManager.php:226
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
-#: source/php/Importer.php:36
+#: source/php/Importer.php:41
 msgid "Once every "
 msgstr ""
 
-#: source/php/PostTypes/Alarms.php:10 source/php/PostTypes/Alarms.php:14
+#: source/php/Importer.php:199
+msgid "Alarm manager: Could not "
+msgstr ""
+
+#: source/php/Importer.php:199
+msgid ""
+"Alarm manager could not execute the last action with success. Action may be "
+"required to resolve this issue."
+msgstr ""
+
+#: source/php/PostTypes/Alarms.php:18 source/php/PostTypes/Alarms.php:22
 msgid "Alarms"
 msgstr ""
 
-#: source/php/PostTypes/Alarms.php:32 source/php/PostTypes/Stations.php:32
+#: source/php/PostTypes/Alarms.php:40 source/php/PostTypes/Stations.php:32
 msgid "Title"
 msgstr ""
 
-#: source/php/PostTypes/Alarms.php:34
+#: source/php/PostTypes/Alarms.php:42
 msgid "Place"
 msgstr ""
 
-#: source/php/PostTypes/Alarms.php:47 source/php/PostTypes/Stations.php:44
+#: source/php/PostTypes/Alarms.php:48 source/php/PostTypes/Stations.php:35
+#: source/php/PostTypes/Stations.php:39
+msgid "No stations"
+msgstr ""
+
+#: source/php/PostTypes/Alarms.php:55 source/php/PostTypes/Stations.php:44
 msgid "Date"
+msgstr ""
+
+#: source/php/PostTypes/Alarms.php:132
+msgid "Start alarm import"
 msgstr ""
 
 #: source/php/PostTypes/BigDisturbance.php:10
@@ -333,11 +376,11 @@ msgstr ""
 msgid "Choose from most used places"
 msgstr ""
 
-#: vendor/helsingborg-stad/acf-export-manager/src/AcfExportManager.php:347
+#: vendor/helsingborg-stad/acf-export-manager/src/AcfExportManager.php:357
 msgid "Export with AcfExportManager"
 msgstr ""
 
-#: vendor/helsingborg-stad/acf-export-manager/src/AcfExportManager.php:384
+#: vendor/helsingborg-stad/acf-export-manager/src/AcfExportManager.php:401
 #, php-format
 msgid "Exported %d fieldgroup(s)."
 msgstr ""
