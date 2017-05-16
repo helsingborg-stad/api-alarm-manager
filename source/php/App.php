@@ -34,8 +34,11 @@ class App
         new Api\BigDisturbanceFields();
 
         // Misc
-        new Admin\General();
-        new Admin\Options();
+        if (is_admin()) {
+            new Admin\General();
+            new Admin\Options();
+            new Admin\Templates();
+        }
 
         // Importer
         new Importer();
