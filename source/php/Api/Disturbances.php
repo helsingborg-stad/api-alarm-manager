@@ -19,16 +19,33 @@ class Disturbances
 
     public function getDisturbances($data)
     {
-        $big = new \WP_Query(array(
-            'post_type' => 'big-disturbance',
+        $args = array(
             'post_status' => 'publish',
             'posts_per_page' => -1
+        );
+
+        if (isset($_GET['place']) && !empty($_GET['place'])) {
+            $args['tax_query'] = array(
+                'relation' => 'AND',
+                array(
+                    'taxonomy' => 'place',
+                    'terms' => explode(',', $_GET['place']),
+                )
+            );
+        }
+
+        $big = new \WP_Query(array_merge(
+            $args,
+            array(
+                'post_type' => 'big-disturbance',
+            )
         ));
 
-        $small = new \WP_Query(array(
-            'post_type' => 'small-disturbance',
-            'post_status' => 'publish',
-            'posts_per_page' => -1
+        $small = new \WP_Query(array_merge(
+            $args,
+            array(
+                'post_type' => 'small-disturbance',
+            )
         ));
 
         foreach (array_merge($big->posts, $small->posts) as &$item) {
