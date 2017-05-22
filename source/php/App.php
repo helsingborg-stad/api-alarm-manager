@@ -26,6 +26,7 @@ class App
         new Api\PostTypes();
         new Api\Taxonomies();
         new Api\Linking();
+        new Api\Disturbances();
 
         new Api\AlarmFields();
         new Api\AlarmFilters();
