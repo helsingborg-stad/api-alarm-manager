@@ -11,6 +11,12 @@ class Templates
 
     public function templateSelector()
     {
+        global $post;
+
+        if (!in_array($post->post_type, array('big-disturbance', 'small-disturbance'))) {
+            return;
+        }
+
         $templates = get_field('templates', 'option');
 
         echo '<style scoped>
