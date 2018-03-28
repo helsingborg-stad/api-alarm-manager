@@ -214,6 +214,7 @@ class Importer
         if (!ftp_nlist($ftp, $file)) {
             ftp_put($ftp, $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
         }
+        echo "file path ".$src.$file;
         //ftp_delete ($ftp, $src.$file);
     }
 
