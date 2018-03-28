@@ -210,7 +210,10 @@ class Importer
         }
 
         ftp_chdir($ftp, $dirname);
-        ftp_put($ftp, $dirname . $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
+        
+        if (!ftp_nlist($ftp, $file)) {
+            ftp_put($ftp, $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
+        }
         //ftp_delete ($ftp, $src.$file);
     }
 
