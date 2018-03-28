@@ -202,7 +202,7 @@ class Importer
 
         $dirname = date('Y-m');
 
-        ftp_chdir($ftp, '/alarm/backup');
+        ftp_chdir($ftp, '/alarm/archive');
 
         if (!ftp_nlist($ftp, $dirname)) {
             ftp_mkdir($ftp, $dirname);
@@ -210,7 +210,7 @@ class Importer
         }
 
         ftp_chdir($ftp, $dirname);
-        
+
         if (!ftp_nlist($ftp, $file)) {
             ftp_put($ftp, $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
         }
