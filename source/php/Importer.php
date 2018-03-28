@@ -180,7 +180,7 @@ class Importer
                 FTP_ASCII
             );
 
-            $this->moveFilesToArchive($ftp, $destination, $file);
+            $this->moveFilesToArchive($ftp, $destination, $file, $src = trailingslashit($this->getFtpDetails('folder')) );
 
         }
 
@@ -197,7 +197,7 @@ class Importer
      * @param string $local_file filename
      * @return void
      */
-    public function moveFilesToArchive($ftp, $local_dir, $local_file)
+    public function moveFilesToArchive($ftp, $local_dir, $file, $src)
     {
 
         $dirname = date('Y-m');
@@ -210,8 +210,8 @@ class Importer
         }
 
         ftp_chdir($ftp, $dirname);
-        ftp_put($ftp, $dirname . $local_file, $local_dir . $local_file, FTP_ASCII, $startpos = 0);
-        //ftp_delete ($ftp, $path);
+        ftp_put($ftp, $dirname . $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
+        //ftp_delete ($ftp, $src.$file);
     }
 
     /**
