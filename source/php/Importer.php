@@ -180,7 +180,8 @@ class Importer
                 FTP_ASCII
             );
 
-            $this->moveFilesToArchive($ftp, $destination, $file, $src = trailingslashit($this->getFtpDetails('folder')) );
+            $this->moveFilesToArchive($ftp, $destination, $file,
+                trailingslashit($this->getFtpDetails('folder')) . $file);
 
         }
 
@@ -191,7 +192,7 @@ class Importer
 
 
     /**
-     * Upload and archive file
+     * Archive file, delete the source file
      * @param object ftp connection
      * @param  string $local_dir Path to local dir
      * @param string $local_file filename
@@ -214,8 +215,8 @@ class Importer
         if (!ftp_nlist($ftp, $file)) {
             ftp_put($ftp, $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
         }
-        echo "file path ".$src.$file;
-        //ftp_delete ($ftp, $src.$file);
+
+        ftp_delete($ftp, $src . $file);
     }
 
     /**
