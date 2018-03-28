@@ -173,15 +173,18 @@ class Importer
                 $this->remoteNewestFile = $modtime;
             }
 
-            ftp_get(
+            $readyToArchive = ftp_get(
                 $ftp,
                 $destination . $file,
                 trailingslashit($this->getFtpDetails('folder')) . $file,
                 FTP_ASCII
             );
 
-            $this->moveFilesToArchive($ftp, $destination, $file,
-                trailingslashit($this->getFtpDetails('folder')) . $file);
+            if ( $readyToArchive ) {
+                $this->moveFilesToArchive($ftp, $destination, $file,
+                    trailingslashit($this->getFtpDetails('folder')) . $file);
+            }
+
 
         }
 
