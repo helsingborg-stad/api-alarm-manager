@@ -127,7 +127,7 @@ class Importer
      * @param  string $destination Path to destination folder
      * @return bool
      */
-    public function downloadFromFtp(string $destination) : bool
+    public function downloadFromFtp(string $destination): bool
     {
         $ftp = ftp_connect($this->getFtpDetails('server'));
 
@@ -179,11 +179,39 @@ class Importer
                 trailingslashit($this->getFtpDetails('folder')) . $file,
                 FTP_ASCII
             );
+
+            $this->moveFilesToArchive($ftp, $destination, $file);
+
         }
 
         ftp_close($ftp);
 
         return true;
+    }
+
+
+    /**
+     * Upload and archive file
+     * @param object ftp connection
+     * @param  string $local_dir Path to local dir
+     * @param string $local_file filename
+     * @return void
+     */
+    public function moveFilesToArchive($ftp, $local_dir, $local_file)
+    {
+
+        $dirname = date('Y-m');
+
+        ftp_chdir($ftp, '/alarm/backup');
+
+        if (!ftp_nlist($ftp, $dirname)) {
+            ftp_mkdir($ftp, $dirname);
+            ftp_chmod($ftp, '0755', $dirname);
+        }
+
+        ftp_chdir($ftp, $dirname);
+        ftp_put($ftp, $dirname . $local_file, $local_dir . $local_file, FTP_ASCII, $startpos = 0);
+        //ftp_delete ($ftp, $path);
     }
 
     /**
@@ -196,7 +224,9 @@ class Importer
         $alerted = get_transient('api-alarm-manager-alerted-' . $type);
 
         if ($alerted != true) {
-            wp_mail(bloginfo('admin_email'),  __("Alarm manager: Could not ", 'api-alarm-manager') . $type, __("Alarm manager could not execute the last action with success. Action may be required to resolve this issue.", 'api-alarm-manager'));
+            wp_mail(bloginfo('admin_email'), __("Alarm manager: Could not ", 'api-alarm-manager') . $type,
+                __("Alarm manager could not execute the last action with success. Action may be required to resolve this issue.",
+                    'api-alarm-manager'));
             set_transient('api-alarm-manager-alerted-' . $type, true, 12 * HOUR_IN_SECONDS);
         }
     }
@@ -213,7 +243,7 @@ class Importer
 
             if (!$xml) {
                 if (is_numeric($xmlErrors = get_option('api-event-manager-xml-error'))) {
-                    update_option('api-event-manager-xml-error', ($xmlErrors+1));
+                    update_option('api-event-manager-xml-error', ($xmlErrors + 1));
                 } else {
                     update_option('api-event-manager-xml-error', 1);
                 }
@@ -263,10 +293,11 @@ class Importer
 
         // Create/update alarm
         if (class_exists('\\Drola\\CoordinateTransformationLibrary\\Transform')) {
-            $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"}, (string)$data->{"RT90-Y"});
+            $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"},
+                (string)$data->{"RT90-Y"});
         } else {
             $this->alertSiteAdmin("coordinates");
-            $coordinates = array("","");
+            $coordinates = array("", "");
         }
 
         $alarm = new \ApiAlarmManager\Alarm();
@@ -296,11 +327,11 @@ class Importer
 
     /**
      * Unpersonalizes and formats address
-     * @param  string       $address       The unformatted address
+     * @param  string $address The unformatted address
      * @param  bool|boolean $unpersonalize To unpersonalize or not
      * @return string                      Formatted & unpersonalized address
      */
-    public function formatAddress(string $address, bool $unpersonalize = true) : string
+    public function formatAddress(string $address, bool $unpersonalize = true): string
     {
         $parts = \ApiAlarmManager\Helper\Address::gmapsGetAddressComponents($address);
 
@@ -319,7 +350,7 @@ class Importer
 
     /**
      * Check if any data matches any keyword filter
-     * @param  object  $xml
+     * @param  object $xml
      * @return boolean
      */
     public function isMatchingKeywordFilter($xml)
