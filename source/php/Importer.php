@@ -180,12 +180,14 @@ class Importer
                 FTP_ASCII
             );
 
-            if ( $readyToArchive ) {
-                $this->moveFilesToArchive($ftp, $destination, $file,
-                    trailingslashit($this->getFtpDetails('folder')) . $file);
+            if ($readyToArchive) {
+                $this->moveFilesToArchive($params = [
+                    "ftp" => $ftp,
+                    "localDir" => $destination,
+                    "file" => $file,
+                    "src" => trailingslashit($this->getFtpDetails('folder')) . $file
+                ]);
             }
-
-
         }
 
         ftp_close($ftp);
@@ -196,31 +198,28 @@ class Importer
 
     /**
      * Archive file, delete the source file
-     * @param object ftp connection
-     * @param  string $local_dir Path to local dir
-     * @param string $file local filename
-     * @param string $src  remote file
+     * @param array ftp, localDir, file, src
      * @return void
      */
-    public function moveFilesToArchive($ftp, $local_dir, $file, $src)
+    public function moveFilesToArchive($params)
     {
 
-        $dirname = date('Y-m');
+        $dirBydate = date('Y-m');
 
-        ftp_chdir($ftp, '/alarm/archive');
+        ftp_chdir($params['ftp'], '/alarm/archive');
 
-        if (!ftp_nlist($ftp, $dirname)) {
-            ftp_mkdir($ftp, $dirname);
-            ftp_chmod($ftp, '0755', $dirname);
+        if (!ftp_nlist($params['ftp'], $dirBydate)) {
+            ftp_mkdir($params['ftp'], $dirBydate);
+            ftp_chmod($params['ftp'], '0755', $dirBydate);
         }
 
-        ftp_chdir($ftp, $dirname);
+        ftp_chdir($params['ftp'], $dirBydate);
 
-        if (!ftp_nlist($ftp, $file)) {
-            ftp_put($ftp, $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
+        if (!ftp_nlist($params['ftp'], $params['file'])) {
+            ftp_put($params['ftp'], $params['file'], $params['localDir'] . $params['file'], FTP_ASCII, $startpos = 0);
         }
 
-        ftp_delete($ftp, $src);
+        ftp_delete($params['ftp'], $params['src']);
     }
 
     /**
