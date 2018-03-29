@@ -198,7 +198,8 @@ class Importer
      * Archive file, delete the source file
      * @param object ftp connection
      * @param  string $local_dir Path to local dir
-     * @param string $local_file filename
+     * @param string $file local filename
+     * @param string $src  remote file
      * @return void
      */
     public function moveFilesToArchive($ftp, $local_dir, $file, $src)
@@ -219,7 +220,7 @@ class Importer
             ftp_put($ftp, $file, $local_dir . $file, FTP_ASCII, $startpos = 0);
         }
 
-        ftp_delete($ftp, $src . $file);
+        ftp_delete($ftp, $src);
     }
 
     /**
