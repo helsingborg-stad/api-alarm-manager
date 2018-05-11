@@ -343,41 +343,17 @@ class Importer
     {
         $parts = \ApiAlarmManager\Helper\Address::gmapsGetAddressComponents($address);
 
-        //Defines temprary unique keys dureing replacement
-        $replaceMap = array(
-            array("E4", "KEYEFYRA"),
-            array("E6", "KEYESEX"),
-        );
-
         // Bail if no parts
         if (!isset($parts->formatted_address)) {
-
-            foreach($replaceMap as $item) {
-                $address = preg_replace("/".$item[0]."/i", $item[1], $adress);
-            }
-
-            $address = preg_replace('/(\d+)(\s)?(trappor|tr|[a-z]+)?/i', '', $address);
-
-            foreach($replaceMap as $item) {
-                $address = preg_replace("/".$item[1]."/i", $item[0], $adress);
-            }
-
-            return trim(ucwords($address));
+            return trim(preg_replace('/(\d+[\S]+)?(trappor|tr)?/i', '', $address));
         }
 
         $streetBefore = $parts->street;
+        $parts->street = trim(preg_replace('/(\d+[\S]+)?(trappor|tr)?/i', '', $parts->street));
 
-        foreach($replaceMap as $item) {
-            $parts->street = preg_replace("/".$item[0]."/i", $item[1], $parts->street);
-        }
+        $parts->formatted_address = str_replace($streetBefore, $parts->street, $parts->formatted_address);
 
-        $parts->street = trim(preg_replace('/(\d+)(\s)?(trappor|tr|[a-z]+)?/i', '', $parts->street));
-
-        foreach($replaceMap as $item) {
-            $address = preg_replace("/".$item[1]."/i", $item[0], $parts->street);
-        }
-
-        return ucwords(trim(str_replace($streetBefore, $parts->street, $parts->formatted_address)));
+        return $parts->formatted_address;
     }
 
     /**
