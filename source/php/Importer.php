@@ -362,6 +362,10 @@ class Importer
                 $address = preg_replace("/".$item[1]."/i", $item[0], $adress);
             }
 
+            foreach (array("A", "B", "C", "D", "E", "F") as $value) {
+                $address = str_replace(" ".$value." ", "", $address);
+            }
+
             return trim(ucwords($address));
         }
 
@@ -375,6 +379,10 @@ class Importer
 
         foreach($replaceMap as $item) {
             $address = preg_replace("/".$item[1]."/i", $item[0], $parts->street);
+        }
+
+        foreach (array("A", "B", "C", "D", "E", "F") as $value) {
+            $address = str_replace(" ".$value." ", "", $address);
         }
 
         return ucwords(trim(str_replace($streetBefore, $parts->street, $parts->formatted_address)));
