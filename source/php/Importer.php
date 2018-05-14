@@ -350,7 +350,16 @@ class Importer
 
         //Sanitize
         $removeSpacesBehind = array(
-            "Väg"
+            "Väg",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
         );
 
         //Concat words and numbers
