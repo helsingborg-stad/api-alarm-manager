@@ -1,13 +1,22 @@
 jQuery(document).ready(function ($) {
 
     $('[data-action="start-alarm-import"]').on('click', function () {
-        var $button = $(this);
-        var data = {
-            action: 'schedule_import'
-        };
+        var $button = $(this),
+            buttonText = $button.text();
 
-        $.post(ajaxurl, data, function (response) {
-            $button.removeAttr('data-action').prop('disabled', true).text(apiAlarmManagerLang.importing);
+        $.ajax({
+            url: ajaxurl,
+            type: 'post',
+            data: {
+                action: 'import_alarms'
+            },
+            beforeSend: function (response) {
+                $button.prop('disabled', true).text(apiAlarmManagerLang.importing);
+            },
+            complete: function (response) {
+                $button.prop('disabled', false).text(buttonText);
+                window.location.reload();
+            }
         });
     });
 

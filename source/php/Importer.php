@@ -20,10 +20,10 @@ class Importer
 
         add_action('admin_init', array($this, 'checkCron'));
         add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
-        add_action('wp_ajax_schedule_import', array($this, 'ajaxScheduleSingleImport'));
+        add_action('wp_ajax_import_alarms', array($this, 'ajaxSingleImport'));
     }
 
-    public function ajaxScheduleSingleImport()
+    public function ajaxSingleImport()
     {
         $this->import();
         echo 'true';
