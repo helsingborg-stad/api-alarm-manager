@@ -7,7 +7,6 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
     public function __construct()
     {
         add_filter('views_edit-alarm', array($this, 'addImportButtons'));
-        add_action('wp_ajax_schedule_import', array($this, 'ajaxScheduleSingleImport'));
 
         add_action('rss_item', array($this, 'rssFields'));
         add_action('rss2_item', array($this, 'rssFields'));
@@ -106,14 +105,6 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         }
 
         return trailingslashit($url) . '#alarm-' . $post->ID;
-    }
-
-    public function ajaxScheduleSingleImport()
-    {
-        wp_schedule_single_event(time() + 10, 'cron_import_alarms');
-        update_option('api-alarm-manager-importing', true);
-        echo 'true';
-        wp_die();
     }
 
     /**

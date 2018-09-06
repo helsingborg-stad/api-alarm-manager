@@ -19,6 +19,14 @@ class Importer
         }
 
         add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
+        add_action('wp_ajax_schedule_import', array($this, 'ajaxScheduleSingleImport'));
+    }
+
+    public function ajaxScheduleSingleImport()
+    {
+        $this->import();
+        echo 'true';
+        wp_die();
     }
 
     /**
@@ -75,7 +83,6 @@ class Importer
      */
     public function import()
     {
-
         //Check if running (using transient)
         if (get_transient('api-alarm-manager-importing')) {
             wp_send_json('false, already running');
@@ -117,7 +124,7 @@ class Importer
         //Mark as done
         update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
         delete_transient('api-alarm-manager-importing');
-
+        
         wp_send_json('true');
         exit;
     }
