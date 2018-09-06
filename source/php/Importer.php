@@ -18,6 +18,7 @@ class Importer
             add_action('init', array($this, 'import'), 100);
         }
 
+        add_action('admin_init', array($this, 'checkCron'));
         add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
         add_action('wp_ajax_schedule_import', array($this, 'ajaxScheduleSingleImport'));
     }
@@ -70,9 +71,26 @@ class Importer
             return;
         }
 
-        $intervalMinutes = get_field('ftp_import_interval', 'option');
+        $this->registerCron();
+    }
 
+    /**
+     * Create new cron schedule if missing
+     */
+    public function checkCron()
+    {
+        if (!wp_doing_ajax() && get_field('ftp_auto_import', 'option')) {
+            $this->registerCron();
+        }
+    }
+
+    /**
+     * Register import alarm cron
+     */
+    public function registerCron()
+    {
         if (!wp_next_scheduled('cron_import_alarms')) {
+            $intervalMinutes = get_field('ftp_import_interval', 'option');
             wp_schedule_event(time(), $intervalMinutes . 'min', 'cron_import_alarms');
         }
     }
@@ -124,7 +142,7 @@ class Importer
         //Mark as done
         update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
         delete_transient('api-alarm-manager-importing');
-        
+
         wp_send_json('true');
         exit;
     }
