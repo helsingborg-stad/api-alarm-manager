@@ -284,6 +284,10 @@ class Importer
                 if (WP_DEBUG) {
                     error_log('Could not read xml-file: ' . $file);
                 }
+                // Remove xml-file
+                if ($removeFile) {
+                    unlink($file);
+                }
                 continue;
             }
 
