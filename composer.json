@@ -11,16 +11,12 @@
     ],
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/helsingborg-stad/acf-export-manager.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/helsingborg-stad/coordinate-transformation-library.git"
+            "type":"composer",
+            "url":"https://packagist.org"
         }
     ],
     "require": {
-        "helsingborg-stad/acf-export-manager": ">=1.0.0",
-        "helsingborg-stad/coordinate-transformation-library": "1.0.1"
+        "helsingborg-stad/acf-export-manager": ">=1.0.11",
+        "helsingborg-stad/coordinate-transformation-library": ">=1.0.1"
     }
 }

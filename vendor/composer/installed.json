@@ -39,8 +39,8 @@
     },
     {
         "name": "helsingborg-stad/coordinate-transformation-library",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/helsingborg-stad/coordinate-transformation-library.git",
@@ -60,17 +60,13 @@
         },
         "time": "2017-05-16T11:48:10+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Drola\\": "src/"
             }
         },
-        "autoload-dev": {
-            "psr-4": {
-                "Drola\\Tests\\": "tests/"
-            }
-        },
+        "notification-url": "https://packagist.org/downloads/",
         "license": [
             "CC BY-NC-SA 3.0"
         ],
@@ -84,9 +80,6 @@
                 "email": "david.gustafsson@xelera.se"
             }
         ],
-        "description": "Transform coordinates between swedish RT90, SWEREF99 and WGS8",
-        "support": {
-            "source": "https://github.com/helsingborg-stad/coordinate-transformation-library/tree/1.0.1"
-        }
+        "description": "Transform coordinates between swedish RT90, SWEREF99 and WGS8"
     }
 ]

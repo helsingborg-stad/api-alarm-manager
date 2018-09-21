@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dc97e548842dcd9b93205c3baad01e4",
+    "content-hash": "fb3ff3d5e0ea8d1647154e4297d4259c",
     "packages": [
         {
             "name": "helsingborg-stad/acf-export-manager",
@@ -44,7 +44,7 @@
         },
         {
             "name": "helsingborg-stad/coordinate-transformation-library",
-            "version": "1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/helsingborg-stad/coordinate-transformation-library.git",
@@ -68,11 +68,7 @@
                     "Drola\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Drola\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "CC BY-NC-SA 3.0"
             ],
@@ -87,9 +83,6 @@
                 }
             ],
             "description": "Transform coordinates between swedish RT90, SWEREF99 and WGS8",
-            "support": {
-                "source": "https://github.com/helsingborg-stad/coordinate-transformation-library/tree/1.0.1"
-            },
             "time": "2017-05-16T11:48:10+00:00"
         }
     ],
