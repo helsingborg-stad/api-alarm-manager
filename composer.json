@@ -2,7 +2,7 @@
     "name": "helsingborg-stad/api-alarm-manager",
     "type": "wordpress-plugin",
     "license": "MIT",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Kristoffer Svanmark",
