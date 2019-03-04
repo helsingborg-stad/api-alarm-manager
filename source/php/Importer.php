@@ -505,6 +505,6 @@ class Importer
      */
     public function isImportLockEnabled()
     {
-        return (bool) wp_cache_get('importing', 'api-alarm-manager')
+        return (bool) wp_cache_get('importing', 'api-alarm-manager');
     }
 }

@@ -29,10 +29,12 @@ class Options
     {
         $filters = get_field('alarm_filters', 'option');
 
-        foreach ($filters as &$filter) {
-            $filter = $filter['keyword'];
+        if(is_array($filters) && !empty($filters)) {
+            foreach ($filters as &$filter) {
+                $filter = $filter['keyword'];
+            }
         }
-
+        
         return $filters;
     }
 }

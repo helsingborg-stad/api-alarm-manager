@@ -117,14 +117,11 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             $button  = '<div class="import-buttons actions">';
 
             if (get_field('ftp_enabled', 'option') === true) {
-                wp_cache_delete('api-alarm-manager-importing', 'options');
-
-                if (!get_transient('api-alarm-manager-importing')) {
+                if (!$this->isImportLockEnabled()) {
                     $button .= '<button type="button" class="button-primary extraspace" data-action="start-alarm-import">' . __('Start alarm import', 'api-alarm-manager') . '</button>';
                 } else {
                     $button .= '<button type="button" class="button-primary extraspace" disabled>' . __('Importing alarms', 'api-alarm-manager') . '…</button>';
                 }
-
             }
 
             $button .= '</div>';
@@ -133,5 +130,15 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         }
 
         return $views;
+    }
+
+
+    /**
+     * Is import locked
+     * @return bool
+     */
+    public function isImportLockEnabled()
+    {
+        return (bool) wp_cache_get('importing', 'api-alarm-manager');
     }
 }
