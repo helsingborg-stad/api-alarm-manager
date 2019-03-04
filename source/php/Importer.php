@@ -101,10 +101,12 @@ class Importer
      */
     public function import()
     {
-        //Check if running (using transient)
-        if (get_transient('api-alarm-manager-importing')) {
+        //Check if import is running before trigger 
+        if($this->isImportLockEnabled()) {
             wp_send_json('false, already running');
             exit;
+        } else {
+            $this->enableImportLock(); 
         }
 
         ini_set('max_execution_time', $this->excecutionTime);
@@ -139,9 +141,11 @@ class Importer
         $this->downloadFromFtp($destination);
         $this->importFromXml($destination, true);
 
-        //Mark as done
+        //Update last import var
         update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
-        delete_transient('api-alarm-manager-importing');
+
+        //Remove import lock
+        $this->disableImportLock(); 
 
         wp_send_json('true');
         exit;
@@ -188,10 +192,6 @@ class Importer
                 }
 
                 continue;
-            }
-
-            if (!get_transient('api-alarm-manager-importing')) {
-                set_transient('api-alarm-manager-importing', true, $this->excecutionTime);
             }
 
             if (empty($this->remoteNewestFile) || $modtime > $this->remoteNewestFile) {
@@ -479,5 +479,32 @@ class Importer
             'mode' => get_field('ftp_mode', 'option'),
             'folder' => get_field('ftp_folder', 'option')
         );
+    }
+
+    /**
+     * Set the cache lock
+     * @return void
+     */
+    public function enableImportLock()
+    {
+        wp_cache_set('importing', true, 'api-alarm-manager', $this->excecutionTime); 
+    }
+
+    /**
+     * Remove the cache lock
+     * @return void
+     */
+    public function disableImportLock()
+    {
+        wp_cache_delete('importing', 'api-alarm-manager'); 
+    }
+
+    /**
+     * Is import locked
+     * @return bool
+     */
+    public function isImportLockEnabled()
+    {
+        return (bool) wp_cache_get('importing', 'api-alarm-manager')
     }
 }
