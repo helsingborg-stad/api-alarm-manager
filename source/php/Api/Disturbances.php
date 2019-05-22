@@ -7,6 +7,7 @@ class Disturbances
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'registerEndpoint'));
+        add_action('rest_api_init', array($this, 'setCacheHeader'), 15);
     }
 
     public function registerEndpoint()
@@ -15,6 +16,15 @@ class Disturbances
             'methods' => 'GET',
             'callback' => array($this, 'getDisturbances'),
         ));
+    }
+
+    public function setCacheHeader() {
+        remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+        add_filter( 'rest_pre_serve_request', function( $value ) {
+            header('Cache-Control: max-age=300');
+
+            return $value;
+        });
     }
 
     public function getDisturbances($data)
