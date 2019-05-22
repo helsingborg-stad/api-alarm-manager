@@ -4,10 +4,15 @@ namespace ApiAlarmManager\PostTypes;
 
 class Alarms extends \ApiAlarmManager\Entity\CustomPostType
 {
+
+    public $expirationTime = 300; //Seconds
+
     public function __construct()
     {
+
         add_filter('views_edit-alarm', array($this, 'addImportButtons'));
 
+        add_action('send_headers', array($this, 'rssCacheControl')); 
         add_action('rss_item', array($this, 'rssFields'));
         add_action('rss2_item', array($this, 'rssFields'));
         add_filter('the_title_rss', array($this, 'rssTitle'));
@@ -52,6 +57,12 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         });
 
         $this->addTableColumn('date', __('Date'));
+
+    }
+
+    public function rssCacheControl() {
+        header('Cache-Control: max-age=' . $this->expirationTime . ", public");
+        header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + $this->expirationTime));
     }
 
     public function rssFields()
@@ -87,6 +98,10 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
     public function rssTitle($title)
     {
         global $post;
+        
+        if(!isset($post->ID)) {
+            return ""; 
+        }
 
         if (empty(get_field('city', $post->ID))) {
             return $title;
