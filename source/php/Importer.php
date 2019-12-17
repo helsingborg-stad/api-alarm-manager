@@ -7,8 +7,6 @@ class Importer
     public $importStarted = null;
     public $remoteNewestFile;
 
-    private $excecutionTime = 600; //Execution time in minutes
-
     public function __construct()
     {
         add_action('cron_import_alarms', array($this, 'import'));
@@ -109,7 +107,7 @@ class Importer
             $this->enableImportLock(); 
         }
 
-        ini_set('max_execution_time', $this->excecutionTime);
+        ini_set('max_execution_time', 600);
         $this->importStarted = time();
 
         $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
@@ -487,7 +485,7 @@ class Importer
      */
     public function enableImportLock()
     {
-        wp_cache_set('importing', true, 'api-alarm-manager', $this->excecutionTime); 
+        wp_cache_set('importing', true, 'api-alarm-manager', 600); 
     }
 
     /**
