@@ -79,7 +79,6 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             'station',
             'address',
             'city',
-            'address_description',
             'coordinate_x',
             'coordinate_y',
             'zone',
