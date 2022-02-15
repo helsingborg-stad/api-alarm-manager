@@ -104,7 +104,7 @@ class Importer
             wp_send_json('false, already running');
             exit;
         } else {
-            $this->enableImportLock(); 
+            $this->enableImportLock();
         }
 
         ini_set('max_execution_time', 600);
@@ -328,8 +328,20 @@ class Importer
 
         // Create/update alarm
         if (class_exists('\\Drola\\CoordinateTransformationLibrary\\Transform')) {
-            $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84((string)$data->{"RT90-X"},
-                (string)$data->{"RT90-Y"});
+            $coordinates = \Drola\CoordinateTransformationLibrary\Transform::RT90ToWGS84(
+                (string)$data->{"RT90-X"},
+                (string)$data->{"RT90-Y"}
+            );
+
+            //Round coordinates, to mask exact position.
+            if (is_array($coordinates) && count($coordinates) == 2) {
+                $coordinates = array(
+                    round($coordinates[0], 2),
+                    round($coordinates[1], 2)
+                );
+            } else {
+                $coordinates = array("", "");
+            }
         } else {
             $this->alertSiteAdmin("coordinates");
             $coordinates = array("", "");
@@ -346,7 +358,6 @@ class Importer
         $alarm->station = is_a($station, '\ApiAlarmManager\Station') ? $station->ID : $station;
         $alarm->address = $this->formatAddress((string)$data->Address);
         $alarm->city = (string)$data->Place;
-        $alarm->address_description = (string)$data->AddressDescription;
         $alarm->coordinate_x = $coordinates[0];
         $alarm->coordinate_y = $coordinates[1];
         $alarm->zone = (string)$data->Zone;

@@ -143,25 +143,6 @@
         },
         {
             "default_value": "",
-            "new_lines": "wpautop",
-            "maxlength": "",
-            "placeholder": "",
-            "rows": "",
-            "key": "field_58ca47a5f7e2e",
-            "label": "Address description",
-            "name": "address_description",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            }
-        },
-        {
-            "default_value": "",
             "maxlength": "",
             "placeholder": "",
             "prepend": "",
@@ -255,4 +236,4 @@
     "active": 1,
     "description": ""
 }]
-
+

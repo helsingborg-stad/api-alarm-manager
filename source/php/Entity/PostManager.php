@@ -71,7 +71,7 @@ abstract class PostManager
      */
     public function beforeSave()
     {
-
+        //No code
     }
 
     public function afterSave()
@@ -198,102 +198,5 @@ abstract class PostManager
         }
 
         return $this->afterSave();
-    }
-
-
-    /**
-     * Uploads an image from a specified url and sets it as the current post's featured image
-     * @param string $url Image url
-     */
-    public function setFeaturedImageFromUrl($url)
-    {
-        if (!isset($this->ID)) {
-            return false;
-        }
-
-        if (!isset($url) || strlen($url) === 0 || !$this->isUrl($url)) {
-            return false;
-        }
-
-        // Upload paths
-        $uploadDir = wp_upload_dir();
-        $uploadDirUrl = $uploadDir['baseurl'];
-        $uploadDir = $uploadDir['basedir'];
-        $uploadDir = $uploadDir . '/events';
-
-        if (!is_dir($uploadDir)) {
-            if (!mkdir($uploadDir, 0776)) {
-                return new WP_Error('event', __('Could not create folder', 'event-manager').' "' . $uploadDir . '", '. __('please go ahead and create it manually and rerun the import.', 'event-manager'));
-            }
-        }
-
-        $filename = basename($url);
-        if (stripos(basename($url), '.aspx')) {
-            $filename = md5($filename) . '.jpg';
-        }
-
-        // Bail if image already exists in library
-        if ($attachmentId = $this->attatchmentExists($uploadDir . '/' . basename($filename))) {
-            set_post_thumbnail($this->ID, $attachmentId);
-            return;
-        }
-
-        // Save file to server
-        $contents = file_get_contents($url);
-        $save = fopen($uploadDir . '/' . $filename, 'w');
-        fwrite($save, $contents);
-        fclose($save);
-
-        // Detect filetype
-        $filetype = wp_check_filetype($filename, null);
-
-        // Insert the file to media library
-        $attachmentId = wp_insert_attachment(array(
-            'guid' => $uploadDir . '/' . basename($filename),
-            'post_mime_type' => $filetype['type'],
-            'post_title' => $filename,
-            'post_content' => '',
-            'post_status' => 'inherit',
-            'post_parent' => $this->ID
-        ), $uploadDir . '/' . $filename, $this->ID);
-
-        // Generate attachment meta
-        require_once(ABSPATH . 'wp-admin/includes/image.php');
-        $attachData = wp_generate_attachment_metadata($attachmentId, $uploadDir . '/' . $filename);
-        wp_update_attachment_metadata($attachmentId, $attachData);
-
-        set_post_thumbnail($this->ID, $attachmentId);
-    }
-
-    /**
-     * Validates url
-     * @param  string  $url Url to validate
-     * @return boolean
-     */
-    private function isUrl($url)
-    {
-        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/', $url)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks if a attachment src already exists in media library
-     * @param  string $src Media url
-     * @return mixed
-     */
-    private function attatchmentExists($src)
-    {
-        global $wpdb;
-        $query = "SELECT ID FROM {$wpdb->posts} WHERE guid = '$src'";
-        $id = $wpdb->get_var($query);
-
-        if (!empty($id) && $id > 0) {
-            return $id;
-        }
-
-        return false;
     }
 }

@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_58ca423c4016f',
     'title' => __('Alarm', 'event-manager'),
     'fields' => array(
@@ -147,25 +149,6 @@
                 'id' => '',
             ),
         ),
-        7 => array(
-            'default_value' => '',
-            'new_lines' => 'wpautop',
-            'maxlength' => '',
-            'placeholder' => '',
-            'rows' => '',
-            'key' => 'field_58ca47a5f7e2e',
-            'label' => __('Address description', 'event-manager'),
-            'name' => 'address_description',
-            'type' => 'textarea',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-        ),
         8 => array(
             'default_value' => '',
             'maxlength' => '',
@@ -261,4 +244,5 @@
     'active' => 1,
     'description' => '',
 ));
-}
+
+}
