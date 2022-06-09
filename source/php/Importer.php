@@ -165,7 +165,6 @@ class Importer
             return false; // No new files
         }
 
-        $skipped = 0;
         foreach ($files as $file) {
             $readyToArchive = ftp_get(
                 $ftp,
