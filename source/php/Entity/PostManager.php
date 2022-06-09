@@ -144,8 +144,8 @@ abstract class PostManager
         $post['post_status'] = $this->post_status;
 
         // Get the default class variables and set it's keys to forbiddenKeys
-        $defaultData = get_class_vars(get_class($this));
-        $forbiddenKeys = array_keys($defaultData);
+        $defaultData    = get_class_vars(get_class($this));
+        $forbiddenKeys  = array_keys($defaultData);
 
         $data = array_filter(get_object_vars($this), function ($item) use ($forbiddenKeys) {
             return !in_array($item, $forbiddenKeys);
@@ -181,17 +181,18 @@ abstract class PostManager
                 ),
                 $this->post_type
             );
+        } else {
+            $duplicate = false;
         }
 
         // Update if duplicate
-        if (isset($duplicate->ID)) {
+        if ($duplicate && isset($duplicate->ID)) {
             $post = array_filter($post, function ($key) use ($nonSyncFields) {
                 return !in_array($key, $nonSyncFields);
             }, ARRAY_FILTER_USE_KEY);
 
-            $post['ID'] = $duplicate->ID;
-            $this->ID = wp_update_post($post);
-            $isDuplicate = true;
+            $post['ID']     = $duplicate->ID;
+            $this->ID       = wp_update_post($post);
         } else {
             // Create if not duplicate
             $this->ID = wp_insert_post($post, true);

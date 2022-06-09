@@ -62,7 +62,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
 
     public function rssCacheControl() {
         header('Cache-Control: max-age=' . $this->expirationTime . ", public");
-        header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + $this->expirationTime));
+        header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + $this->expirationTime));
     }
 
     public function rssFields()
@@ -97,9 +97,9 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
     public function rssTitle($title)
     {
         global $post;
-        
-        if(!isset($post->ID)) {
-            return ""; 
+
+        if (!isset($post->ID)) {
+            return "";
         }
 
         if (empty(get_field('city', $post->ID))) {
@@ -131,11 +131,7 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
             $button  = '<div class="import-buttons actions">';
 
             if (get_field('ftp_enabled', 'option') === true) {
-                if (!$this->isImportLockEnabled()) {
-                    $button .= '<button type="button" class="button-primary extraspace" data-action="start-alarm-import">' . __('Start alarm import', 'api-alarm-manager') . '</button>';
-                } else {
-                    $button .= '<button type="button" class="button-primary extraspace" disabled>' . __('Importing alarms', 'api-alarm-manager') . '…</button>';
-                }
+                $button .= '<button type="button" class="button-primary extraspace" data-action="start-alarm-import">' . __('Start alarm import', 'api-alarm-manager') . '</button>';
             }
 
             $button .= '</div>';
@@ -144,15 +140,5 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
         }
 
         return $views;
-    }
-
-
-    /**
-     * Is import locked
-     * @return bool
-     */
-    public function isImportLockEnabled()
-    {
-        return (bool) wp_cache_get('importing', 'api-alarm-manager');
     }
 }

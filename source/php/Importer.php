@@ -99,13 +99,6 @@ class Importer
      */
     public function import()
     {
-        //Check if import is running before trigger 
-        if($this->isImportLockEnabled()) {
-            wp_send_json('false, already running');
-            exit;
-        } else {
-            $this->enableImportLock();
-        }
 
         ini_set('max_execution_time', 600);
         $this->importStarted = time();
@@ -142,9 +135,6 @@ class Importer
         //Update last import var
         update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
 
-        //Remove import lock
-        $this->disableImportLock(); 
-
         wp_send_json('true');
         exit;
     }
@@ -156,10 +146,8 @@ class Importer
      */
     public function downloadFromFtp(string $destination): bool
     {
+        //Connect
         $ftp = ftp_connect($this->getFtpDetails('server'));
-
-        wp_cache_delete('api-alarm-manager-last-import', 'options');
-        $lastImport = get_option('api-alarm-manager-last-import');
 
         // Try to login
         if (!ftp_login($ftp, $this->getFtpDetails('username'), $this->getFtpDetails('password'))) {
@@ -172,30 +160,13 @@ class Importer
         }
 
         $files = ftp_nlist($ftp, '-rt ' . $this->getFtpDetails('folder'));
+
         if (!is_array($files)) {
-            $this->alertSiteAdmin("import");
-            throw new \Exception('Could not list alarms from ftp.');
+            return false; // No new files
         }
 
         $skipped = 0;
         foreach ($files as $file) {
-            $modtime = ftp_mdtm($ftp, trailingslashit($this->getFtpDetails('folder')) . $file);
-
-            if ($lastImport && $lastImport > $modtime) {
-                $skipped++;
-
-                // Break if skipped more than 5
-                if ($skipped > 5) {
-                    break;
-                }
-
-                continue;
-            }
-
-            if (empty($this->remoteNewestFile) || $modtime > $this->remoteNewestFile) {
-                $this->remoteNewestFile = $modtime;
-            }
-
             $readyToArchive = ftp_get(
                 $ftp,
                 $destination . $file,
@@ -315,11 +286,16 @@ class Importer
         $station = null;
         if (strlen((string)$data->Station) > 0) {
             $station = new \ApiAlarmManager\Station();
-            $station->post_title = (string)$data->Place . ' ' . (string)$data->Station;
-            $station->_alarm_manager_uid = (string)$data->Station;
-            $station->station_id = (string)$data->Station;
-            $station->city = (string)$data->Place;
-            $station->save(array('post_title', 'post_content'));
+
+            $station->post_title            = (string) $data->Place . ' ' . (string)$data->Station;
+            $station->_alarm_manager_uid    = (string) $data->Station;
+            $station->station_id            = (string) $data->Station;
+            $station->city                  = (string) $data->Place;
+
+            $station->save([
+                'post_title',
+                'post_content'
+            ]);
 
             if (is_string(@(string)$data->Place)) {
                 wp_set_object_terms($station->ID, (string)$data->Place, 'place', false);
@@ -401,8 +377,8 @@ class Importer
         );
 
         //Concat words and numbers
-        if(is_array($removeSpacesBehind) && !empty($removeSpacesBehind)) {
-            foreach($removeSpacesBehind as $replace) {
+        if (is_array($removeSpacesBehind) && !empty($removeSpacesBehind)) {
+            foreach ($removeSpacesBehind as $replace) {
                 $address = str_replace(" " . $replace . " ", " " . $replace, $address);
             }
         }
@@ -411,9 +387,9 @@ class Importer
         $address = explode(" ", $address);
 
         //Parse
-        if(is_array($address) && !empty($address)) {
+        if (is_array($address) && !empty($address)) {
             foreach ($address as $key => $word) {
-                if(is_numeric($word[0])) {
+                if (is_numeric($word[0])) {
                     unset($address[$key]);
                 }
             }
@@ -488,32 +464,5 @@ class Importer
             'mode' => get_field('ftp_mode', 'option'),
             'folder' => get_field('ftp_folder', 'option')
         );
-    }
-
-    /**
-     * Set the cache lock
-     * @return void
-     */
-    public function enableImportLock()
-    {
-        wp_cache_set('importing', true, 'api-alarm-manager', 600); 
-    }
-
-    /**
-     * Remove the cache lock
-     * @return void
-     */
-    public function disableImportLock()
-    {
-        wp_cache_delete('importing', 'api-alarm-manager'); 
-    }
-
-    /**
-     * Is import locked
-     * @return bool
-     */
-    public function isImportLockEnabled()
-    {
-        return (bool) wp_cache_get('importing', 'api-alarm-manager');
     }
 }
