@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'helsingborg-stad/api-alarm-manager',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '189d820912ca2829018c43500ecdab646addf3b3',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'helsingborg-stad/acf-export-manager' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '27e904a24eb013cac5c8f3d3c30e88b5b9b7859b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../helsingborg-stad/acf-export-manager',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'helsingborg-stad/api-alarm-manager' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '189d820912ca2829018c43500ecdab646addf3b3',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'helsingborg-stad/coordinate-transformation-library' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '37702bca6fad110fa2cd7463bb3359b3b6e5ace1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../helsingborg-stad/coordinate-transformation-library',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
