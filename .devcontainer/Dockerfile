@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/php:0-7.4-bullseye
 
 # Install php-mysql driver
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install mysqli pdo pdo_mysql ssh2
 
 # Update expired key
 # RUN export YARNKEY=yarn-keyring.gpg && \

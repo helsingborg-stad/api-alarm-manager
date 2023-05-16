@@ -21,10 +21,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-azuretools.vscode-docker",
 				"github.copilot",
-				"ritwickdey.liveserver",
-				"wongjn.php-sniffer"
+				"ritwickdey.liveserver"
 			]
 		}
 	},
