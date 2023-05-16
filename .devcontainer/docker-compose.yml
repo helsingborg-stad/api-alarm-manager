@@ -1,0 +1,52 @@
+version: '3.8'
+
+services: 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: mariadb
+      MYSQL_ROOT_PASSWORD: mariadb
+      MYSQL_USER: mariadb
+      MYSQL_PASSWORD: mariadb
+
+    # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+  
+  wordpress:
+    image: wordpress:6.2
+    ports:
+      - 8123:80
+    volumes:
+      - ..:/var/www/html/wp-content/plugins/api-alarm-manager
+      - ../.wordpress:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: mariadb
+      WORDPRESS_DB_PASSWORD: mariadb
+      WORDPRESS_DB_NAME: mariadb
+      WORDPRESS_TABLE_PREFIX: wp
+
+volumes:
+  db:
+  wordpress:
