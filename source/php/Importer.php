@@ -2,6 +2,9 @@
 
 namespace ApiAlarmManager;
 
+use ApiAlarmManager\Admin\Options;
+use Error;
+
 class Importer
 {
     public $importStarted = null;
@@ -186,6 +189,53 @@ class Importer
         ftp_close($ftp);
 
         return true;
+    }
+
+    /**
+     * Downloads files from sftp to destination folder
+     * @param  string $destination Path to destination folder
+     * @return bool
+     */
+    public function downloadFromSftp(string $destination): bool
+    {
+        if (Options::serverSupportsSftp() === false) {
+            trigger_error('Server does not support SFTP', E_USER_WARNING);
+            return false;
+        }
+
+        $connection = ssh2_connect($this->getFtpDetails('server'), 22);
+
+        if (!ssh2_auth_password($connection, $this->getFtpDetails('username'), $this->getFtpDetails('password'))) {
+            throw new \Exception('Could not connect to alarm ftp.');
+        }
+
+        $sftp = ssh2_sftp($connection);
+
+        $files = scandir('ssh2.sftp://' . intval($sftp) . $this->getFtpDetails('folder'));
+
+        if (!is_array($files)) {
+            return false; // No new files
+        }
+
+        foreach ($files as $file) {
+            $readyToArchive = copy(
+                'ssh2.sftp://' . intval($sftp) . $this->getFtpDetails('folder') . $file,
+                $destination . $file
+            );
+
+            if ($readyToArchive) {
+                $this->moveFilesToArchive($params = [
+                    "ftp" => $sftp,
+                    "localDir" => $destination,
+                    "file" => $file,
+                    "src" => $this->getFtpDetails('folder') . $file
+                ]);
+            }
+        }
+
+        return true;
+    
+        
     }
 
 
