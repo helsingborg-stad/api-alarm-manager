@@ -37,7 +37,8 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": {
-		"install-apt-packages": "export YARNKEY=yarn-keyring.gpg && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmour -o /usr/share/keyrings/$YARNKEY && echo \"deb [signed-by=/usr/share/keyrings/$YARNKEY] https://dl.yarnpkg.com/debian stable main\" | sudo tee /etc/apt/sources.list.d/yarn.list && sudo apt-get update && sudo apt-get install -y subversion nano bash-completion"
+		"install-apt-packages": "export YARNKEY=yarn-keyring.gpg && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmour -o /usr/share/keyrings/$YARNKEY && echo \"deb [signed-by=/usr/share/keyrings/$YARNKEY] https://dl.yarnpkg.com/debian stable main\" | sudo tee /etc/apt/sources.list.d/yarn.list && sudo apt-get update && sudo apt-get install -y subversion nano bash-completion",
+		"install-acf-pro-plugin": "rm -rf /tmp/acf.zip .wordpress/wp-content/plugins/advanced-custom-fields-pro && curl \"https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=${ACF_PRO_KEY}\" --output /tmp/acf.zip && unzip /tmp/acf.zip -d .wordpress/wp-content/plugins"
 	},
 
 	"waitFor": "postCreateCommand"
