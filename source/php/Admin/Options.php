@@ -19,6 +19,8 @@ class Options
         add_action('admin_init', function () {
             \ApiAlarmManager\Admin\Options::getFilters();
         });
+
+        add_action('admin_notices', [$this, 'adminNotices']);
     }
 
     /**
@@ -36,5 +38,33 @@ class Options
         }
         
         return $filters;
+    }
+
+    public function adminNotices()
+    {
+        $currentScreen = get_current_screen();
+
+        if ($currentScreen->base !== 'alarm_page_alarm-manager-options') {
+            return;
+        }
+
+        if (self::serverSupportsSftp() === false) {
+            echo $this->getNoSftpNotice();
+        }
+    }
+
+    public static function serverSupportsSftp(): bool
+    {
+        return function_exists('ssh2_connect');
+    }
+
+    private function getNoSftpNotice(): string
+    {
+        $message = __('This server does not support SFTP connections. If you intend to utilize SFTP connection, please verify that you support the SSH PHP library', 'event-manager');
+        $notice = '<div class="notice notice-warning is-dismissible">';
+        $notice .= '<p>' . $message . '</p>';
+        $notice .= '</div>';
+
+        return $notice;
     }
 }
