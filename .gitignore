@@ -2,9 +2,10 @@
 .*
 ~*
 
-# include .devcontainer
+# .devcontainer
 !.devcontainer
 .devcontainer/advanced-custom-fields-pro
+.devcontainer/devcontainer.env
 
 # ignore node/grunt dependency directories
 node_modules/
