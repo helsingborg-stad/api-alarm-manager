@@ -2,6 +2,7 @@ version: '3.8'
 
 services: 
   app:
+    env_file: devcontainer.env
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,28 +26,13 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: mariadb
-      MYSQL_ROOT_PASSWORD: mariadb
-      MYSQL_USER: mariadb
-      MYSQL_PASSWORD: mariadb
+      MYSQL_DATABASE: dev
+      MYSQL_ROOT_PASSWORD: dev
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
 
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
-  
-  wordpress:
-    image: wordpress:6.2
-    ports:
-      - 8123:80
-    volumes:
-      - ..:/var/www/html/wp-content/plugins/api-alarm-manager
-      - ../.wordpress:/var/www/html
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: mariadb
-      WORDPRESS_DB_PASSWORD: mariadb
-      WORDPRESS_DB_NAME: mariadb
-      WORDPRESS_TABLE_PREFIX: wp
 
 volumes:
   db:
-  wordpress:

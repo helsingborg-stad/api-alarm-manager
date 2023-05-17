@@ -4,6 +4,7 @@
 
 # include .devcontainer
 !.devcontainer
+.devcontainer/advanced-custom-fields-pro
 
 # ignore node/grunt dependency directories
 node_modules/
