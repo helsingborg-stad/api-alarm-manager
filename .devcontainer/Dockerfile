@@ -13,7 +13,7 @@ RUN export YARNKEY=yarn-keyring.gpg && \
 # Install packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends curl nano subversion bash-completion libssh2-1 libssh2-1-dev
-# RUN apt-get install -y curl nano subversion bash-completion libssh2-1 libssh2-1-dev
+
 RUN yes '' | pecl install ssh2-1.2
 
 # Install php-mysql driver
@@ -24,6 +24,4 @@ RUN docker-php-ext-enable ssh2
 RUN a2enmod rewrite expires
 
 # Install wp cli
-
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && sudo mv wp-cli.phar /usr/local/bin/wp
-CMD ["apache2-foreground"]
