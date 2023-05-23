@@ -67,4 +67,19 @@ class SftpFileHandler implements RemoteFileHandler
         // Remove '.' and '..' from the list
         return $fileList = array_filter($fileList, fn ($file) => $file !== '.' && $file !== '..');
     }
+
+    public function fileExists(string $path): bool
+    {
+        return $this->sftp->file_exists($path);
+    }
+
+    public function mkdir(string $path): bool
+    {
+        return $this->sftp->mkdir($path);
+    }
+
+    public function moveFile(string $source, string $destination): bool
+    {
+        return $this->sftp->rename($source, $destination);
+    }
 }

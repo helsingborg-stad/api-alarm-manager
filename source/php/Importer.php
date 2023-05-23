@@ -214,14 +214,21 @@ class Importer
         foreach ($fileList as $file) {
             $remoteFile = trailingslashit($folder) . $file;
             $localFile = trailingslashit($destination) . $file;
-            $sftp->copy($remoteFile, $localFile);
-        }
+            $copied = $sftp->copy($remoteFile, $localFile);
 
-        // TODO: Move files to archive on remote server.
+            if( $copied === true ) {
+                $remoteArchiveDir = trailingslashit($folder) . 'archive';
+                
+                if( $sftp->fileExists($remoteArchiveDir) === false ) {
+                    $sftp->mkdir($remoteArchiveDir);
+                }
+
+                $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
+            }
+        }
 
         return true;
     }
-
 
     /**
      * Archive file, delete the source file
