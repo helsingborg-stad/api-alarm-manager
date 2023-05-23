@@ -9,6 +9,14 @@
 	// "features": {},
 	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
 	"forwardPorts": [80,3306],
+	"portsAttributes": {
+		"80": {
+			"label": "WordPress"
+		},
+		"3306": {
+			"label": "Database"
+		}
+	},
 	"remoteEnv": {
 		"XDEBUG_MODE": "off"
 	},
@@ -20,7 +28,12 @@
 			"extensions": [
 				"github.copilot",
 				"ritwickdey.liveserver"
-			]
+			],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html"
+				]
+			}
 		}
 	},
 	"features": {
@@ -38,7 +51,7 @@
 		"start-apache": "service apache2 start"
 	},
 
-	// "waitFor": "postCreateCommand",
+	"waitFor": "postCreateCommand",
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	"remoteUser": "vscode"
 }
