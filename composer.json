@@ -18,6 +18,6 @@
     "require": {
         "helsingborg-stad/acf-export-manager": "dev-master",
         "helsingborg-stad/coordinate-transformation-library": "dev-master",
-        "phpseclib/phpseclib": "3.0.x-dev"
+        "phpseclib/phpseclib": "^3.0.0"
     }
 }

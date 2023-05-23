@@ -3,7 +3,7 @@
         'name' => 'helsingborg-stad/api-alarm-manager',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '92a5b6f648a140ba683a6e417c78669cd1871183',
+        'reference' => '9b08f6ce4ab2eeec276c5506176ebb37b46c48e6',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'helsingborg-stad/api-alarm-manager' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '92a5b6f648a140ba683a6e417c78669cd1871183',
+            'reference' => '9b08f6ce4ab2eeec276c5506176ebb37b46c48e6',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
