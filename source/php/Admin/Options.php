@@ -25,16 +25,32 @@ class Options
      * Get alarm filter keywords
      * @return array
      */
-    public static function getFilters()
+    public static function getFilters(): array
     {
         $filters = get_field('alarm_filters', 'option');
 
-        if(is_array($filters) && !empty($filters)) {
+        if (is_array($filters) && !empty($filters)) {
             foreach ($filters as &$filter) {
                 $filter = $filter['keyword'];
             }
+
+            return $filters;
         }
-        
-        return $filters;
+
+        if (is_string($filters)) {
+            return [$filters];
+        }
+
+        return [];
+    }
+
+    private function getNoSftpNotice(): string
+    {
+        $message = __('This server does not support SFTP connections. If you intend to utilize SFTP connection, please verify that you support the SSH PHP library', 'event-manager');
+        $notice = '<div class="notice notice-warning is-dismissible">';
+        $notice .= '<p>' . $message . '</p>';
+        $notice .= '</div>';
+
+        return $notice;
     }
 }

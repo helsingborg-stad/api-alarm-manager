@@ -139,7 +139,8 @@
             "layout": "horizontal",
             "choices": {
                 "passive": "Passive mode",
-                "active": "Active mode"
+                "active": "Active mode",
+                "sftp": "SFTP"
             },
             "default_value": "passive",
             "other_choice": 0,
@@ -296,4 +297,4 @@
     "local": "php",
     "modified": 1489671894
 }]
-
+

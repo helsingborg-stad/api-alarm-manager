@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_58ca5ce582e3b',
     'title' => 'Contal FTP',
     'fields' => array(
@@ -143,6 +145,7 @@
             'choices' => array(
                 'passive' => __('Passive mode', 'event-manager'),
                 'active' => __('Active mode', 'event-manager'),
+                "sftp" => "SFTP"
             ),
             'default_value' => 'passive',
             'other_choice' => 0,
@@ -299,4 +302,5 @@
     'local' => 'php',
     'modified' => 1489671894,
 ));
-}
+
+}

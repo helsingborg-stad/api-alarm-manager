@@ -1,0 +1,50 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/php-mariadb
+{
+	"name": "PHP & MySQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"forwardPorts": [
+		80,
+		3306
+	],
+	"portsAttributes": {
+		"80": {
+			"label": "WordPress"
+		},
+		"3306": {
+			"label": "Database"
+		}
+	},
+	"remoteEnv": {
+		"XDEBUG_MODE": "off"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"github.copilot",
+				"ritwickdey.liveserver"
+			],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html"
+				]
+			}
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "16"
+		}
+	},
+	"postCreateCommand": {
+		"install-acf-pro-plugin": "sudo rm -rf /tmp/acf.zip \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" && sudo curl \"https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=${ACF_PRO_KEY}\" --output /tmp/acf.zip && sudo unzip /tmp/acf.zip -d \"$(pwd)/.devcontainer\" && sudo ln -s \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" /var/www/html/wp-content/plugins/advanced-custom-fields-pro",
+		"symlink-plugin": "sudo ln -s \"$(pwd)\" /var/www/html/wp-content/plugins/api-alarm-manager",
+		"symlink-wp-config": "sudo ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
+		"start-apache": "service apache2 start"
+	},
+	"waitFor": "postCreateCommand",
+	"remoteUser": "vscode"
+}

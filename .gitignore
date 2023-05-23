@@ -2,6 +2,15 @@
 .*
 ~*
 
+# .vscode
+!.vscode
+
+# .devcontainer
+!.devcontainer
+!.devcontainer/.env.example
+.devcontainer/advanced-custom-fields-pro
+.devcontainer/devcontainer.env
+
 # ignore node/grunt dependency directories
 node_modules/
 

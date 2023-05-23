@@ -16,7 +16,8 @@
         }
     ],
     "require": {
-        "helsingborg-stad/acf-export-manager": ">=1.0.11",
-        "helsingborg-stad/coordinate-transformation-library": ">=1.0.1"
+        "helsingborg-stad/acf-export-manager": "dev-master",
+        "helsingborg-stad/coordinate-transformation-library": "dev-master",
+        "phpseclib/phpseclib": "^3.0.0"
     }
 }

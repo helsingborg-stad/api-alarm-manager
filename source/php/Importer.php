@@ -129,7 +129,13 @@ class Importer
             add_option('api-alarm-manager-updated-content', true);
         }
 
-        $this->downloadFromFtp($destination);
+
+        if ($this->getFtpDetails('mode') === 'sftp') {
+            $this->downloadFromSftp($destination);
+        } else {
+            $this->downloadFromFtp($destination);
+        }
+        
         $this->importFromXml($destination, true);
 
         //Update last import var
@@ -188,6 +194,41 @@ class Importer
         return true;
     }
 
+    /**
+     * Downloads files from sftp to destination folder
+     * @param  string $destination Path to destination folder
+     * @return bool
+     */
+    public function downloadFromSftp(string $destination): bool
+    {
+        $folder = $this->getFtpDetails('folder');
+        $sftp = new SftpFileHandler(
+            $this->getFtpDetails('server'),
+            $this->getFtpDetails('username'),
+            $this->getFtpDetails('password')
+        );
+
+        $sftp->connect();
+        $fileList = $sftp->list($folder);
+
+        foreach ($fileList as $file) {
+            $remoteFile = trailingslashit($folder) . $file;
+            $localFile = trailingslashit($destination) . $file;
+            $copied = $sftp->copy($remoteFile, $localFile);
+
+            if( $copied === true ) {
+                $remoteArchiveDir = trailingslashit($folder) . 'archive';
+                
+                if( $sftp->fileExists($remoteArchiveDir) === false ) {
+                    $sftp->mkdir($remoteArchiveDir);
+                }
+
+                $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Archive file, delete the source file
@@ -407,21 +448,22 @@ class Importer
     public function isMatchingKeywordFilter($xml)
     {
         $data = $xml->Alarm;
-
         $filters = \ApiAlarmManager\Admin\Options::getFilters();
         $filters = implode('|', $filters);
 
-        $continue = false;
+        if (empty($filters)) {
+            return false;
+        }
 
         foreach ($data as $item) {
             foreach ($item as $field => $value) {
                 if (preg_match('/(' . $filters . ')/i', $value)) {
-                    $continue = true;
+                    return true;
                 }
             }
         }
 
-        return $continue;
+        return false;
     }
 
     /**
@@ -444,7 +486,7 @@ class Importer
 
     /**
      * Gets ftp connection details
-     * @return array
+     * @return array|string
      */
     public function getFtpDetails($what = null)
     {
