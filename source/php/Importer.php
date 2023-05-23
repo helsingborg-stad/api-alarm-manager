@@ -216,15 +216,15 @@ class Importer
             $localFile = trailingslashit($destination) . $file;
             $copied = $sftp->copy($remoteFile, $localFile);
 
-            // if( $copied === true ) {
-            //     $remoteArchiveDir = trailingslashit($folder) . 'archive';
+            if( $copied === true ) {
+                $remoteArchiveDir = trailingslashit($folder) . 'archive';
                 
-            //     if( $sftp->fileExists($remoteArchiveDir) === false ) {
-            //         $sftp->mkdir($remoteArchiveDir);
-            //     }
+                if( $sftp->fileExists($remoteArchiveDir) === false ) {
+                    $sftp->mkdir($remoteArchiveDir);
+                }
 
-            //     $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
-            // }
+                $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
+            }
         }
 
         return true;

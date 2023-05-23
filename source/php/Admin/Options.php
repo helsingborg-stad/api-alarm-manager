@@ -19,8 +19,6 @@ class Options
         add_action('admin_init', function () {
             \ApiAlarmManager\Admin\Options::getFilters();
         });
-
-        add_action('admin_notices', [$this, 'adminNotices']);
     }
 
     /**
@@ -44,24 +42,6 @@ class Options
         }
 
         return [];
-    }
-
-    public function adminNotices()
-    {
-        $currentScreen = get_current_screen();
-
-        if ($currentScreen->base !== 'alarm_page_alarm-manager-options') {
-            return;
-        }
-
-        if (self::serverSupportsSftp() === false) {
-            echo $this->getNoSftpNotice();
-        }
-    }
-
-    public static function serverSupportsSftp(): bool
-    {
-        return extension_loaded( 'ssh2' );
     }
 
     private function getNoSftpNotice(): string
