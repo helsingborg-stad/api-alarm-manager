@@ -2,9 +2,6 @@
 
 namespace ApiAlarmManager;
 
-use ApiAlarmManager\Admin\Options;
-use Error;
-
 class Importer
 {
     public $importStarted = null;
@@ -132,7 +129,13 @@ class Importer
             add_option('api-alarm-manager-updated-content', true);
         }
 
-        $this->downloadFromFtp($destination);
+
+        if ($this->getFtpDetails('mode') === 'sftp') {
+            $this->downloadFromSftp($destination);
+        } else {
+            $this->downloadFromFtp($destination);
+        }
+        
         $this->importFromXml($destination, true);
 
         //Update last import var
@@ -198,44 +201,25 @@ class Importer
      */
     public function downloadFromSftp(string $destination): bool
     {
-        if (Options::serverSupportsSftp() === false) {
-            trigger_error('Server does not support SFTP', E_USER_WARNING);
-            return false;
+        $folder = $this->getFtpDetails('folder');
+        $sftp = new SftpFileHandler(
+            $this->getFtpDetails('server'),
+            $this->getFtpDetails('username'),
+            $this->getFtpDetails('password')
+        );
+
+        $sftp->connect();
+        $fileList = $sftp->list($folder);
+
+        foreach ($fileList as $file) {
+            $remoteFile = trailingslashit($folder) . $file;
+            $localFile = trailingslashit($destination) . $file;
+            $sftp->copy($remoteFile, $localFile);
         }
 
-        $connection = ssh2_connect($this->getFtpDetails('server'), 22);
-
-        if (!ssh2_auth_password($connection, $this->getFtpDetails('username'), $this->getFtpDetails('password'))) {
-            throw new \Exception('Could not connect to alarm ftp.');
-        }
-
-        $sftp = ssh2_sftp($connection);
-
-        $files = scandir('ssh2.sftp://' . intval($sftp) . $this->getFtpDetails('folder'));
-
-        if (!is_array($files)) {
-            return false; // No new files
-        }
-
-        foreach ($files as $file) {
-            $readyToArchive = copy(
-                'ssh2.sftp://' . intval($sftp) . $this->getFtpDetails('folder') . $file,
-                $destination . $file
-            );
-
-            if ($readyToArchive) {
-                $this->moveFilesToArchive($params = [
-                    "ftp" => $sftp,
-                    "localDir" => $destination,
-                    "file" => $file,
-                    "src" => $this->getFtpDetails('folder') . $file
-                ]);
-            }
-        }
+        // TODO: Move files to archive on remote server.
 
         return true;
-    
-        
     }
 
 
@@ -494,7 +478,7 @@ class Importer
 
     /**
      * Gets ftp connection details
-     * @return array
+     * @return array|string
      */
     public function getFtpDetails($what = null)
     {

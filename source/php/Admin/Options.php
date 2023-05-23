@@ -55,7 +55,7 @@ class Options
 
     public static function serverSupportsSftp(): bool
     {
-        return function_exists('ssh2_connect');
+        return extension_loaded( 'ssh2' );
     }
 
     private function getNoSftpNotice(): string
