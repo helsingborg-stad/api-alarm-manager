@@ -5,10 +5,10 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
-	"forwardPorts": [80,3306],
+	"forwardPorts": [
+		80,
+		3306
+	],
 	"portsAttributes": {
 		"80": {
 			"label": "WordPress"
@@ -20,9 +20,6 @@
 	"remoteEnv": {
 		"XDEBUG_MODE": "off"
 	},
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": {},
-	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -42,16 +39,12 @@
 			"version": "16"
 		}
 	},
-
-	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": {
 		"install-acf-pro-plugin": "sudo rm -rf /tmp/acf.zip \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" && sudo curl \"https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=${ACF_PRO_KEY}\" --output /tmp/acf.zip && sudo unzip /tmp/acf.zip -d \"$(pwd)/.devcontainer\" && sudo ln -s \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" /var/www/html/wp-content/plugins/advanced-custom-fields-pro",
 		"symlink-plugin": "sudo ln -s \"$(pwd)\" /var/www/html/wp-content/plugins/api-alarm-manager",
 		"symlink-wp-config": "sudo ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
 		"start-apache": "service apache2 start"
 	},
-
 	"waitFor": "postCreateCommand",
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	"remoteUser": "vscode"
 }

@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "xdebug: enable",
+			"type": "shell",
+			"command": "export XDEBUG_MODE=debug && apache2ctl restart",
+			"problemMatcher": [],
+		},
+		{
+			"label": "xdebug: disable",
+			"type": "shell",
+			"command": "export XDEBUG_MODE=off && apache2ctl restart",
+			"problemMatcher": [],
+		}
+	]
+}

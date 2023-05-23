@@ -2,7 +2,7 @@ version: '3.8'
 
 services: 
   app:
-    env_file: devcontainer.env
+    # env_file: devcontainer.env
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,6 +15,9 @@ services:
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     network_mode: service:db
+
+    environment:
+      - ACF_PRO_KEY=${ACF_PRO_KEY}
 
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
