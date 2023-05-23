@@ -216,15 +216,15 @@ class Importer
             $localFile = trailingslashit($destination) . $file;
             $copied = $sftp->copy($remoteFile, $localFile);
 
-            if( $copied === true ) {
-                $remoteArchiveDir = trailingslashit($folder) . 'archive';
+            // if( $copied === true ) {
+            //     $remoteArchiveDir = trailingslashit($folder) . 'archive';
                 
-                if( $sftp->fileExists($remoteArchiveDir) === false ) {
-                    $sftp->mkdir($remoteArchiveDir);
-                }
+            //     if( $sftp->fileExists($remoteArchiveDir) === false ) {
+            //         $sftp->mkdir($remoteArchiveDir);
+            //     }
 
-                $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
-            }
+            //     $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
+            // }
         }
 
         return true;
@@ -448,21 +448,22 @@ class Importer
     public function isMatchingKeywordFilter($xml)
     {
         $data = $xml->Alarm;
-
         $filters = \ApiAlarmManager\Admin\Options::getFilters();
         $filters = implode('|', $filters);
 
-        $continue = false;
+        if (empty($filters)) {
+            return false;
+        }
 
         foreach ($data as $item) {
             foreach ($item as $field => $value) {
                 if (preg_match('/(' . $filters . ')/i', $value)) {
-                    $continue = true;
+                    return true;
                 }
             }
         }
 
-        return $continue;
+        return false;
     }
 
     /**
