@@ -39,6 +39,7 @@ class App
             new Admin\General();
             new Admin\Options();
             new Admin\Templates();
+            new Admin\FireDangerLevels();
         }
 
         // Importer
