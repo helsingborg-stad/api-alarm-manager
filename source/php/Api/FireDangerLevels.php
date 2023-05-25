@@ -2,6 +2,8 @@
 
 namespace ApiAlarmManager\Api;
 
+use ApiAlarmManager\Admin\FireDangerLevels as AdminFireDangerLevels;
+
 class FireDangerLevels
 {
     private $namespace = 'wp/v2';
@@ -23,19 +25,23 @@ class FireDangerLevels
     public function getFireDangerLevels(): array
     {
         $data = get_field('fire_danger_levels', 'option');
+        $dateTimeChanged = get_option(AdminFireDangerLevels::$dateTimeChangedOptionName, null);
 
         if ($data === false) {
+            trigger_error('No fire danger levels found', E_USER_WARNING);
             return [];
         }
 
-        $fireDangerLevels = array_map([$this, 'convertPlaceIdToName'], $data);
+        $places = array_map([$this, 'convertPlaceIdToName'], $data);
 
-        return $fireDangerLevels;
+        return [
+            'dateTimeChanged' => $dateTimeChanged,
+            'places' => $places
+        ];
     }
 
     public function convertPlaceIdToName($fireDangerLevel)
     {
-        // Get term name from term id
         $fireDangerLevel['place'] = get_term($fireDangerLevel['place'])->name;
         return $fireDangerLevel;
     }
