@@ -27,6 +27,7 @@ class App
         new Api\Taxonomies();
         new Api\Linking();
         new Api\Disturbances();
+        new Api\FireDangerLevels();
 
         new Api\AlarmFields();
         new Api\AlarmFilters();
