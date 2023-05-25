@@ -1,218 +1,50 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Api Alarm Manager\n"
-"POT-Creation-Date: 2017-05-16 11:26+0200\n"
-"PO-Revision-Date: 2017-05-16 11:28+0200\n"
+"Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2017-05-16 11:26+0200\n"
+"PO-Revision-Date: 2017-05-16 11:28+0200\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: api-alarm-manager.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: source/php/AcfFields/php/alarm.php:6
-#: source/php/AcfFields/php/disturbance-alarm.php:6
-#: source/php/PostTypes/Alarms.php:19
+#: source/php/PostTypes/Alarms.php:23
 msgid "Alarm"
 msgstr "Alarm"
 
-#: source/php/AcfFields/php/alarm.php:15
-msgid "Alarm ID"
-msgstr "Alarm ID"
-
-#: source/php/AcfFields/php/alarm.php:34
-msgid "Case ID"
-msgstr "Ärende ID"
-
-#: source/php/AcfFields/php/alarm.php:53
-msgid "Typ"
-msgstr "Typ"
-
-#: source/php/AcfFields/php/alarm.php:77
-msgid "Extend"
-msgstr "Nivå"
-
-#: source/php/AcfFields/php/alarm.php:100 source/php/PostTypes/Alarms.php:44
+#: source/php/PostTypes/Alarms.php:48
 #: source/php/PostTypes/Stations.php:11
 msgid "Station"
 msgstr "Station"
 
-#: source/php/AcfFields/php/alarm.php:119
-msgid "Adress"
-msgstr "Adress"
-
-#: source/php/AcfFields/php/alarm.php:138
-#: source/php/AcfFields/php/station.php:72 source/php/PostTypes/Stations.php:38
+#: source/php/PostTypes/Stations.php:38
 msgid "City"
 msgstr "Stad"
 
-#: source/php/AcfFields/php/alarm.php:157
-msgid "Address description"
-msgstr "Adressbeskrivning"
-
-#: source/php/AcfFields/php/alarm.php:176
-msgid "X-Coordinate"
-msgstr "X-Koordinat"
-
-#: source/php/AcfFields/php/alarm.php:195
-msgid "Y-Coordinate"
-msgstr "Y-Koordinat"
-
-#: source/php/AcfFields/php/alarm.php:214
-msgid "Zone"
-msgstr "Zon"
-
-#: source/php/AcfFields/php/alarm.php:233
-msgid "To zone"
-msgstr "Till zon"
-
-#: source/php/AcfFields/php/disturbance-alarm.php:19
-msgid "Alarm connection"
-msgstr "Knyt till alarm"
-
-#: source/php/AcfFields/php/disturbance-alarm.php:22
-msgid ""
-"If this distrurbance could be connected to specific alarm(s) - add them here."
-msgstr ""
-"Om denna störning ska knytas till ett eller flera specifika alarm så kan du "
-"göra det här."
-
-#: source/php/AcfFields/php/options-filters.php:9
-msgid ""
-"Alarm filters are used to avoid importing of alarms containing unwanted "
-"keywords. For example: Suicide Note: Adding a new filter keyword will remove "
-"any existing alarms containing the keyword."
-msgstr ""
-"Alarmfilter används för att undvika import av alarm som innehåller specifika "
-"nyckelord. Till exempel: Självmord."
-
-#: source/php/AcfFields/php/options-filters.php:13
-msgid "About filters"
-msgstr "Om filter"
-
-#: source/php/AcfFields/php/options-ftp.php:12
-#: source/php/AcfFields/php/options-ftp.php:29
-msgid "FTP Connection"
-msgstr "FTP-anslutning"
-
-#: source/php/AcfFields/php/options-ftp.php:25
-msgid ""
-"The FTP-connection should be set to where the alarm xml-files are hosted."
-msgstr "FTP-anslutningen kunde inte bläddra till katalogen för xml-filer."
-
-#: source/php/AcfFields/php/options-ftp.php:48
-msgid "Enable contal FTP"
-msgstr "Aktivera contal FTP"
-
-#: source/php/AcfFields/php/options-ftp.php:67
-msgid "Server"
-msgstr "Server"
-
-#: source/php/AcfFields/php/options-ftp.php:94
-msgid "Username"
-msgstr "Användarnamn"
-
-#: source/php/AcfFields/php/options-ftp.php:121
-msgid "Password"
-msgstr "Lösenord"
-
-#: source/php/AcfFields/php/options-ftp.php:144
-msgid "Passive mode"
-msgstr "Passivt läge"
-
-#: source/php/AcfFields/php/options-ftp.php:145
-msgid "Active mode"
-msgstr "Aktivt läge"
-
-#: source/php/AcfFields/php/options-ftp.php:153
-msgid "FTP mode"
-msgstr "FTP-läge"
-
-#: source/php/AcfFields/php/options-ftp.php:180
-msgid "FTP folder"
-msgstr "FTP mapp"
-
-#: source/php/AcfFields/php/options-ftp.php:204
-#: source/php/AcfFields/php/options-ftp.php:221
-msgid "FTP Auto import"
-msgstr "FTP Automatimport"
-
-#: source/php/AcfFields/php/options-ftp.php:217
-msgid ""
-"The FTP auto import will run in intervals according to the below setting. "
-"The auto import will automatically check for new alarms in the contal ftp "
-"and import these."
-msgstr ""
-"FTP-automatimport kommer automatiskt med jämna intervaller att importera "
-"alarm."
-
-#: source/php/AcfFields/php/options-ftp.php:240
-msgid "Activate auto import"
-msgstr "Aktivera autoimport"
-
-#: source/php/AcfFields/php/options-ftp.php:259
-msgid "minutes"
-msgstr "minuter"
-
-#: source/php/AcfFields/php/options-ftp.php:261
-msgid "Import interval"
-msgstr "Intervall för import"
-
-#: source/php/AcfFields/php/options-rss.php:6
-msgid "RSS"
-msgstr "RSS"
-
-#: source/php/AcfFields/php/options-rss.php:12
-msgid "RSS Permalink"
-msgstr "RSS-länk"
-
-#: source/php/AcfFields/php/options-rss.php:15
-msgid "The hash for specific alarms will be appended automatically"
-msgstr ""
-"Hashen för specifika larm kommer att läggas till i slutet av länken "
-"automatiskt."
-
-#: source/php/AcfFields/php/station.php:15 source/php/PostTypes/Stations.php:34
+#: source/php/PostTypes/Stations.php:34
 msgid "Station ID"
 msgstr "Station ID"
 
-#: source/php/AcfFields/php/station.php:34
-msgid "Street address"
-msgstr "Gatuadress"
-
-#: source/php/AcfFields/php/station.php:53
-msgid "Postal code"
-msgstr "Postnummer"
-
-#: source/php/Admin/Options.php:11
-msgctxt "ACF"
-msgid "Alarm manager options"
-msgstr "Inställningar för alarmhanterare"
-
-#: source/php/Admin/Options.php:12
-msgctxt "Alarm manager options"
-msgid "Options"
-msgstr "Inställningar"
-
-#: source/php/Admin/Templates.php:31
+#: source/php/Admin/Templates.php:37
 msgid "Create from template"
 msgstr "Skapa från mall"
 
-#: source/php/Admin/Templates.php:32
+#: source/php/Admin/Templates.php:38
 msgid "Select template…"
 msgstr "Välj mall…"
 
-#: source/php/App.php:51 source/php/PostTypes/Alarms.php:134
+#: source/php/App.php:54
 msgid "Importing alarms"
 msgstr "Importerar alarm"
 
@@ -261,52 +93,36 @@ msgstr "Inga %s i papperskorgen"
 msgid "Parent %s:"
 msgstr "Förälder %s"
 
-#: source/php/Entity/PostManager.php:226
-msgid "Could not create folder"
-msgstr "Kunde inte skapa mapp"
-
-#: source/php/Entity/PostManager.php:226
-msgid "please go ahead and create it manually and rerun the import."
-msgstr "fortsätt genom att skapa den manuellt"
-
-#: source/php/Importer.php:41
-msgid "Once every "
-msgstr "En gång var"
-
-#: source/php/Importer.php:199
+#: source/php/Importer.php:269
 msgid "Alarm manager: Could not "
 msgstr "Alarm manager: Kunde inte"
 
-#: source/php/Importer.php:199
-msgid ""
-"Alarm manager could not execute the last action with success. Action may be "
-"required to resolve this issue."
-msgstr ""
-"Alarm manager kunde inte köras korrekt. Åtgärder kan behövas för att lösa "
-"problemet."
+#: source/php/Importer.php:270
+msgid "Alarm manager could not execute the last action with success. Action may be required to resolve this issue."
+msgstr "Alarm manager kunde inte köras korrekt. Åtgärder kan behövas för att lösa problemet."
 
-#: source/php/PostTypes/Alarms.php:18 source/php/PostTypes/Alarms.php:22
+#: source/php/PostTypes/Alarms.php:22
+#: source/php/PostTypes/Alarms.php:26
 msgid "Alarms"
 msgstr "Alarm"
 
-#: source/php/PostTypes/Alarms.php:40 source/php/PostTypes/Stations.php:32
+#: source/php/PostTypes/Alarms.php:44
+#: source/php/PostTypes/Stations.php:32
 msgid "Title"
 msgstr "Titel"
 
-#: source/php/PostTypes/Alarms.php:42
+#: source/php/AcfFields/php/fire-danger-levels.php:36
+#: source/php/PostTypes/Alarms.php:46
 msgid "Place"
 msgstr "Plats"
 
-#: source/php/PostTypes/Alarms.php:48 source/php/PostTypes/Stations.php:35
+#: source/php/PostTypes/Alarms.php:52
+#: source/php/PostTypes/Stations.php:35
 #: source/php/PostTypes/Stations.php:39
 msgid "No stations"
 msgstr "Inga stationer"
 
-#: source/php/PostTypes/Alarms.php:55 source/php/PostTypes/Stations.php:44
-msgid "Date"
-msgstr "Datum"
-
-#: source/php/PostTypes/Alarms.php:132
+#: source/php/PostTypes/Alarms.php:134
 msgid "Start alarm import"
 msgstr "Starta import"
 
@@ -328,11 +144,13 @@ msgstr "Lillstörning"
 msgid "Small Disturbance"
 msgstr "Lillstörningar"
 
-#: source/php/PostTypes/Stations.php:10 source/php/PostTypes/Stations.php:14
+#: source/php/PostTypes/Stations.php:10
+#: source/php/PostTypes/Stations.php:14
 msgid "Stations"
 msgstr "Stationer"
 
-#: source/php/PostTypes/Stations.php:42 source/php/Taxonomies/Place.php:28
+#: source/php/PostTypes/Stations.php:42
+#: source/php/Taxonomies/Place.php:28
 msgid "Places"
 msgstr "Platser"
 
@@ -358,7 +176,8 @@ msgstr "Populära platser"
 msgid "All places"
 msgstr "Alla platser"
 
-#: source/php/Taxonomies/Place.php:20 source/php/Taxonomies/Place.php:21
+#: source/php/Taxonomies/Place.php:20
+#: source/php/Taxonomies/Place.php:21
 msgid "Parent place"
 msgstr "Förälderplats"
 
@@ -386,31 +205,36 @@ msgstr "Lägg till eller ta bort platser"
 msgid "Choose from most used places"
 msgstr "Välj från mest använda platser"
 
-#: vendor/helsingborg-stad/acf-export-manager/src/AcfExportManager.php:357
-msgid "Export with AcfExportManager"
-msgstr "Exportera med AcfExportManager"
-
-#: vendor/helsingborg-stad/acf-export-manager/src/AcfExportManager.php:401
-#, php-format
-msgid "Exported %d fieldgroup(s)."
-msgstr "Exporterade %d fältgrupper."
-
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
 msgid "Api Alarm Manager"
 msgstr "Alarmhanterare (Alarm API)"
 
-#. Plugin URI of the plugin/theme
+#. Plugin URI of the plugin
 msgid "https://github.com/helsingborg-stad/api-alarm-manager"
 msgstr ""
 
-#. Description of the plugin/theme
+#. Description of the plugin
 msgid "Creates WordPress Rest API endpoint for contal alarms"
 msgstr ""
 
-#. Author of the plugin/theme
+#. Author of the plugin
 msgid "Kristoffer Svanmark"
 msgstr ""
 
-#. Author URI of the plugin/theme
+#. Author URI of the plugin
 msgid "https://github.com/helsingborg-stad"
 msgstr ""
+
+#: source/php/AcfFields/php/fire-danger-levels.php:14
+#: source/php/Admin/FireDangerLevels.php:20
+#: source/php/Admin/FireDangerLevels.php:21
+msgid "Fire Danger Levels"
+msgstr "Brandrisknivå"
+
+#: source/php/AcfFields/php/fire-danger-levels.php:31
+msgid "Add Row"
+msgstr "Lägg till rad"
+
+#: source/php/AcfFields/php/fire-danger-levels.php:60
+msgid "Level"
+msgstr "Nivå"
