@@ -2,7 +2,7 @@
     "name": "helsingborg-stad/api-alarm-manager",
     "type": "wordpress-plugin",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "Kristoffer Svanmark",
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "helsingborg-stad/acf-export-manager": "dev-master",
+        "helsingborg-stad/acf-export-manager": "^1.0.12",
         "helsingborg-stad/coordinate-transformation-library": "dev-master",
         "phpseclib/phpseclib": "^3.0.0"
     }
