@@ -13,11 +13,7 @@ class ComposerStaticInit702692486baf17986f845ebd9e2f934a
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
-            'phpseclib3\\' => 11,
-        ),
-        'P' => 
-        array (
-            'ParagonIE\\ConstantTime\\' => 23,
+            'phpseclib\\' => 10,
         ),
         'D' => 
         array (
@@ -30,13 +26,9 @@ class ComposerStaticInit702692486baf17986f845ebd9e2f934a
     );
 
     public static $prefixDirsPsr4 = array (
-        'phpseclib3\\' => 
+        'phpseclib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
-        ),
-        'ParagonIE\\ConstantTime\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
         'Drola\\' => 
         array (
