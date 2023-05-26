@@ -6,7 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpseclib\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'phpseclib3\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'ParagonIE\\ConstantTime\\' => array($vendorDir . '/paragonie/constant_time_encoding/src'),
     'Drola\\' => array($vendorDir . '/helsingborg-stad/coordinate-transformation-library/src'),
     'AcfExportManager\\' => array($vendorDir . '/helsingborg-stad/acf-export-manager/src'),
 );
