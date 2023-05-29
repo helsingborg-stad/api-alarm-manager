@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5703f41486cb430b418c1a1b231dd977",
+    "content-hash": "a59246fc30fa22058ae0a551ecd776ec",
     "packages": [
         {
             "name": "helsingborg-stad/acf-export-manager",
-            "version": "dev-master",
+            "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/helsingborg-stad/acf-export-manager.git",
-                "reference": "27e904a24eb013cac5c8f3d3c30e88b5b9b7859b"
+                "reference": "9e1b282460cebf68ec4d83cd3c11d8fe7e3612fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/helsingborg-stad/acf-export-manager/zipball/27e904a24eb013cac5c8f3d3c30e88b5b9b7859b",
-                "reference": "27e904a24eb013cac5c8f3d3c30e88b5b9b7859b",
+                "url": "https://api.github.com/repos/helsingborg-stad/acf-export-manager/zipball/9e1b282460cebf68ec4d83cd3c11d8fe7e3612fd",
+                "reference": "9e1b282460cebf68ec4d83cd3c11d8fe7e3612fd",
                 "shasum": ""
             },
             "type": "library",
@@ -26,6 +26,7 @@
                     "AcfExportManager\\": "src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -37,14 +38,14 @@
             ],
             "description": "ACF Export Manager is a extension that let's you automatically export specified your ACF fields on save.",
             "support": {
-                "source": "https://github.com/helsingborg-stad/acf-export-manager/tree/1.0.11",
-                "issues": "https://github.com/helsingborg-stad/acf-export-manager/issues"
+                "issues": "https://github.com/helsingborg-stad/acf-export-manager/issues",
+                "source": "https://github.com/helsingborg-stad/acf-export-manager/tree/1.0.12"
             },
-            "time": "2018-05-29T07:52:24+00:00"
+            "time": "2023-05-25T07:56:58+00:00"
         },
         {
             "name": "helsingborg-stad/coordinate-transformation-library",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/helsingborg-stad/coordinate-transformation-library.git",
@@ -83,6 +84,9 @@
                 }
             ],
             "description": "Transform coordinates between swedish RT90, SWEREF99 and WGS8",
+            "support": {
+                "source": "https://github.com/helsingborg-stad/coordinate-transformation-library/tree/1.0.1"
+            },
             "time": "2017-05-16T11:48:10+00:00"
         },
         {
@@ -204,16 +208,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.x-dev",
+            "version": "3.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "2097656b4a968a5ccde692a4d56755aa829f8962"
+                "reference": "cc181005cf548bfd8a4896383bb825d859259f95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/2097656b4a968a5ccde692a4d56755aa829f8962",
-                "reference": "2097656b4a968a5ccde692a4d56755aa829f8962",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/cc181005cf548bfd8a4896383bb825d859259f95",
+                "reference": "cc181005cf548bfd8a4896383bb825d859259f95",
                 "shasum": ""
             },
             "require": {
@@ -294,7 +298,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.19"
             },
             "funding": [
                 {
@@ -310,20 +314,16 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-18T13:17:52+00:00"
+            "time": "2023-03-05T17:13:09+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": {
-        "helsingborg-stad/acf-export-manager": 20,
-        "helsingborg-stad/coordinate-transformation-library": 20,
-        "phpseclib/phpseclib": 20
-    },
+    "minimum-stability": "stable",
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.1.0"
 }

@@ -4,8 +4,8 @@ namespace ApiAlarmManager;
 
 class SftpFileHandler implements RemoteFileHandler
 {
-    private string $username;
-    private string $password;
+    private $username;
+    private $password;
     private $sftp;
 
     public function __construct(string $server, string $username, string $password)
@@ -29,7 +29,7 @@ class SftpFileHandler implements RemoteFileHandler
     {
         $content = $this->sftp->get($remoteFile);
 
-        if (!is_string($content) || empty($content)) {
+        if (!is_string($content) || strlen($content) === 0) {
             trigger_error("Could not download file: $remoteFile", E_USER_WARNING);
             return false;
         }
@@ -65,7 +65,9 @@ class SftpFileHandler implements RemoteFileHandler
         }
 
         // Remove '.' and '..' from the list
-        return $fileList = array_filter($fileList, fn ($file) => $file !== '.' && $file !== '..');
+        return $fileList = array_filter($fileList, function($file) {
+            return $file !== '.' && $file !== '..';
+        });        
     }
 
     public function fileExists(string $path): bool
