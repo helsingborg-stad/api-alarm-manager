@@ -4,8 +4,8 @@ namespace ApiAlarmManager\Admin;
 
 class FireDangerLevels
 {
-    private string $acfFieldId = 'field_646dfb45bc655';
-    public static string $dateTimeChangedOptionName = 'fire_danger_levels_date_time_changed';
+    private $acfFieldId = 'field_646dfb45bc655';
+    public static $dateTimeChangedOptionName = 'fire_danger_levels_date_time_changed';
 
     public function __construct()
     {
