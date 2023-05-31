@@ -27,6 +27,7 @@ class App
         new Api\Taxonomies();
         new Api\Linking();
         new Api\Disturbances();
+        new Api\FireDangerLevels();
 
         new Api\AlarmFields();
         new Api\AlarmFilters();
@@ -39,6 +40,7 @@ class App
             new Admin\General();
             new Admin\Options();
             new Admin\Templates();
+            new Admin\FireDangerLevels();
         }
 
         // Importer
