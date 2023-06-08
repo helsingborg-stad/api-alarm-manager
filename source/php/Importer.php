@@ -429,7 +429,7 @@ class Importer
         //Parse
         if (is_array($address) && !empty($address)) {
             foreach ($address as $key => $word) {
-                if (is_numeric($word[0])) {
+                if (!empty($word) && is_numeric($word[0])) {
                     unset($address[$key]);
                 }
             }
