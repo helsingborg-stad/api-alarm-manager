@@ -65,10 +65,15 @@ class SftpFileHandler implements RemoteFileHandler
         }
 
         // Remove '.' and '..' from the list
-        return $fileList = array_filter($fileList, function($file) {
-            return $file !== '.' && $file !== '..';
-        });        
+        return array_filter(
+            $fileList, 
+            [$this, 'isFile']
+        );        
     }
+
+    private function isFile($file) {
+        return $file !== '.' && $file !== '..' && $this->sftp->is_file($file);
+    } 
 
     public function fileExists(string $path): bool
     {
