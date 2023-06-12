@@ -217,7 +217,7 @@ class Importer
             $copied = $sftp->copy($remoteFile, $localFile);
 
             if( $copied === true ) {
-                $remoteArchiveDir = trailingslashit($folder) . 'archive';
+                $remoteArchiveDir = trailingslashit($folder) . '../archive';
                 
                 if( $sftp->fileExists($remoteArchiveDir) === false ) {
                     $sftp->mkdir($remoteArchiveDir);
