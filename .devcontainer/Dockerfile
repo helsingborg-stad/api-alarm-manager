@@ -1,17 +1,12 @@
 FROM wordpress:6.2
 
-FROM mcr.microsoft.com/vscode/devcontainers/php:7.4
+FROM mcr.microsoft.com/vscode/devcontainers/php:8.2
 
 # Copy WordPress files from wordpress container.
 COPY --from=0 /usr/src/wordpress/ /var/www/html/
 
 # Make vscode owner of all WordPress files.
 RUN chown -R vscode:vscode /var/www/html
-
-# Update expired key that would otherwise cause apt-get update to fail.
-RUN export YARNKEY=yarn-keyring.gpg && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmour -o /usr/share/keyrings/$YARNKEY && \
-    echo "deb [signed-by=/usr/share/keyrings/$YARNKEY] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 # Install packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

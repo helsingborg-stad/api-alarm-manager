@@ -216,10 +216,10 @@ class Importer
             $localFile = trailingslashit($destination) . $file;
             $copied = $sftp->copy($remoteFile, $localFile);
 
-            if( $copied === true ) {
-                $remoteArchiveDir = trailingslashit($folder) . '../archive';
-                
-                if( $sftp->fileExists($remoteArchiveDir) === false ) {
+            if ($copied === true) {
+                $remoteArchiveDir = $this->getArchiveFolder();
+
+                if ($sftp->fileExists($remoteArchiveDir) === false) {
                     $sftp->mkdir($remoteArchiveDir);
                 }
 
@@ -228,6 +228,24 @@ class Importer
         }
 
         return true;
+    }
+
+    /**
+     * Get archive folder
+     *
+     * @return string
+     */
+    private function getArchiveFolder()
+    {
+        $defaultArchiveFolder = trailingslashit($this->getFtpDetails('folder')) . '../archive/';
+        $archiveFolder = sanitize_text_field($this->getFtpDetails('archive_folder'));
+        $yearMonthFolder = trailingslashit(date('Y-m'));
+
+        if (empty($archiveFolder)) {
+            return $defaultArchiveFolder . $yearMonthFolder;
+        }
+
+        return trailingslashit($archiveFolder) . $yearMonthFolder;
     }
 
     /**
@@ -297,14 +315,9 @@ class Importer
                 if ($removeFile) {
                     unlink($file);
                 }
-                continue;
+            } elseif (!$this->isMatchingKeywordFilter($xml)) {
+                $this->createOrUpdate($xml);
             }
-
-            if ($this->isMatchingKeywordFilter($xml)) {
-                continue;
-            }
-
-            $this->createOrUpdate($xml);
 
             // Remove xml-file when done
             if ($removeFile) {
@@ -494,7 +507,7 @@ class Importer
             return array();
         }
 
-        if (in_array($what, array('server', 'username', 'password', 'mode', 'folder'))) {
+        if (in_array($what, array('server', 'username', 'password', 'mode', 'folder', 'archive_folder'))) {
             return get_field('ftp_' . $what, 'option');
         }
 
@@ -503,7 +516,8 @@ class Importer
             'username' => get_field('ftp_username', 'option'),
             'password' => get_field('ftp_password', 'option'),
             'mode' => get_field('ftp_mode', 'option'),
-            'folder' => get_field('ftp_folder', 'option')
+            'folder' => get_field('ftp_folder', 'option'),
+            'ftp_archive_folder' => get_field('ftp_archive_folder', 'option'),
         );
     }
 }

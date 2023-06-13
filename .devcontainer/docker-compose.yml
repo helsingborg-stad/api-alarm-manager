@@ -37,5 +37,13 @@ services:
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
+  sftp:
+    image: atmoz/sftp
+    volumes:
+        - ../.sftp/files:/home/dev/files
+    ports:
+        - "22:22"
+    command: dev:dev:1001:::files
+
 volumes:
   db:

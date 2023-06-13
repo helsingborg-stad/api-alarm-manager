@@ -23,10 +23,10 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"github.copilot",
 				"ritwickdey.liveserver"
 			],
 			"settings": {
+				"intelephense.environment.phpVersion": "8.2",
 				"intelephense.environment.includePaths": [
 					"/var/www/html"
 				]
@@ -37,12 +37,15 @@
 		"ghcr.io/devcontainers/features/node:1": {
 			"nodeGypDependencies": true,
 			"version": "16"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/apt-packages": {
+			"packages": "curl,nano,subversion,bash-completion"
 		}
 	},
 	"postCreateCommand": {
 		"install-acf-pro-plugin": "sudo rm -rf /tmp/acf.zip \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" && sudo curl \"https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=${ACF_PRO_KEY}\" --output /tmp/acf.zip && sudo unzip /tmp/acf.zip -d \"$(pwd)/.devcontainer\" && sudo ln -s \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" /var/www/html/wp-content/plugins/advanced-custom-fields-pro",
-		"symlink-plugin": "sudo ln -s \"$(pwd)\" /var/www/html/wp-content/plugins/api-alarm-manager",
-		"symlink-wp-config": "sudo ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
+		"symlink-plugin": "ln -s \"$(pwd)\" /var/www/html/wp-content/plugins/api-alarm-manager",
+		"symlink-wp-config": "ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
 		"start-apache": "service apache2 start"
 	},
 	"waitFor": "postCreateCommand",
