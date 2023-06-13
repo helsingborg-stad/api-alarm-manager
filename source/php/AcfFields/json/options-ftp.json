@@ -196,6 +196,33 @@
             }
         },
         {
+            "default_value": "\/",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_58ca67ba79c13",
+            "label": "FTP/SFTP archive folder",
+            "name": "ftp_archive_folder",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_58ca5d6bafadc",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
             "placement": "left",
             "endpoint": 0,
             "key": "field_58ca66e350b0c",

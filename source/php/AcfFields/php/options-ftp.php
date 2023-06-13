@@ -180,7 +180,7 @@ if (function_exists('acf_add_local_field_group')) {
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca67ba79c52',
-            'label' => __('FTP folder', 'event-manager'),
+            'label' => __('FTP/SFTP folder', 'event-manager'),
             'name' => 'ftp_folder',
             'type' => 'text',
             'instructions' => '',
@@ -201,6 +201,33 @@ if (function_exists('acf_add_local_field_group')) {
             ),
         ),
         8 => array(
+            'default_value' => '',
+            'maxlength' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'key' => 'field_58ca67ba79c13',
+            'label' => __('FTP/SFTP archive folder', 'event-manager'),
+            'name' => 'ftp_archive_folder',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_58ca5d6bafadc',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+        ),
+        9 => array(
             'placement' => 'left',
             'endpoint' => 0,
             'key' => 'field_58ca66e350b0c',
@@ -216,7 +243,7 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
         ),
-        9 => array(
+        10 => array(
             'message' => __('The FTP auto import will run in intervals according to the below setting. The auto import will automatically check for new alarms in the contal ftp and import these.', 'event-manager'),
             'esc_html' => 0,
             'new_lines' => 'wpautop',
@@ -233,7 +260,7 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
         ),
-        10 => array(
+        11 => array(
             'default_value' => 0,
             'message' => '',
             'ui' => 0,
@@ -252,7 +279,7 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
         ),
-        11 => array(
+        12 => array(
             'default_value' => 10,
             'min' => 1,
             'max' => '',

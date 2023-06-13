@@ -217,9 +217,7 @@ class Importer
             $copied = $sftp->copy($remoteFile, $localFile);
 
             if ($copied === true) {
-                $folder = trailingslashit($folder);
-                $yearMonthDirName = trailingslashit(date('Y-m'));
-                $remoteArchiveDir = $folder . '../archive/' . $yearMonthDirName;
+                $remoteArchiveDir = $this->getArchiveFolder();
 
                 if ($sftp->fileExists($remoteArchiveDir) === false) {
                     $sftp->mkdir($remoteArchiveDir);
@@ -230,6 +228,24 @@ class Importer
         }
 
         return true;
+    }
+
+    /**
+     * Get archive folder
+     *
+     * @return string
+     */
+    private function getArchiveFolder()
+    {
+        $defaultArchiveFolder = trailingslashit($this->getFtpDetails('folder')) . '../archive/';
+        $archiveFolder = sanitize_text_field($this->getFtpDetails('archive_folder'));
+        $yearMonthFolder = trailingslashit(date('Y-m'));
+
+        if (empty($archiveFolder)) {
+            return $defaultArchiveFolder . $yearMonthFolder;
+        }
+
+        return trailingslashit($archiveFolder) . $yearMonthFolder;
     }
 
     /**
@@ -496,7 +512,7 @@ class Importer
             return array();
         }
 
-        if (in_array($what, array('server', 'username', 'password', 'mode', 'folder'))) {
+        if (in_array($what, array('server', 'username', 'password', 'mode', 'folder', 'archive_folder'))) {
             return get_field('ftp_' . $what, 'option');
         }
 
@@ -505,7 +521,8 @@ class Importer
             'username' => get_field('ftp_username', 'option'),
             'password' => get_field('ftp_password', 'option'),
             'mode' => get_field('ftp_mode', 'option'),
-            'folder' => get_field('ftp_folder', 'option')
+            'folder' => get_field('ftp_folder', 'option'),
+            'ftp_archive_folder' => get_field('ftp_archive_folder', 'option'),
         );
     }
 }
