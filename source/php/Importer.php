@@ -315,14 +315,9 @@ class Importer
                 if ($removeFile) {
                     unlink($file);
                 }
-                continue;
+            } elseif (!$this->isMatchingKeywordFilter($xml)) {
+                $this->createOrUpdate($xml);
             }
-
-            if ($this->isMatchingKeywordFilter($xml)) {
-                continue;
-            }
-
-            $this->createOrUpdate($xml);
 
             // Remove xml-file when done
             if ($removeFile) {
