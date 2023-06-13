@@ -216,10 +216,12 @@ class Importer
             $localFile = trailingslashit($destination) . $file;
             $copied = $sftp->copy($remoteFile, $localFile);
 
-            if( $copied === true ) {
-                $remoteArchiveDir = trailingslashit($folder) . '../archive';
-                
-                if( $sftp->fileExists($remoteArchiveDir) === false ) {
+            if ($copied === true) {
+                $folder = trailingslashit($folder);
+                $yearMonthDirName = trailingslashit(date('Y-m'));
+                $remoteArchiveDir = $folder . '../archive/' . $yearMonthDirName;
+
+                if ($sftp->fileExists($remoteArchiveDir) === false) {
                     $sftp->mkdir($remoteArchiveDir);
                 }
 
