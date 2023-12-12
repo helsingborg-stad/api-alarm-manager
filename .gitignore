@@ -2,6 +2,9 @@
 .*
 ~*
 
+# GitHub
+!.github
+
 # .vscode
 !.vscode
 
