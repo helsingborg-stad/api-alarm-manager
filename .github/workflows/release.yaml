@@ -2,7 +2,7 @@ name: Set tag and release
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
