@@ -1,8 +1,14 @@
 name: Set tag and release
 
 on:
+  workflow_run:
+    workflows: ["Test:PHP"]
+    branches: [main]
+    types: 
+      - completed
   push:
-    branches: [ "main" ]
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
