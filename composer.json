@@ -21,7 +21,7 @@
         "helsingborg-stad/coordinate-transformation-library": "^1.0.1",
         "phpseclib/phpseclib": "^3.0.0"
     },
-    "version": "2.0.1",
+    "version": "2.0.2",
     "require-dev": {
         "10up/wp_mock": "^1.0"
     },
