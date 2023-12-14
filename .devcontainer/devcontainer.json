@@ -23,13 +23,58 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ritwickdey.liveserver"
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker",
+				"ritwickdey.liveserver",
+				"valeryanm.vscode-phpsab"
 			],
 			"settings": {
-				"intelephense.environment.phpVersion": "8.2",
 				"intelephense.environment.includePaths": [
-					"/var/www/html"
-				]
+					"/var/www/html/wp-includes",
+					"/var/www/html/wp-admin",
+					"/var/www/html/wp-admin/wp-content/plugins",
+					"/tmp/wordpress-tests-lib"
+				],
+				"intelephense.environment.phpVersion": "8.2",
+				"php.validate.run": "onSave",
+				"phpsab.fixerEnable": true,
+				"phpsab.snifferShowSources": true,
+				"phpsab.executablePathCS": "./vendor/bin/phpcs",
+				"editor.formatOnSave": true,
+				"phpsab.allowedAutoRulesets": [
+					"phpcs.xml"
+				],
+				"editor.defaultFormatter": "valeryanm.vscode-phpsab",
+				"[php]": {
+					"editor.defaultFormatter": "valeryanm.vscode-phpsab"
+				}
+			}
+		},
+		"codespaces": {
+			"extensions": [
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker",
+				"ritwickdey.liveserver",
+				"valeryanm.vscode-phpsab"
+			],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html/wp-includes",
+					"/var/www/html/wp-admin",
+					"/tmp/wordpress-tests-lib"
+				],
+				"intelephense.environment.phpVersion": "8.2",
+				"php.validate.run": "onSave",
+				"phpsab.fixerEnable": true,
+				"phpsab.snifferShowSources": true,
+				"phpsab.executablePathCS": "./vendor/bin/phpcs",
+				"phpsab.allowedAutoRulesets": [
+					"phpcs.xml"
+				],
+				"editor.defaultFormatter": "valeryanm.vscode-phpsab",
+				"[php]": {
+					"editor.defaultFormatter": "valeryanm.vscode-phpsab"
+				}
 			}
 		}
 	},
@@ -37,16 +82,14 @@
 		"ghcr.io/devcontainers/features/node:1": {
 			"nodeGypDependencies": true,
 			"version": "16"
-		},
-		"ghcr.io/rocker-org/devcontainer-features/apt-packages": {
-			"packages": "curl,nano,subversion,bash-completion"
 		}
 	},
 	"postCreateCommand": {
-		"install-acf-pro-plugin": "sudo rm -rf /tmp/acf.zip \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" && sudo curl \"https://connect.advancedcustomfields.com/index.php?p=pro&a=download&k=${ACF_PRO_KEY}\" --output /tmp/acf.zip && sudo unzip /tmp/acf.zip -d \"$(pwd)/.devcontainer\" && sudo ln -s \"$(pwd)/.devcontainer/advanced-custom-fields-pro\" /var/www/html/wp-content/plugins/advanced-custom-fields-pro",
-		"symlink-plugin": "ln -s \"$(pwd)\" /var/www/html/wp-content/plugins/api-alarm-manager",
+		"symlink-plugin": "ln -s \"$(pwd)\" \"/var/www/html/wp-content/plugins/$(basename \"$PWD\")\"",
+		"symlink-wp-config-local": "ln -s \"$(pwd)/.devcontainer/wp-config-local.php\" /var/www/html/wp-config-local.php",
 		"symlink-wp-config": "ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
-		"start-apache": "service apache2 start"
+		"start-apache": "service apache2 start",
+		"install-acf-plugin": "bash ./.vscode/tasks/install-acf-plugin.sh"
 	},
 	"waitFor": "postCreateCommand",
 	"remoteUser": "vscode"

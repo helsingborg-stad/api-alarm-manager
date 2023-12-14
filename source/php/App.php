@@ -49,7 +49,7 @@ class App
 
     public function enqueueScripts()
     {
-        wp_enqueue_script('api-alarm-manager', APIALARMMANAGER_URL . '/dist/js/api-alarm-manager.min.js', array('jquery'), '1.0.0', true);
+        wp_enqueue_script('api-alarm-manager', APIALARMMANAGER_URL . '/assets/js/api-alarm-manager.min.js', array('jquery'), '1.0.0', true);
         wp_localize_script('api-alarm-manager', 'apiAlarmManagerLang', array(
             'importing' => __('Importing alarms', 'api-alarm-manager')
         ));
