@@ -1,29 +1,46 @@
 name: Test:PHP
 
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
+    branches: [ "main" ]
+
+env:
+  XDEBUG_MODE: off
 
 jobs:
-  
-  test:
+  build:
 
     runs-on: ubuntu-latest
-          
-    steps: 
-      
-      - name: Checkout
-        uses: actions/checkout@v3
 
-      - name: Setup PHP with composer v2
-        uses: shivammathur/setup-php@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          php-version: '7.4'
-          tools: composer:v2
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.1', '8.2']
 
-      - name: Install dependencies
-        run: composer i
+    steps:
+    - uses: actions/checkout@v2
 
-      - name: Run tests
-        run: composer run test
+    - name: Setup PHP with composer v2
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        tools: composer:v2
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+    - uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist
+
+    - name: Run unit tests
+      run: composer run test
