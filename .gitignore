@@ -8,6 +8,9 @@
 # .vscode
 !.vscode
 
+# Composer
+vendor/
+
 # .devcontainer
 !.devcontainer
 !.devcontainer/.env.example
