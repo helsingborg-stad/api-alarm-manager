@@ -7,8 +7,7 @@ class Importer
     public $importStarted = null;
     public $remoteNewestFile;
 
-    public function __construct()
-    {
+    public function addHooks() {
         add_action('cron_import_alarms', array($this, 'import'));
         add_filter('cron_schedules', array($this, 'cronSchedules'));
 
