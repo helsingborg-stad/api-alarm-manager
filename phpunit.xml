@@ -24,7 +24,7 @@
 
   <testsuites>
     <testsuite name="default">
-      <directory suffix=".php">./tests/phpunit/tests</directory>
+      <directory suffix=".php">tests/phpunit/tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>
