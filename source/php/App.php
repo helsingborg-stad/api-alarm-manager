@@ -44,7 +44,9 @@ class App
         }
 
         // Importer
-        new Importer();
+        $importer = new Importer();
+        $importer->addHooks();
+
     }
 
     public function enqueueScripts()
