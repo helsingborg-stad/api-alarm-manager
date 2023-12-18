@@ -40,7 +40,7 @@
 				"intelephense.environment.includePaths": [
 					"/var/www/html/wp-includes",
 					"/var/www/html/wp-admin",
-					"/var/www/html/wp-admin/wp-content/plugins",
+					"/var/www/html/wp-content/plugins/advanced-custom-fields-pro",
 					"/tmp/wordpress-tests-lib"
 				],
 				"intelephense.environment.phpVersion": "8.2",
