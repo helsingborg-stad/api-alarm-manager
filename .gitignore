@@ -19,6 +19,8 @@ vendor/
 .devcontainer/devcontainer.env
 .devcontainer/remoteFiles/archive/**
 !.devcontainer/remoteFiles/archive/.gitkeep
+.devcontainer/remoteFiles/files/**
+!.devcontainer/remoteFiles/files/.gitkeep
 
 # ignore node/grunt dependency directories
 node_modules/

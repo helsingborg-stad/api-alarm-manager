@@ -1,8 +1,33 @@
 # Api Alarm Manager
-Creates WordPress Rest API endpoint for contal alarms
+Creates WordPress Rest API endpoints for contal alarms and fire danger levels.
 
 ## Devcontainer
-* Copy `.devcontainer/env.example` to `.devcontainer/env` and fill out the variable values inside. Then restart/rebuild container.
+This project uses a devcontainer for development. This means that you can use VS Code to develop the project. To use the devcontainer, you need to install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension for VS Code. When you have installed the extension, you can open the project in a container by clicking the green button in the bottom left corner of VS Code and select "Remote-Containers: Reopen in Container".
+
+### Devcontainer ftp/sftp services
+To make it easier to test this plugins functionality on your local machine you can use the ftp/sftp services that are installed in the devcontainer. The services and their credentials are listed in the `./devcontainer/docker-compose.yml` file.
+
+Use the following details to set up a connection to either ftp or sftp from the WordPress admin panel:
+
+#### SFTP
+* server: sftp
+* username: demo
+* password: demo
+* FTP/SFTP folder: /files
+* FTP/SFTP archive folder: /archive
+
+#### FTP
+* server: ftp
+* username: demo
+* password: demo
+* FTP/SFTP folder: /files
+* FTP/SFTP archive folder: /archive
+
+### Devcontainer ftp/sftp test files
+A number of files for testing locally are available in the `./devcontainer/remoteFiles`. To prepare or reset test files run the shell script `./.vscode/tasks/reset-dummy-files` from the terminal: 
+```bash
+sh ./vscode/tasks/reset-dummy-files.sh
+```
 
 ## PHP Tests
 Municipio uses [PHPUnit](https://phpunit.de/) for unit testing. For mocking and stubbing we use [WP_Mock](https://wp-mock.gitbook.io/). This means that you can use WP_Mock, [Mockery](https://github.com/mockery/mockery)(since this is a wrapper for WP_Mock) and PHPUnit_MockObject for mocking and stubbing.
