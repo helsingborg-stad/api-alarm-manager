@@ -2,7 +2,7 @@
 
 namespace ApiAlarmManager;
 
-class SftpFileHandler implements RemoteFileHandler
+class SftpFileHandler implements RemoteFileHandlerInterface
 {
     private $username;
     private $password;
