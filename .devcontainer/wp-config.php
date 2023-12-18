@@ -22,8 +22,6 @@ if (file_exists(__DIR__ . '/wp-config-local.php')) {
     require __DIR__ . '/wp-config-local.php';
 }
 
-define('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE', true);
-
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 if (!defined('DB_NAME')) {
