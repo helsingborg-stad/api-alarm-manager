@@ -129,8 +129,8 @@ class Alarms extends \ApiAlarmManager\Entity\CustomPostType
     {
         if (current_user_can('administrator')) {
             $button  = '<div class="import-buttons actions">';
-
-            if (get_field('ftp_enabled', 'option') === true) {
+            
+            if (get_field('ftp_enabled', 'option')) {
                 $button .= '<button type="button" class="button-primary extraspace" data-action="start-alarm-import">' . __('Start alarm import', 'api-alarm-manager') . '</button>';
             }
 

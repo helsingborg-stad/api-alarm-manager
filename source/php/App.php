@@ -44,14 +44,46 @@ class App
         }
 
         // Importer
-        $importer = new Importer();
-        $importer->addHooks();
 
+        $remoteFileHandler = null;
+        $settings = array(
+            'enabled' => get_field('ftp_enabled', 'option'),
+            'server' => get_field('ftp_server', 'option'),
+            'username' => get_field('ftp_username', 'option'),
+            'password' => get_field('ftp_password', 'option'),
+            'mode' => get_field('ftp_mode', 'option'),
+            'folder' => get_field('ftp_folder', 'option'),
+            'ftp_archive_folder' => get_field('ftp_archive_folder', 'option')
+        );
+
+        if( $settings['enabled'] && $settings['server'] && $settings['username'] && $settings['password'] && $settings['folder'] && $settings['ftp_archive_folder'] ) {
+
+            if ($settings['mode'] === 'sftp') {
+                $remoteFileHandler = new SftpFileHandler(
+                    $settings['server'],
+                    $settings['username'],
+                    $settings['password']
+                );
+            } else {
+                $remoteFileHandler = new FtpFileHandler(
+                    $settings['server'],
+                    $settings['username'],
+                    $settings['password'],
+                    $settings['mode']
+                );
+            }
+        }
+
+        if( $remoteFileHandler && $settings['folder'] && $settings['ftp_archive_folder'] ) {
+            $importer = new Importer($remoteFileHandler, $settings['folder'], $settings['ftp_archive_folder']);
+            $importer->addHooks();
+        }
+        
     }
 
     public function enqueueScripts()
     {
-        wp_enqueue_script('api-alarm-manager', APIALARMMANAGER_URL . '/assets/js/api-alarm-manager.min.js', array('jquery'), '1.0.0', true);
+        wp_enqueue_script('api-alarm-manager', APIALARMMANAGER_URL . '/assets/js/api-alarm-manager.js', array('jquery'), '1.0.0', true);
         wp_localize_script('api-alarm-manager', 'apiAlarmManagerLang', array(
             'importing' => __('Importing alarms', 'api-alarm-manager')
         ));

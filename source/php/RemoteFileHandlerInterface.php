@@ -2,7 +2,7 @@
 
 namespace ApiAlarmManager;
 
-interface RemoteFileHandler
+interface RemoteFileHandlerInterface
 {
     /**
      * Connect to the remote server.

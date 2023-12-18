@@ -6,6 +6,16 @@ class Importer
 {
     public $importStarted = null;
     public $remoteNewestFile;
+    private RemoteFileHandlerInterface $remoteFileHandler;
+    private string $folder;
+    private string $archiveFolder;
+
+    public function __construct(RemoteFileHandlerInterface $remoteFileHandler, string $folder, string $archiveFolder)
+    {
+        $this->remoteFileHandler = $remoteFileHandler;
+        $this->folder = $folder;
+        $this->archiveFolder = $archiveFolder;
+    }
 
     public function addHooks() {
         add_action('cron_import_alarms', array($this, 'import'));
@@ -98,8 +108,6 @@ class Importer
      */
     public function import()
     {
-        return;
-
         ini_set('max_execution_time', 600);
         $this->importStarted = time();
 
@@ -129,13 +137,7 @@ class Importer
             add_option('api-alarm-manager-updated-content', true);
         }
 
-
-        if ($this->getFtpDetails('mode') === 'sftp') {
-            $this->downloadFromSftp($destination);
-        } else {
-            $this->downloadFromFtp($destination);
-        }
-        
+        $this->downloadFromRemote($destination);
         $this->importFromXml($destination, true);
 
         //Update last import var
@@ -146,84 +148,30 @@ class Importer
     }
 
     /**
-     * Downloads files from ftp to destinatin folder
-     * @param  string $destination Path to destination folder
-     * @return bool
-     */
-    public function downloadFromFtp(string $destination): bool
-    {
-        //Connect
-        $ftp = ftp_connect($this->getFtpDetails('server'));
-
-        // Try to login
-        if (!ftp_login($ftp, $this->getFtpDetails('username'), $this->getFtpDetails('password'))) {
-            throw new \Exception('Could not connect to alarm ftp.');
-        }
-
-        // Set passive mode (?)
-        if ($this->getFtpDetails('mode') === 'passive') {
-            ftp_pasv($ftp, true);
-        }
-
-        $files = ftp_nlist($ftp, '-rt ' . $this->getFtpDetails('folder'));
-
-        if (!is_array($files)) {
-            return false; // No new files
-        }
-
-        foreach ($files as $file) {
-            $readyToArchive = ftp_get(
-                $ftp,
-                $destination . $file,
-                trailingslashit($this->getFtpDetails('folder')) . $file,
-                FTP_ASCII
-            );
-
-            if ($readyToArchive) {
-                $this->moveFilesToArchive($params = [
-                    "ftp" => $ftp,
-                    "localDir" => $destination,
-                    "file" => $file,
-                    "src" => trailingslashit($this->getFtpDetails('folder')) . $file
-                ]);
-            }
-        }
-
-        ftp_close($ftp);
-
-        return true;
-    }
-
-    /**
      * Downloads files from sftp to destination folder
      * @param  string $destination Path to destination folder
      * @return bool
      */
-    public function downloadFromSftp(string $destination): bool
+    public function downloadFromRemote(string $destination): bool
     {
-        $folder = $this->getFtpDetails('folder');
-        $sftp = new SftpFileHandler(
-            $this->getFtpDetails('server'),
-            $this->getFtpDetails('username'),
-            $this->getFtpDetails('password')
-        );
+        $folder = $this->folder;
+        $this->remoteFileHandler->connect();
 
-        $sftp->connect();
-        $fileList = $sftp->list($folder);
+        $fileList = $this->remoteFileHandler->list($folder);
 
         foreach ($fileList as $file) {
-            $remoteFile = trailingslashit($folder) . $file;
-            $localFile = trailingslashit($destination) . $file;
-            $copied = $sftp->copy($remoteFile, $localFile);
+            $remoteFile = trailingslashit($folder) . basename(ltrim($file, '/'));
+            $localFile = trailingslashit($destination) . basename(ltrim($file, '/'));
+            $copied = $this->remoteFileHandler->copy($remoteFile, $localFile);
 
             if ($copied === true) {
-                $remoteArchiveDir = $this->getArchiveFolder();
+                $remoteArchiveDir = rtrim($this->getArchiveFolder(), '/');
 
-                if ($sftp->fileExists($remoteArchiveDir) === false) {
-                    $sftp->mkdir($remoteArchiveDir);
+                if ($this->remoteFileHandler->fileExists($remoteArchiveDir) === false) {
+                    $this->remoteFileHandler->mkdir($remoteArchiveDir);
                 }
 
-                $sftp->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . $file);
+                $this->remoteFileHandler->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . basename($file));
             }
         }
 
@@ -237,8 +185,8 @@ class Importer
      */
     private function getArchiveFolder()
     {
-        $defaultArchiveFolder = trailingslashit($this->getFtpDetails('folder')) . '../archive/';
-        $archiveFolder = sanitize_text_field($this->getFtpDetails('archive_folder'));
+        $defaultArchiveFolder = trailingslashit($this->folder) . '../archive/';
+        $archiveFolder = sanitize_text_field($this->archiveFolder);
         $yearMonthFolder = trailingslashit(date('Y-m'));
 
         if (empty($archiveFolder)) {
@@ -246,32 +194,6 @@ class Importer
         }
 
         return trailingslashit($archiveFolder) . $yearMonthFolder;
-    }
-
-    /**
-     * Archive file, delete the source file
-     * @param array ftp, localDir, file, src
-     * @return void
-     */
-    public function moveFilesToArchive($params)
-    {
-
-        $dirBydate = date('Y-m');
-
-        ftp_chdir($params['ftp'], '/alarm/archive');
-
-        if (!ftp_nlist($params['ftp'], $dirBydate)) {
-            ftp_mkdir($params['ftp'], $dirBydate);
-            ftp_chmod($params['ftp'], '0755', $dirBydate);
-        }
-
-        ftp_chdir($params['ftp'], $dirBydate);
-
-        if (!ftp_nlist($params['ftp'], $params['file'])) {
-            ftp_put($params['ftp'], $params['file'], $params['localDir'] . $params['file'], FTP_ASCII, $startpos = 0);
-        }
-
-        ftp_delete($params['ftp'], $params['src']);
     }
 
     /**
@@ -495,29 +417,5 @@ class Importer
         }
 
         return trailingslashit($path);
-    }
-
-    /**
-     * Gets ftp connection details
-     * @return array|string
-     */
-    public function getFtpDetails($what = null)
-    {
-        if (!get_field('ftp_enabled', 'option')) {
-            return array();
-        }
-
-        if (in_array($what, array('server', 'username', 'password', 'mode', 'folder', 'archive_folder'))) {
-            return get_field('ftp_' . $what, 'option');
-        }
-
-        return array(
-            'server' => get_field('ftp_server', 'option'),
-            'username' => get_field('ftp_username', 'option'),
-            'password' => get_field('ftp_password', 'option'),
-            'mode' => get_field('ftp_mode', 'option'),
-            'folder' => get_field('ftp_folder', 'option'),
-            'ftp_archive_folder' => get_field('ftp_archive_folder', 'option'),
-        );
     }
 }
