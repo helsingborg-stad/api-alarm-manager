@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Message>
+		<Source>DEV</Source>
+		<Format>SOS</Format>
+		<PresGrp>Larm IL</PresGrp>
+		<SEQ>71</SEQ>
+		<SendTime>2023-12-15 02:59:15</SendTime>
+		<Alarm>
+			<IDNumber>123456A0001</IDNumber>
+			<Time>2023-12-15 02:59:15</Time>
+			<RT90-X>6221010</RT90-X>
+			<RT90-Y>1320609</RT90-Y>
+			<ObjectName>Dummy Object</ObjectName>
+			<AlarmName>264-1000:106 Larm Insatsledare</AlarmName>
+			<PresGrp>Larm IL</PresGrp>
+			<CaseID>20:8331681:2</CaseID>
+			<Station>Dummy Station</Station>
+			<AlertCategory>106</AlertCategory>
+			<HtText>Brand n&#229;gonstans</HtText>
+			<Address>Dummy Address</Address>
+			<AddressDescription></AddressDescription>
+			<Name></Name>
+			<Zone>M27L</Zone>
+			<ToZone>M27L</ToZone>
+			<Units></Units>
+			<Position>X=6221010 Y=1320609</Position>
+			<AddInfo></AddInfo>
+			<Comment>Dummy Comment</Comment>
+			<Key></Key>
+			<Centre></Centre>
+			<Extend>Medel</Extend>
+			<Place>Dummy Place</Place>
+			<RapsName>Dummy RAPS</RapsName>
+			<RapsNumber>240-1-9064013</RapsNumber>
+			<CaseFolderIndexComment>Dummy Case Folder Comment</CaseFolderIndexComment>
+		</Alarm>
+</Message>

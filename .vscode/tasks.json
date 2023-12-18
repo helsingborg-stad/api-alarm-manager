@@ -59,5 +59,12 @@
 			"group": "none",
 			"problemMatcher": []
 		},
+		{
+			"label": "reset ftp/sftp dummy files",
+			"type": "shell",
+			"command": "$(pwd)/.vscode/tasks/reset-dummy-files.sh",
+			"group": "test",
+			"problemMatcher": []
+		}
 	]
 }
