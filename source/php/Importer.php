@@ -150,9 +150,9 @@ class Importer
     /**
      * Downloads files from sftp to destination folder
      * @param  string $destination Path to destination folder
-     * @return bool
+     * @return void
      */
-    public function downloadFromRemote(string $destination): bool
+    public function downloadFromRemote(string $destination): void
     {
         $folder = $this->folder;
         $this->remoteFileHandler->connect();
@@ -164,7 +164,7 @@ class Importer
             $localFile = trailingslashit($destination) . basename(ltrim($file, '/'));
             $copied = $this->remoteFileHandler->copy($remoteFile, $localFile);
 
-            if ($copied === true) {
+            if ($this->shouldArchiveRemoteFiles() && $copied === true) {
                 $remoteArchiveDir = rtrim($this->getArchiveFolder(), '/');
 
                 if ($this->remoteFileHandler->fileExists($remoteArchiveDir) === false) {
@@ -174,8 +174,12 @@ class Importer
                 $this->remoteFileHandler->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . basename($file));
             }
         }
+    }
 
-        return true;
+    private function shouldArchiveRemoteFiles():bool {
+        return 
+            defined('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE') &&
+            constant('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE') === true;
     }
 
     /**

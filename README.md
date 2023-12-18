@@ -1,6 +1,16 @@
 # Api Alarm Manager
 Creates WordPress Rest API endpoints for contal alarms and fire danger levels.
 
+## Alarms
+Alarms are imported from a remote FTP/SFTP server. The alarms are then stored in the WordPress database and can be fetched from the WordPress Rest API.
+After the alarms have been imported, they are moved to an archive folder on the remote server. For the alarms to be archived on the remote server, the const `API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE` must be set to `true`. Otherwise the alarm files on the remote server will note be altered.
+
+## Fire danger levels
+Fire danger levels are posts that are created in WordPress. The posts are then fetched from the WordPress Rest API.
+
+## Constants
+define('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE', true); - REQUIRED to archive alarms on remote server.
+
 ## Devcontainer
 This project uses a devcontainer for development. This means that you can use VS Code to develop the project. To use the devcontainer, you need to install the [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension for VS Code. When you have installed the extension, you can open the project in a container by clicking the green button in the bottom left corner of VS Code and select "Remote-Containers: Reopen in Container".
 

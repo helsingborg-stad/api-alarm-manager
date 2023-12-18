@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e7af02bbb778908825b668fd1402324",
+    "content-hash": "f6ace5ef250dc1f9536bb56525b59777",
     "packages": [
         {
             "name": "helsingborg-stad/acf-export-manager",
@@ -540,6 +540,100 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "lucatume/args",
+            "version": "1.0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lucatume/args.git",
+                "reference": "9ab69f5c995813b2dfbb067100ada500ee2893e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lucatume/args/zipball/9ab69f5c995813b2dfbb067100ada500ee2893e8",
+                "reference": "9ab69f5c995813b2dfbb067100ada500ee2893e8",
+                "shasum": ""
+            },
+            "require": {
+                "xrstf/composer-php52": "1.*"
+            },
+            "require-dev": {
+                "codeception/codeception": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Arg": "src/",
+                    "tad_": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Luca Tumedei",
+                    "email": "luca@theaveragedev.com"
+                }
+            ],
+            "description": "A PHP 5.2 compatible arguments handling library.",
+            "support": {
+                "issues": "https://github.com/lucatume/args/issues",
+                "source": "https://github.com/lucatume/args/tree/master"
+            },
+            "time": "2018-02-11T12:20:29+00:00"
+        },
+        {
+            "name": "lucatume/function-mocker",
+            "version": "1.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lucatume/function-mocker.git",
+                "reference": "97dbec0d806dfa2745fd1f793a86bec9a852629e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lucatume/function-mocker/zipball/97dbec0d806dfa2745fd1f793a86bec9a852629e",
+                "reference": "97dbec0d806dfa2745fd1f793a86bec9a852629e",
+                "shasum": ""
+            },
+            "require": {
+                "antecedent/patchwork": "^2.0",
+                "lucatume/args": "^1.0",
+                "php": ">=5.6.0",
+                "phpunit/phpunit": ">=5.7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/shims.php",
+                    "src/functions.php"
+                ],
+                "psr-0": {
+                    "tad\\FunctionMocker": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "theAverageDev",
+                    "email": "luca@theaveragedev.com"
+                }
+            ],
+            "description": "Function mocking with Patchwork",
+            "support": {
+                "issues": "https://github.com/lucatume/function-mocker/issues",
+                "source": "https://github.com/lucatume/function-mocker/tree/1.3.8"
+            },
+            "time": "2018-04-18T15:25:42+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -2285,6 +2379,41 @@
                 }
             ],
             "time": "2023-11-20T00:12:19+00:00"
+        },
+        {
+            "name": "xrstf/composer-php52",
+            "version": "v1.0.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer-php52/composer-php52.git",
+                "reference": "670ac996f93792f8de0427605cfef342b3429ff3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer-php52/composer-php52/zipball/670ac996f93792f8de0427605cfef342b3429ff3",
+                "reference": "670ac996f93792f8de0427605cfef342b3429ff3",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-default": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "xrstf\\Composer52": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "issues": "https://github.com/composer-php52/composer-php52/issues",
+                "source": "https://github.com/composer-php52/composer-php52"
+            },
+            "time": "2022-06-08T03:23:46+00:00"
         }
     ],
     "aliases": [],
