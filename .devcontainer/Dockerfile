@@ -16,11 +16,11 @@ RUN chown -R vscode:vscode /var/www/html
 
 # Install MariaDB client
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y mariadb-client curl nano bash-completion zip subversion \ 
+    && apt-get install -y mariadb-client curl nano bash-completion zip libgmp-dev \ 
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install php-mysql driver
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+RUN docker-php-ext-install pdo pdo_mysql mysqli gmp
 
 # Enable apache mods
 RUN a2enmod rewrite expires

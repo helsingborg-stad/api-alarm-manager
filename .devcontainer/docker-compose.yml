@@ -33,5 +33,23 @@ services:
     # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
+  sftp:
+    image: emberstack/sftp
+    ports:
+      - "22:22"
+    volumes:
+      - ./remoteFiles:/home/demo
+
+  ftp:
+    environment:
+      - FTP_PASS=demo
+      - FTP_USER=demo
+    image: garethflowers/ftp-server
+    ports:
+      - '20-21:20-21/tcp'
+      - '40000-40009:40000-40009/tcp'
+    volumes:
+      - ./remoteFiles:/home/demo
+
 volumes:
   db-data:
