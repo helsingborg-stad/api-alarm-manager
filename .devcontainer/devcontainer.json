@@ -7,6 +7,8 @@
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"forwardPorts": [
 		80,
+		21,
+		22,
 		3306
 	],
 	"portsAttributes": {
@@ -15,6 +17,12 @@
 		},
 		"3306": {
 			"label": "Database"
+		},
+		"21": {
+			"label": "FTP"
+		},
+		"22": {
+			"label": "SFTP"
 		}
 	},
 	"remoteEnv": {
@@ -61,7 +69,7 @@
 				"intelephense.environment.includePaths": [
 					"/var/www/html/wp-includes",
 					"/var/www/html/wp-admin",
-					"/tmp/wordpress-tests-lib"
+					"/var/www/html/wp-content/plugins/advanced-custom-fields-pro"
 				],
 				"intelephense.environment.phpVersion": "8.2",
 				"php.validate.run": "onSave",
