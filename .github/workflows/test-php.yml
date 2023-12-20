@@ -10,7 +10,7 @@ env:
   XDEBUG_MODE: off
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
