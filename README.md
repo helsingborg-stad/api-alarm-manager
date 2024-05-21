@@ -1,5 +1,5 @@
 # Api Alarm Manager
-Creates WordPress Rest API endpoints for contal alarms and fire danger levels.
+Creates WordPress Rest API endpoints for contal alarms and fire danger levels. 
 
 ## Alarms
 Alarms are imported from a remote FTP/SFTP server. The alarms are then stored in the WordPress database and can be fetched from the WordPress Rest API.
