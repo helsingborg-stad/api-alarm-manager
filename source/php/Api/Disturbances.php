@@ -22,7 +22,6 @@ class Disturbances
         remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
         add_filter( 'rest_pre_serve_request', function( $value ) {
             header('Cache-Control: max-age=300');
-            header('Access-Control-Allow-Origin: *');
 
             return $value;
         });
