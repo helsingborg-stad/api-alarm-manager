@@ -72,10 +72,7 @@ add_action('acf/include_fields', function () {
                         'choices' => array(
                             1 => '1',
                             2 => '2',
-                            3 => '3',
-                            4 => '4',
-                            5 => '5',
-                            '5E' => '5E',
+                            3 => '3'
                         ),
                         'default_value' => 1,
                         'return_format' => 'value',
