@@ -23,9 +23,7 @@ define('APIALARMMANAGER_URL', plugins_url('', __FILE__));
 define('APIALARMMANAGER_TEMPLATE_PATH', APIALARMMANAGER_PATH . 'templates/');
 
 
-add_action('init', function () {
-    load_plugin_textdomain('api-alarm-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
-}); 
+load_plugin_textdomain('api-alarm-manager', false, plugin_basename(dirname(__FILE__)) . '/languages'); 
 
 // Autoload from plugin
 if (file_exists(APIALARMMANAGER_PATH . 'vendor/autoload.php')) {
