@@ -52,7 +52,7 @@ if (function_exists('acf_add_local_field_group')) {
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca41bb84d75',
-            'label' => __('Postal code', 'api-alarm-manager')
+            'label' => __('Postal code', 'api-alarm-manager'),
             'name' => 'postal_code',
             'type' => 'text',
             'instructions' => '',
@@ -71,7 +71,7 @@ if (function_exists('acf_add_local_field_group')) {
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca403a49741',
-            'label' => __('City', 'api-alarm-manager')
+            'label' => __('City', 'api-alarm-manager'),
             'name' => 'city',
             'type' => 'text',
             'instructions' => '',

@@ -22,6 +22,7 @@ define('APIALARMMANAGER_PATH', plugin_dir_path(__FILE__));
 define('APIALARMMANAGER_URL', plugins_url('', __FILE__));
 define('APIALARMMANAGER_TEMPLATE_PATH', APIALARMMANAGER_PATH . 'templates/');
 
+
 add_action('init', function () {
     load_plugin_textdomain('api-alarm-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
 }); 
@@ -31,13 +32,6 @@ if (file_exists(APIALARMMANAGER_PATH . 'vendor/autoload.php')) {
     require_once APIALARMMANAGER_PATH . 'vendor/autoload.php';
 }
 
-// Autoload from ABSPATH
-if (file_exists(dirname(ABSPATH) . '/vendor/autoload.php')) {
-    require_once dirname(ABSPATH) . '/vendor/autoload.php';
-}
-
-require_once APIALARMMANAGER_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
-require_once APIALARMMANAGER_PATH . 'Public.php';
 
 // Instantiate and register the autoloader
 $loader = new \ApiAlarmManager\Vendor\Psr4ClassLoader();
@@ -47,7 +41,7 @@ $loader->register();
 
 // Acf auto import and export
 $acfExportManager = new \AcfExportManager\AcfExportManager();
-$acfExportManager->setTextdomain('event-manager');
+$acfExportManager->setTextdomain('api-alarm-manager');
 $acfExportManager->setExportFolder(APIALARMMANAGER_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
     'station'                => 'group_58ca3def60074',
@@ -60,6 +54,7 @@ $acfExportManager->autoExport(array(
     'options-templates'      => 'group_591ab89a6e9f5'
 ));
 $acfExportManager->import();
+
 
 // Start application
 new \ApiAlarmManager\App();
