@@ -8,7 +8,6 @@ class App
     {
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
-        add_action('admin_init', array($this, 'dashboardRedirect'));
 
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
@@ -104,26 +103,5 @@ class App
         }
 
         return $redirect_to;
-    }
-
-    /**
-     * Redirect user when entering dashboard.
-     * @return void
-     */
-    public function dashboardRedirect()
-    {
-        global $pagenow;
-        if ($pagenow !== 'index.php') {
-            return;
-        }
-
-        if (isset($_GET['page']) && in_array($_GET['page'], array('acf-upgrade'))) {
-            return;
-        }
-
-        // Redirect to alarm list (remove the return here)
-        return;
-        wp_redirect(admin_url('edit.php?post_type=event'), 301);
-        exit;
     }
 }

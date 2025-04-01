@@ -126,7 +126,7 @@ abstract class PostManager
     }
 
     /**
-     * Saves the event and it's data
+     * Saves the alarm and it's data
      * @var nonSyncFields  Fields to discard when updating existing post
      * @return integer The inserted/updated post id
      */
