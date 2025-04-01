@@ -1,9 +1,11 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_591ab89a6e9f5',
-    'title' => __('Templates', 'event-manager'),
+    'title' => __('Templates', 'api-alarm-manager'),
     'fields' => array(
         0 => array(
             'sub_fields' => array(
@@ -14,7 +16,7 @@
                     'prepend' => '',
                     'append' => '',
                     'key' => 'field_591ab8b0f6700',
-                    'label' => __(__(__(__(__('Template name', 'event-manager'), 'event-manager'), 'event-manager'), 'event-manager'), 'event-manager'),
+                    'label' => __('Template name', 'api-alarm-manager'),
                     'name' => 'template_name',
                     'type' => 'text',
                     'instructions' => '',
@@ -33,7 +35,7 @@
                     'prepend' => '',
                     'append' => '',
                     'key' => 'field_591ab8d4f6702',
-                    'label' => __(__(__(__(__('Title', 'event-manager'), 'event-manager'), 'event-manager'), 'event-manager'), 'event-manager'),
+                    'label' => __('Title', 'api-alarm-manager'),
                     'name' => 'title',
                     'type' => 'text',
                     'instructions' => '',
@@ -52,7 +54,7 @@
                     'default_value' => '',
                     'delay' => 0,
                     'key' => 'field_591ab8c1f6701',
-                    'label' => __(__(__(__(__('Message', 'event-manager'), 'event-manager'), 'event-manager'), 'event-manager'), 'event-manager'),
+                    'label' => __('Message', 'api-alarm-manager'),
                     'name' => 'message',
                     'type' => 'wysiwyg',
                     'instructions' => '',
@@ -68,10 +70,10 @@
             'min' => 0,
             'max' => 0,
             'layout' => 'block',
-            'button_label' => __('Add template', 'event-manager'),
+            'button_label' => __('Add template', 'api-alarm-manager'),
             'collapsed' => '',
             'key' => 'field_591ab89ff66ff',
-            'label' => __('Templates', 'event-manager'),
+            'label' => __('Templates', 'api-alarm-manager'),
             'name' => 'templates',
             'type' => 'repeater',
             'instructions' => '',
@@ -102,4 +104,5 @@
     'active' => 1,
     'description' => '',
 ));
-}
+
+}

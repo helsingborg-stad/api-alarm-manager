@@ -5,11 +5,11 @@ if (function_exists('acf_add_local_field_group')) {
 
     acf_add_local_field_group(array(
     'key' => 'group_646dfb458aa04',
-    'title' => __('Fire Danger Levels', 'event-manager'),
+    'title' => __('Fire Danger Levels', 'api-alarm-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_646dfb45bc655',
-            'label' => __('Fire Danger Levels', 'event-manager'),
+            'label' => __('Fire Danger Levels', 'api-alarm-manager'),
             'name' => 'fire_danger_levels',
             'aria-label' => '',
             'type' => 'repeater',
@@ -26,13 +26,13 @@ if (function_exists('acf_add_local_field_group')) {
             'min' => 0,
             'max' => 0,
             'collapsed' => '',
-            'button_label' => __('Add Row', 'event-manager'),
+            'button_label' => __('Add Row', 'api-alarm-manager'),
             'rows_per_page' => 20,
             'acfe_repeater_stylised_button' => 0,
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_646dfb6bbc656',
-                    'label' => __('Place', 'event-manager'),
+                    'label' => __('Place', 'api-alarm-manager'),
                     'name' => 'place',
                     'aria-label' => '',
                     'type' => 'taxonomy',
@@ -58,7 +58,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
                 1 => array(
                     'key' => 'field_646dfbbcbc657',
-                    'label' => __('Level', 'event-manager'),
+                    'label' => __('Level', 'api-alarm-manager'),
                     'name' => 'level',
                     'aria-label' => '',
                     'type' => 'radio',
@@ -71,9 +71,9 @@ if (function_exists('acf_add_local_field_group')) {
                         'id' => '',
                     ),
                     'choices' => array(
-                        1 => __('No fire ban', 'event-manager'),
-                        2 => __('Fire ban', 'event-manager'),
-                        3 => __('Strict fire ban', 'event-manager'),
+                        1 => __('No fire ban', 'api-alarm-manager'),
+                        2 => __('Fire ban', 'api-alarm-manager'),
+                        3 => __('Strict fire ban', 'api-alarm-manager'),
                     ),
                     'default_value' => 1,
                     'return_format' => 'value',
