@@ -1,101 +1,107 @@
-[
-    {
-        "key": "group_646dfb458aa04",
-        "title": "Fire Danger Levels",
-        "fields": [
-            {
-                "key": "field_646dfb45bc655",
-                "label": "Fire Danger Levels",
-                "name": "fire_danger_levels",
-                "aria-label": "",
-                "type": "repeater",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "layout": "table",
-                "pagination": 0,
-                "min": 0,
-                "max": 0,
-                "collapsed": "",
-                "button_label": "Add Row",
-                "rows_per_page": 20,
-                "sub_fields": [
-                    {
-                        "key": "field_646dfb6bbc656",
-                        "label": "Place",
-                        "name": "place",
-                        "aria-label": "",
-                        "type": "taxonomy",
-                        "instructions": "",
-                        "required": 1,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "taxonomy": "place",
-                        "add_term": 1,
-                        "save_terms": 0,
-                        "load_terms": 0,
-                        "return_format": "id",
-                        "field_type": "select",
-                        "allow_null": 0,
-                        "multiple": 0,
-                        "parent_repeater": "field_646dfb45bc655"
-                    },
-                    {
-                        "key": "field_646dfbbcbc657",
-                        "label": "Level",
-                        "name": "level",
-                        "aria-label": "",
-                        "type": "radio",
-                        "instructions": "",
-                        "required": 1,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "choices": {
-                            "1": "1",
-                            "2": "2",
-                            "3": "3"
-                        },
-                        "default_value": 1,
-                        "return_format": "value",
-                        "allow_null": 0,
-                        "other_choice": 0,
-                        "layout": "horizontal",
-                        "save_other_choice": 0,
-                        "parent_repeater": "field_646dfb45bc655"
-                    }
-                ]
-            }
-        ],
-        "location": [
-            [
+[{
+    "key": "group_646dfb458aa04",
+    "title": "Fire Danger Levels",
+    "fields": [
+        {
+            "key": "field_646dfb45bc655",
+            "label": "Fire Danger Levels",
+            "name": "fire_danger_levels",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
+            "sub_fields": [
                 {
-                    "param": "options_page",
-                    "operator": "==",
-                    "value": "fire-danger-levels"
+                    "key": "field_646dfb6bbc656",
+                    "label": "Place",
+                    "name": "place",
+                    "aria-label": "",
+                    "type": "taxonomy",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "place",
+                    "add_term": 1,
+                    "save_terms": 0,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "field_type": "select",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "parent_repeater": "field_646dfb45bc655",
+                    "bidirectional_target": []
+                },
+                {
+                    "key": "field_646dfbbcbc657",
+                    "label": "Level",
+                    "name": "level",
+                    "aria-label": "",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {   
+                        "1": "No fire ban",
+                        "2": "Fire ban",
+                        "3": "Strict fire ban"
+                    },
+                    "default_value": 1,
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "layout": "horizontal",
+                    "save_other_choice": 0,
+                    "parent_repeater": "field_646dfb45bc655"
                 }
             ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "seamless",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "",
-        "show_in_rest": 0
-    }
-]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "fire-danger-levels"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
+}]
+

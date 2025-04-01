@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Api Alarm Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-01 11:59+0200\n"
-"PO-Revision-Date: 2025-04-01 13:57+0200\n"
+"POT-Creation-Date: 2025-04-01 15:09+0200\n"
+"PO-Revision-Date: 2025-04-01 15:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -82,24 +82,37 @@ msgid ""
 "If this distrurbance could be connected to specific alarm(s) - add them here."
 msgstr "Om denna störning kan kopplas till specifika larm – lägg till dem här."
 
-#: source/php/AcfFields/php/fire-danger-levels.php:14
+#: source/php/AcfFields/php/fire-danger-levels.php:8
+#: source/php/AcfFields/php/fire-danger-levels.php:12
 #: source/php/Admin/FireDangerLevels.php:20
 #: source/php/Admin/FireDangerLevels.php:21
 msgid "Fire Danger Levels"
 msgstr "Brandrisknivå"
 
-#: source/php/AcfFields/php/fire-danger-levels.php:31
+#: source/php/AcfFields/php/fire-danger-levels.php:29
 msgid "Add Row"
 msgstr "Lägg till rad"
 
-#: source/php/AcfFields/php/fire-danger-levels.php:36
+#: source/php/AcfFields/php/fire-danger-levels.php:35
 #: source/php/PostTypes/Alarms.php:46
 msgid "Place"
 msgstr "Plats"
 
-#: source/php/AcfFields/php/fire-danger-levels.php:60
+#: source/php/AcfFields/php/fire-danger-levels.php:61
 msgid "Level"
 msgstr "Nivå"
+
+#: source/php/AcfFields/php/fire-danger-levels.php:74
+msgid "No fire ban"
+msgstr "Inget eldningsförbud"
+
+#: source/php/AcfFields/php/fire-danger-levels.php:75
+msgid "Fire ban"
+msgstr "Eldningsförbud"
+
+#: source/php/AcfFields/php/fire-danger-levels.php:76
+msgid "Strict fire ban"
+msgstr "Skärpt eldningsförbud"
 
 #: source/php/AcfFields/php/options-filters.php:9
 msgid ""
