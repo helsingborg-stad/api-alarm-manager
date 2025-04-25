@@ -7,7 +7,7 @@ use ApiAlarmManager\Admin\FireDangerLevels as AdminFireDangerLevels;
 class FireDangerLevels
 {
     private $namespace = 'wp/v2';
-    private $route = '/fire-danger-levels';
+    private $route     = '/fire-danger-levels';
 
     public function __construct()
     {
@@ -17,22 +17,22 @@ class FireDangerLevels
     public function registerEndpoint()
     {
         register_rest_route($this->namespace, $this->route, array(
-            'methods' => 'GET',
+            'methods'  => 'GET',
             'callback' => array($this, 'getFireDangerLevels'),
         ));
     }
 
     public function getFireDangerLevels(): array
     {
-        $data = get_field('fire_danger_levels', 'option');
+        $data            = get_field('fire_danger_levels', 'option');
         $dateTimeChanged = get_option(AdminFireDangerLevels::$dateTimeChangedOptionName, null);
-        
+
         $places =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
 
         if (isset($_GET['place']) && !empty($_GET['place'])) {
             $filter = explode(',', $_GET['place']);
 
-            $places = array_filter($places, function($item) use ($filter) {
+            $places = array_filter($places, function ($item) use ($filter) {
                 return in_array($item['place'], $filter);
             });
         }
@@ -44,7 +44,7 @@ class FireDangerLevels
 
         return [
             'dateTimeChanged' => $dateTimeChanged,
-            'places' => $places
+            'places'          => $places
         ];
     }
 
