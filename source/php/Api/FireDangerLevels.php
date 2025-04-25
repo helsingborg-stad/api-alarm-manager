@@ -29,8 +29,18 @@ class FireDangerLevels
 
         $places =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
 
-        if (isset($_GET['place']) && !empty($_GET['place'])) {
-            $filter = explode(',', $_GET['place']);
+        $sanitize = function ($name) {
+            // phpcs:ignore WordPress.Security.NonceVerification
+            if (isset($_GET[$name]) && !empty($_GET[$name])) {
+                // phpcs:ignore WordPress.Security.NonceVerification
+                return sanitize_text_field(wp_unslash($_GET[$name]));
+            }
+            return '';
+        };
+        $input    = $sanitize('place');
+
+        if (!empty($input)) {
+            $filter = explode(',', $input);
 
             $places = array_filter($places, function ($item) use ($filter) {
                 return in_array($item['place'], $filter);
