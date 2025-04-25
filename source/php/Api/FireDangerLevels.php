@@ -26,13 +26,21 @@ class FireDangerLevels
     {
         $data = get_field('fire_danger_levels', 'option');
         $dateTimeChanged = get_option(AdminFireDangerLevels::$dateTimeChangedOptionName, null);
+        
+        $places =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
 
-        if ($data === false) {
+        if (isset($_GET['place']) && !empty($_GET['place'])) {
+            $filter = explode(',', $_GET['place']);
+
+            $places = array_filter($places, function($item) use ($filter) {
+                return in_array($item['place'], $filter);
+            });
+        }
+
+        if (count($places) === 0) {
             trigger_error('No fire danger levels found', E_USER_WARNING);
             return [];
         }
-
-        $places = array_map([$this, 'convertPlaceIdToName'], $data);
 
         return [
             'dateTimeChanged' => $dateTimeChanged,
