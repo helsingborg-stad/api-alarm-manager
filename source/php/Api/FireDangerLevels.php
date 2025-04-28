@@ -4,6 +4,8 @@ namespace ApiAlarmManager\Api;
 
 use ApiAlarmManager\Admin\FireDangerLevels as AdminFireDangerLevels;
 
+use function PHPUnit\Framework\isNull;
+
 class FireDangerLevels
 {
     private $namespace = 'wp/v2';
@@ -22,23 +24,14 @@ class FireDangerLevels
         ));
     }
 
-    public function getFireDangerLevels(): array
+    public function getFireDangerLevels(\WP_REST_Request $request): array
     {
         $data            = get_field('fire_danger_levels', 'option');
         $dateTimeChanged = get_option(AdminFireDangerLevels::$dateTimeChangedOptionName, null);
         $places          =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
+        $input           = $request->get_param('place');
 
-        $sanitize = function ($name) {
-            // phpcs:ignore WordPress.Security.NonceVerification
-            if (isset($_GET[$name]) && !empty($_GET[$name])) {
-                // phpcs:ignore WordPress.Security.NonceVerification
-                return sanitize_text_field(wp_unslash($_GET[$name]));
-            }
-            return '';
-        };
-        $input    = $sanitize('place');
-
-        if (!empty($input)) {
+        if (!isNull($input) && !empty($input)) {
             $filter = explode(',', $input);
             $filter = array_map('trim', $filter);
             $filter = array_map('strtolower', $filter);
