@@ -26,8 +26,7 @@ class FireDangerLevels
     {
         $data            = get_field('fire_danger_levels', 'option');
         $dateTimeChanged = get_option(AdminFireDangerLevels::$dateTimeChangedOptionName, null);
-
-        $places =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
+        $places          =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
 
         $sanitize = function ($name) {
             // phpcs:ignore WordPress.Security.NonceVerification
@@ -41,9 +40,11 @@ class FireDangerLevels
 
         if (!empty($input)) {
             $filter = explode(',', $input);
+            $filter = array_map('trim', $filter);
+            $filter = array_map('strtolower', $filter);
 
             $places = array_filter($places, function ($item) use ($filter) {
-                return in_array($item['place'], $filter);
+                return in_array(strtolower($item['place']), $filter);
             });
         }
 
