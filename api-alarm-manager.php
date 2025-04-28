@@ -13,6 +13,8 @@
  * Domain Path:       /languages
  */
 
+use WpService\Implementations\NativeWpService;
+
  // Protect agains direct file access
 if (! defined('WPINC')) {
     die;
@@ -60,4 +62,4 @@ $acfExportManager->autoExport(array(
 $acfExportManager->import();
 
 // Start application
-new \ApiAlarmManager\App();
+new \ApiAlarmManager\App(new NativeWpService());

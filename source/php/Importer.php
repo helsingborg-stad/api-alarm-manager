@@ -2,39 +2,40 @@
 
 namespace ApiAlarmManager;
 
+use WpService\WpService;
+
 class Importer
 {
     public $importStarted = null;
     public $remoteNewestFile;
-    private RemoteFileHandlerInterface $remoteFileHandler;
-    private string $folder;
-    private string $archiveFolder;
 
-    public function __construct(RemoteFileHandlerInterface $remoteFileHandler, string $folder, string $archiveFolder)
-    {
-        $this->remoteFileHandler = $remoteFileHandler;
-        $this->folder = $folder;
-        $this->archiveFolder = $archiveFolder;
+    public function __construct(
+        private RemoteFileHandlerInterface $remoteFileHandler,
+        private string $folder,
+        private string $archiveFolder,
+        private WpService $wpService
+    ) {
     }
 
-    public function addHooks() {
-        add_action('cron_import_alarms', array($this, 'import'));
-        add_filter('cron_schedules', array($this, 'cronSchedules'));
+    public function addHooks()
+    {
+        $this->wpService->addAction('cron_import_alarms', array($this, 'import'));
+        $this->wpService->addFilter('cron_schedules', array($this, 'cronSchedules'));
 
         if (isset($_GET['alarmimport'])) {
-            add_action('init', array($this, 'import'), 100);
+            $this->wpService->addAction('init', array($this, 'import'), 100);
         }
 
-        add_action('admin_init', array($this, 'checkCron'));
-        add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
-        add_action('wp_ajax_import_alarms', array($this, 'ajaxSingleImport'));
+        $this->wpService->addAction('admin_init', array($this, 'checkCron'));
+        $this->wpService->addAction('acf/save_post', array($this, 'scheduleImportCron'), 20);
+        $this->wpService->addAction('wp_ajax_import_alarms', array($this, 'ajaxSingleImport'));
     }
 
     public function ajaxSingleImport()
     {
         $this->import();
         echo 'true';
-        wp_die();
+        $this->wpService->wpDie();
     }
 
     /**
@@ -49,12 +50,12 @@ class Importer
         }
 
         $intervalMinutes = get_field('ftp_import_interval', 'option');
-        $intervalKey = $intervalMinutes . 'min';
+        $intervalKey     = $intervalMinutes . 'min';
 
         if (!isset($schedules[$intervalKey])) {
             $schedules[$intervalKey] = array(
                 'interval' => $intervalMinutes * 60,
-                'display' => __('Once every ' . $intervalMinutes . ' minutes')
+                'display'  => __('Once every ' . $intervalMinutes . ' minutes')
             );
         }
 
@@ -68,11 +69,11 @@ class Importer
      */
     public function scheduleImportCron($postId)
     {
-        if ($postId !== 'options' || get_current_screen()->id !== 'alarm_page_alarm-manager-options') {
+        if ($postId !== 'options' || $this->wpService->getCurrentScreen()->id !== 'alarm_page_alarm-manager-options') {
             return;
         }
 
-        wp_clear_scheduled_hook('cron_import_alarms');
+        $this->wpService->wpClearScheduledHook('cron_import_alarms');
 
         if (!get_field('ftp_auto_import', 'option')) {
             return;
@@ -86,7 +87,7 @@ class Importer
      */
     public function checkCron()
     {
-        if (!wp_doing_ajax() && get_field('ftp_auto_import', 'option')) {
+        if (!$this->wpService->wpDoingAjax() && get_field('ftp_auto_import', 'option')) {
             $this->registerCron();
         }
     }
@@ -96,9 +97,9 @@ class Importer
      */
     public function registerCron()
     {
-        if (!wp_next_scheduled('cron_import_alarms')) {
+        if (!$this->wpService->wpNextScheduled('cron_import_alarms')) {
             $intervalMinutes = get_field('ftp_import_interval', 'option');
-            wp_schedule_event(time(), $intervalMinutes . 'min', 'cron_import_alarms');
+            $this->wpService->wpScheduleEvent(time(), $intervalMinutes . 'min', 'cron_import_alarms');
         }
     }
 
@@ -111,7 +112,7 @@ class Importer
         ini_set('max_execution_time', 600);
         $this->importStarted = time();
 
-        $destination = $this->maybeCreateFolder(wp_upload_dir()['basedir'] . '/alarms');
+        $destination = $this->maybeCreateFolder($this->wpService->wpUploadDir()['basedir'] . '/alarms');
 
         if (!$destination) {
             throw new \Error('Destination folder missing');
@@ -122,28 +123,28 @@ class Importer
          * @since 0.2.11
          */
         if (!get_option('api-alarm-manager-updated-content', false)) {
-            $alarms = get_posts(array(
-                'post_type' => 'alarm',
+            $alarms = $this->wpService->getPosts(array(
+                'post_type'      => 'alarm',
                 'posts_per_page' => -1
             ));
 
             foreach ($alarms as $alarm) {
-                wp_update_post(array(
-                    'ID' => $alarm->ID,
+                $this->wpService->wpUpdatePost(array(
+                    'ID'           => $alarm->ID,
                     'post_content' => null
                 ));
             }
 
-            add_option('api-alarm-manager-updated-content', true);
+            $this->wpService->addOption('api-alarm-manager-updated-content', true);
         }
 
         $this->downloadFromRemote($destination);
         $this->importFromXml($destination, true);
 
         //Update last import var
-        update_option('api-alarm-manager-last-import', $this->remoteNewestFile);
+        $this->wpService->updateOption('api-alarm-manager-last-import', $this->remoteNewestFile);
 
-        wp_send_json('true');
+        $this->wpService->wpSendJson('true');
         exit;
     }
 
@@ -160,9 +161,9 @@ class Importer
         $fileList = $this->remoteFileHandler->list($folder);
 
         foreach ($fileList as $file) {
-            $remoteFile = trailingslashit($folder) . basename(ltrim($file, '/'));
-            $localFile = trailingslashit($destination) . basename(ltrim($file, '/'));
-            $copied = $this->remoteFileHandler->copy($remoteFile, $localFile);
+            $remoteFile = $this->wpService->trailingslashit($folder) . basename(ltrim($file, '/'));
+            $localFile  = $this->wpService->trailingslashit($destination) . basename(ltrim($file, '/'));
+            $copied     = $this->remoteFileHandler->copy($remoteFile, $localFile);
 
             if ($this->shouldArchiveRemoteFiles() && $copied === true) {
                 $remoteArchiveDir = rtrim($this->getArchiveFolder(), '/');
@@ -171,13 +172,14 @@ class Importer
                     $this->remoteFileHandler->mkdir($remoteArchiveDir);
                 }
 
-                $this->remoteFileHandler->moveFile($remoteFile, trailingslashit($remoteArchiveDir) . basename($file));
+                $this->remoteFileHandler->moveFile($remoteFile, $this->wpService->trailingslashit($remoteArchiveDir) . basename($file));
             }
         }
     }
 
-    private function shouldArchiveRemoteFiles():bool {
-        return 
+    private function shouldArchiveRemoteFiles(): bool
+    {
+        return
             defined('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE') &&
             constant('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE') === true;
     }
@@ -189,15 +191,15 @@ class Importer
      */
     private function getArchiveFolder()
     {
-        $defaultArchiveFolder = trailingslashit($this->folder) . '../archive/';
-        $archiveFolder = sanitize_text_field($this->archiveFolder);
-        $yearMonthFolder = trailingslashit(date('Y-m'));
+        $defaultArchiveFolder = $this->wpService->trailingslashit($this->folder) . '../archive/';
+        $archiveFolder        = $this->wpService->sanitizeTextField($this->archiveFolder);
+        $yearMonthFolder      = $this->wpService->trailingslashit(date('Y-m'));
 
         if (empty($archiveFolder)) {
             return $defaultArchiveFolder . $yearMonthFolder;
         }
 
-        return trailingslashit($archiveFolder) . $yearMonthFolder;
+        return $this->wpService->trailingslashit($archiveFolder) . $yearMonthFolder;
     }
 
     /**
@@ -207,13 +209,18 @@ class Importer
 
     public function alertSiteAdmin($type = "import")
     {
-        $alerted = get_transient('api-alarm-manager-alerted-' . $type);
+        $alerted = $this->wpService->getTransient('api-alarm-manager-alerted-' . $type);
 
         if ($alerted != true) {
-            wp_mail(bloginfo('admin_email'), __("Alarm manager: Could not ", 'api-alarm-manager') . $type,
-                __("Alarm manager could not execute the last action with success. Action may be required to resolve this issue.",
-                    'api-alarm-manager'));
-            set_transient('api-alarm-manager-alerted-' . $type, true, 12 * HOUR_IN_SECONDS);
+            $this->wpService->wpMail(
+                $this->wpService->bloginfo('admin_email'),
+                __("Alarm manager: Could not ", 'api-alarm-manager') . $type,
+                __(
+                    "Alarm manager could not execute the last action with success. Action may be required to resolve this issue.",
+                    'api-alarm-manager'
+                )
+            );
+            $this->wpService->setTransient('api-alarm-manager-alerted-' . $type, true, 12 * HOUR_IN_SECONDS);
         }
     }
 
@@ -228,10 +235,10 @@ class Importer
             $xml = @simplexml_load_file($file);
 
             if (!$xml) {
-                if (is_numeric($xmlErrors = get_option('api-event-manager-xml-error'))) {
-                    update_option('api-event-manager-xml-error', ($xmlErrors + 1));
+                if (is_numeric($xmlErrors = $this->wpService->getOption('api-event-manager-xml-error'))) {
+                    $this->wpService->updateOption('api-event-manager-xml-error', ($xmlErrors + 1));
                 } else {
-                    update_option('api-event-manager-xml-error', 1);
+                    $this->wpService->updateOption('api-event-manager-xml-error', 1);
                 }
 
                 if (WP_DEBUG) {
@@ -266,10 +273,10 @@ class Importer
         if (strlen((string)$data->Station) > 0) {
             $station = new \ApiAlarmManager\Station();
 
-            $station->post_title            = (string) $data->Place . ' ' . (string)$data->Station;
-            $station->_alarm_manager_uid    = (string) $data->Station;
-            $station->station_id            = (string) $data->Station;
-            $station->city                  = (string) $data->Place;
+            $station->post_title         = (string) $data->Place . ' ' . (string)$data->Station;
+            $station->_alarm_manager_uid = (string) $data->Station;
+            $station->station_id         = (string) $data->Station;
+            $station->city               = (string) $data->Place;
 
             $station->save([
                 'post_title',
@@ -302,25 +309,25 @@ class Importer
             $coordinates = array("", "");
         }
 
-        $alarm = new \ApiAlarmManager\Alarm();
-        $alarm->post_title = (string)$data->HtText;
-        $alarm->post_date = (string)$xml->SendTime;
+        $alarm                     = new \ApiAlarmManager\Alarm();
+        $alarm->post_title         = (string)$data->HtText;
+        $alarm->post_date          = (string)$xml->SendTime;
         $alarm->_alarm_manager_uid = (string)$data->IDNumber;
-        $alarm->alarm_id = (string)$data->CaseID;
-        $alarm->case_id = (string)$data->CaseID;
-        $alarm->type = (string)$data->PresGrp;
-        $alarm->extend = (string)$data->Extend;
-        $alarm->station = is_a($station, '\ApiAlarmManager\Station') ? $station->ID : $station;
-        $alarm->address = $this->formatAddress((string)$data->Address);
-        $alarm->city = (string)$data->Place;
-        $alarm->coordinate_x = $coordinates[0];
-        $alarm->coordinate_y = $coordinates[1];
-        $alarm->zone = (string)$data->Zone;
-        $alarm->to_zone = (string)$data->ToZone;
+        $alarm->alarm_id           = (string)$data->CaseID;
+        $alarm->case_id            = (string)$data->CaseID;
+        $alarm->type               = (string)$data->PresGrp;
+        $alarm->extend             = (string)$data->Extend;
+        $alarm->station            = is_a($station, '\ApiAlarmManager\Station') ? $station->ID : $station;
+        $alarm->address            = $this->formatAddress((string)$data->Address);
+        $alarm->city               = (string)$data->Place;
+        $alarm->coordinate_x       = $coordinates[0];
+        $alarm->coordinate_y       = $coordinates[1];
+        $alarm->zone               = (string)$data->Zone;
+        $alarm->to_zone            = (string)$data->ToZone;
         $alarm->save();
 
         if (is_string(@(string)$data->Place)) {
-            wp_set_object_terms($alarm->ID, (string)$data->Place, 'place', false);
+            $this->wpService->wpSetObjectTerms($alarm->ID, (string)$data->Place, 'place', false);
         }
 
         return true;
@@ -386,7 +393,7 @@ class Importer
      */
     public function isMatchingKeywordFilter($xml)
     {
-        $data = $xml->Alarm;
+        $data    = $xml->Alarm;
         $filters = \ApiAlarmManager\Admin\Options::getFilters();
         $filters = implode('|', $filters);
 
@@ -413,13 +420,13 @@ class Importer
     public function maybeCreateFolder(string $path)
     {
         if (file_exists($path)) {
-            return trailingslashit($path);
+            return $this->wpService->trailingslashit($path);
         }
 
         if (!mkdir($path, 0777)) {
             throw new \Exception('Could not create folder at path: ' . $path);
         }
 
-        return trailingslashit($path);
+        return $this->wpService->tralingslashit($path);
     }
 }
