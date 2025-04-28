@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-         bootstrap="./tests/phpunit/bootstrap.php"
+         bootstrap="./bootstrap.php"
          backupGlobals="false"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true">
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnPhpunitDeprecations="true">
 
-  <coverage processUncoveredFiles="false">
-    <include>
-      <directory suffix=".php">./source</directory>
-    </include>
-    <exclude>
-      <directory>./source/AcfFields</directory>
-    </exclude>
+  <coverage>
     <report>
       <text outputFile="php://stdout" showUncoveredFiles="true"/>
-      <html outputDirectory="./tests/phpunit/.coverage"/>
-      <clover outputFile="./tests/phpunit/.coverage/clover.xml"/>
+      <html outputDirectory="./.coverage"/>
+      <clover outputFile="./.coverage/clover.xml"/>
     </report>
   </coverage>
 
   <testsuites>
     <testsuite name="default">
-      <directory suffix=".php">tests/phpunit/tests</directory>
+      <directory suffix="Test.php">source/php</directory>
     </testsuite>
   </testsuites>
+
+  <php>
+    <ini name="error_reporting" value="-1"/>
+    <ini name="display_errors" value="1"/>
+  </php>
 </phpunit>

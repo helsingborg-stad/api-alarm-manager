@@ -2,9 +2,11 @@
 
 namespace ApiAlarmManager;
 
+use WpService\WpService;
+
 class App
 {
-    public function __construct()
+    public function __construct(private WpService $wpService)
     {
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
@@ -46,18 +48,17 @@ class App
         // Importer
 
         $remoteFileHandler = null;
-        $settings = array(
-            'enabled' => get_field('ftp_enabled', 'option'),
-            'server' => get_field('ftp_server', 'option'),
-            'username' => get_field('ftp_username', 'option'),
-            'password' => get_field('ftp_password', 'option'),
-            'mode' => get_field('ftp_mode', 'option'),
-            'folder' => get_field('ftp_folder', 'option'),
+        $settings          = array(
+            'enabled'            => get_field('ftp_enabled', 'option'),
+            'server'             => get_field('ftp_server', 'option'),
+            'username'           => get_field('ftp_username', 'option'),
+            'password'           => get_field('ftp_password', 'option'),
+            'mode'               => get_field('ftp_mode', 'option'),
+            'folder'             => get_field('ftp_folder', 'option'),
             'ftp_archive_folder' => get_field('ftp_archive_folder', 'option')
         );
 
-        if( $settings['enabled'] && $settings['server'] && $settings['username'] && $settings['password'] && $settings['folder'] && $settings['ftp_archive_folder'] ) {
-
+        if ($settings['enabled'] && $settings['server'] && $settings['username'] && $settings['password'] && $settings['folder'] && $settings['ftp_archive_folder']) {
             if ($settings['mode'] === 'sftp') {
                 $remoteFileHandler = new SftpFileHandler(
                     $settings['server'],
@@ -74,11 +75,10 @@ class App
             }
         }
 
-        if( $remoteFileHandler && $settings['folder'] && $settings['ftp_archive_folder'] ) {
-            $importer = new Importer($remoteFileHandler, $settings['folder'], $settings['ftp_archive_folder']);
+        if ($remoteFileHandler && $settings['folder'] && $settings['ftp_archive_folder']) {
+            $importer = new Importer($remoteFileHandler, $settings['folder'], $settings['ftp_archive_folder'], $this->wpService);
             $importer->addHooks();
         }
-        
     }
 
     public function enqueueScripts()
