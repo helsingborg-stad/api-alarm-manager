@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bdbb9471161e5fe791664e02efa7875",
+    "content-hash": "d8a99a08b3fe1f4d4195d2b97130f8ca",
     "packages": [
         {
             "name": "helsingborg-stad/acf-export-manager",
@@ -42,6 +42,50 @@
                 "source": "https://github.com/helsingborg-stad/acf-export-manager/tree/1.0.12"
             },
             "time": "2023-05-25T07:56:58+00:00"
+        },
+        {
+            "name": "helsingborg-stad/acfservice",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/helsingborg-stad/acfservice.git",
+                "reference": "c1750a9e4f0d54161e49e7cab9f9cec12d9f4dce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/helsingborg-stad/acfservice/zipball/c1750a9e4f0d54161e49e7cab9f9cec12d9f4dce",
+                "reference": "c1750a9e4f0d54161e49e7cab9f9cec12d9f4dce",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "helsingborg-stad/phpcs": "^0.3.5",
+                "phpunit/phpunit": "^9.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AcfService\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thor Brink",
+                    "email": "thor.brink@helsingborg.se"
+                }
+            ],
+            "description": "Simplifies ACF integration by providing a centralized AcfService that exposes global ACF functions in a streamlined manner. Simplify your development workflow and enhance ACF integration with ease.",
+            "support": {
+                "issues": "https://github.com/helsingborg-stad/acfservice/issues",
+                "source": "https://github.com/helsingborg-stad/acfservice/tree/1.0.1"
+            },
+            "time": "2025-04-23T10:51:02+00:00"
         },
         {
             "name": "helsingborg-stad/coordinate-transformation-library",
@@ -719,6 +763,57 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "php-stubs/wordpress-stubs",
+            "version": "v6.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-stubs/wordpress-stubs.git",
+                "reference": "1824db4d1d00d32c0119175d2369d9425dbc4953"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/1824db4d1d00d32c0119175d2369d9425dbc4953",
+                "reference": "1824db4d1d00d32c0119175d2369d9425dbc4953",
+                "shasum": ""
+            },
+            "conflict": {
+                "phpdocumentor/reflection-docblock": "5.6.1"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "nikic/php-parser": "^4.13",
+                "php": "^7.4 || ^8.0",
+                "php-stubs/generator": "^0.8.3",
+                "phpdocumentor/reflection-docblock": "^5.4.1",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.5",
+                "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^1.1.1",
+                "wp-coding-standards/wpcs": "3.1.0 as 2.3.0"
+            },
+            "suggest": {
+                "paragonie/sodium_compat": "Pure PHP implementation of libsodium",
+                "symfony/polyfill-php80": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+                "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "WordPress function and class declaration stubs for static analysis.",
+            "homepage": "https://github.com/php-stubs/wordpress-stubs",
+            "keywords": [
+                "PHPStan",
+                "static analysis",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.8.0"
+            },
+            "time": "2025-04-17T15:13:53+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",

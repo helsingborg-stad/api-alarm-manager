@@ -2,11 +2,12 @@
 
 namespace ApiAlarmManager;
 
+use AcfService\AcfService;
 use WpService\WpService;
 
 class App
 {
-    public function __construct(private WpService $wpService)
+    public function __construct(private WpService $wpService, private AcfService $acfService)
     {
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
@@ -29,7 +30,7 @@ class App
         new Api\Taxonomies();
         new Api\Linking();
         new Api\Disturbances();
-        new Api\FireDangerLevels();
+        new Api\FireDangerLevels($this->wpService, $this->acfService);
 
         new Api\AlarmFields();
         new Api\AlarmFilters();
