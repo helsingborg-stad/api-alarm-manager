@@ -2,11 +2,12 @@
 
 namespace ApiAlarmManager;
 
+use AcfService\AcfService;
 use WpService\WpService;
 
 class App
 {
-    public function __construct(private WpService $wpService)
+    public function __construct(private WpService $wpService, private AcfService $acfService)
     {
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
@@ -29,7 +30,7 @@ class App
         new Api\Taxonomies();
         new Api\Linking();
         new Api\Disturbances();
-        new Api\FireDangerLevels();
+        new Api\FireDangerLevels($this->wpService, $this->acfService);
 
         new Api\AlarmFields();
         new Api\AlarmFilters();
@@ -58,7 +59,10 @@ class App
             'ftp_archive_folder' => get_field('ftp_archive_folder', 'option')
         );
 
-        if ($settings['enabled'] && $settings['server'] && $settings['username'] && $settings['password'] && $settings['folder'] && $settings['ftp_archive_folder']) {
+        if (
+            $settings['enabled'] && $settings['server'] && $settings['username'] && $settings['password'] &&
+            $settings['folder'] && $settings['ftp_archive_folder']
+        ) {
             if ($settings['mode'] === 'sftp') {
                 $remoteFileHandler = new SftpFileHandler(
                     $settings['server'],
@@ -76,14 +80,25 @@ class App
         }
 
         if ($remoteFileHandler && $settings['folder'] && $settings['ftp_archive_folder']) {
-            $importer = new Importer($remoteFileHandler, $settings['folder'], $settings['ftp_archive_folder'], $this->wpService);
+            $importer = new Importer(
+                $remoteFileHandler,
+                $settings['folder'],
+                $settings['ftp_archive_folder'],
+                $this->wpService
+            );
             $importer->addHooks();
         }
     }
 
     public function enqueueScripts()
     {
-        wp_enqueue_script('api-alarm-manager', APIALARMMANAGER_URL . '/assets/js/api-alarm-manager.js', array('jquery'), '1.0.0', true);
+        wp_enqueue_script(
+            'api-alarm-manager',
+            APIALARMMANAGER_URL . '/assets/js/api-alarm-manager.js',
+            array('jquery'),
+            '1.0.0',
+            true
+        );
         wp_localize_script('api-alarm-manager', 'apiAlarmManagerLang', array(
             'importing' => __('Importing alarms', 'api-alarm-manager')
         ));
@@ -123,7 +138,7 @@ class App
 
         // Redirect to alarm list (remove the return here)
         return;
-        wp_redirect(admin_url('edit.php?post_type=event'), 301);
+        wp_safe_redirect(admin_url('edit.php?post_type=event'), 301);
         exit;
     }
 }

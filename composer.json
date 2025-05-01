@@ -25,12 +25,14 @@
         "helsingborg-stad/acf-export-manager": "^1.0.12",
         "helsingborg-stad/coordinate-transformation-library": "^1.0.1",
         "phpseclib/phpseclib": "^3.0.0",
-        "helsingborg-stad/wpservice": "^2.0"
+        "helsingborg-stad/wpservice": "^2.0",
+        "helsingborg-stad/acfservice": "^1.0"
     },
     "version": "2.3.4",
     "require-dev": {
         "helsingborg-stad/phpcs": "^0.2.2",
-        "phpunit/phpunit": "^11.5"
+        "phpunit/phpunit": "^11.5",
+        "php-stubs/wordpress-stubs": "^6.8"
     },
     "scripts": {
         "test": "phpunit --no-coverage --testdox",

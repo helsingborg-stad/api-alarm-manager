@@ -13,6 +13,7 @@
  * Domain Path:       /languages
  */
 
+use AcfService\Implementations\NativeAcfService;
 use WpService\Implementations\NativeWpService;
 
  // Protect agains direct file access
@@ -62,4 +63,4 @@ $acfExportManager->autoExport(array(
 $acfExportManager->import();
 
 // Start application
-new \ApiAlarmManager\App(new NativeWpService());
+new \ApiAlarmManager\App(new NativeWpService(), new NativeAcfService());
