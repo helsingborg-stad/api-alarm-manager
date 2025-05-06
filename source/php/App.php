@@ -29,14 +29,14 @@ class App
         new Api\PostTypes();
         new Api\Taxonomies();
         new Api\Linking();
-        new Api\Disturbances();
+        new Api\Disturbances($this->wpService, $this->acfService);
         new Api\FireDangerLevels($this->wpService, $this->acfService);
-
         new Api\AlarmFields();
         new Api\AlarmFilters();
         new Api\StationFields();
         new Api\SmallDisturbanceFields();
         new Api\BigDisturbanceFields();
+        new Api\AllDisturbances($this->wpService, $this->acfService);
 
         // Misc
         if (is_admin()) {
