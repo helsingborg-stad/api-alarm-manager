@@ -11,8 +11,6 @@ use WpService\Contracts\GetTerm;
 use WpService\Contracts\RegisterRestRoute;
 use WpService\WpService;
 
-use function PHPUnit\Framework\isNull;
-
 class FireDangerLevels
 {
     private $namespace = 'wp/v2';
@@ -33,27 +31,32 @@ class FireDangerLevels
         ));
     }
 
+    public function filter(array $data, string $property, mixed $value): array
+    {
+        if (!is_null($value) && !empty($value)) {
+            $filter = array_map('trim', explode(',', $value));
+
+            return array_values(
+                array_filter($data, function ($item) use ($filter, $property) {
+                    return in_array($item[$property], $filter);
+                })
+            );
+        }
+        return $data;
+    }
+
     public function getFireDangerLevels(\WP_REST_Request $request): array
     {
-        $data            = $this->acfService->getField('fire_danger_levels', 'option');
         $dateTimeChanged = $this->wpService->getOption(AdminFireDangerLevels::$dateTimeChangedOptionName, null);
-        $places          =  is_array($data) ? array_map([$this, 'convertPlaceIdToName'], $data) : [];
-        $input           = $request->get_param('place');
 
-        if (!is_null($input) && !empty($input)) {
-            $filter = explode(',', $input);
-            $filter = array_map('trim', $filter);
-            $filter = array_map('strtolower', $filter);
-
-            $places = array_filter($places, function ($item) use ($filter) {
-                return in_array(strtolower($item['place']), $filter);
-            });
-        }
+        $places = $this->acfService->getField('fire_danger_levels', 'option');
+        $places = $this->filter($places, 'place', $request->get_param('place'));
+        $places = $this->filter($places, 'level', $request->get_param('level'));
 
         if (count($places) === 0) {
-            trigger_error('No fire danger levels found', E_USER_WARNING);
             return [];
         }
+        $places = array_map([$this, 'convertPlaceIdToName'], $places);
 
         return [
             'dateTimeChanged' => $dateTimeChanged,
