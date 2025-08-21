@@ -48,7 +48,7 @@ $loader->register();
 
 // Acf auto import and export
 $acfExportManager = new \AcfExportManager\AcfExportManager();
-$acfExportManager->setTextdomain('event-manager');
+$acfExportManager->setTextdomain('api-alarm-manager');
 $acfExportManager->setExportFolder(APIALARMMANAGER_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
     'station'                => 'group_58ca3def60074',
