@@ -1,16 +1,18 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_58ca5f387fb86',
     'title' => 'Filters',
     'fields' => array(
         0 => array(
-            'message' => __('Alarm filters are used to avoid importing of alarms containing unwanted keywords. For example: Suicide Note: Adding a new filter keyword will remove any existing alarms containing the keyword.', 'event-manager'),
+            'message' => __('Alarm filters are used to avoid importing of alarms containing unwanted keywords. For example: Suicide Note: Adding a new filter keyword will remove any existing alarms containing the keyword.', 'api-alarm-manager'),
             'esc_html' => 0,
             'new_lines' => 'wpautop',
             'key' => 'field_58ca5f3d8b5ea',
-            'label' => __('About filters', 'event-manager'),
+            'label' => __('About filters', 'api-alarm-manager'),
             'name' => '',
             'type' => 'message',
             'instructions' => '',
@@ -83,4 +85,5 @@
     'local' => 'php',
     'modified' => 1489671900,
 ));
-}
+
+}

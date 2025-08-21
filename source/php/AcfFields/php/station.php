@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_58ca3def60074',
     'title' => 'Station',
     'fields' => array(
@@ -12,7 +14,7 @@
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca3e0e4973f',
-            'label' => __('Station ID', 'event-manager'),
+            'label' => __('Station ID', 'api-alarm-manager'),
             'name' => 'station_id',
             'type' => 'text',
             'instructions' => '',
@@ -31,7 +33,7 @@
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca3fe049740',
-            'label' => __('Street address', 'event-manager'),
+            'label' => __('Street address', 'api-alarm-manager'),
             'name' => 'street_address',
             'type' => 'text',
             'instructions' => '',
@@ -50,7 +52,7 @@
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca41bb84d75',
-            'label' => __('Postal code', 'event-manager'),
+            'label' => __('Postal code', 'api-alarm-manager'),
             'name' => 'postal_code',
             'type' => 'text',
             'instructions' => '',
@@ -69,7 +71,7 @@
             'prepend' => '',
             'append' => '',
             'key' => 'field_58ca403a49741',
-            'label' => __('City', 'event-manager'),
+            'label' => __('City', 'api-alarm-manager'),
             'name' => 'city',
             'type' => 'text',
             'instructions' => '',
@@ -102,4 +104,5 @@
     'local' => 'php',
     'modified' => 1489671888,
 ));
-}
+
+}
