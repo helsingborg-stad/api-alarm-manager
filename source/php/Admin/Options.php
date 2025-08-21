@@ -8,11 +8,11 @@ class Options
     {
         if (function_exists('acf_add_options_sub_page')) {
             acf_add_options_sub_page(array(
-                'page_title'    => _x('Alarm manager options', 'ACF', 'api-alarm-manager'),
-                'menu_title'    => _x('Options', 'Alarm manager options', 'api-alarm-manager'),
-                'menu_slug'     => 'alarm-manager-options',
-                'parent_slug'   => 'edit.php?post_type=alarm',
-                'capability'    => 'edit_users'
+                'page_title'  => _x('Alarm manager options', 'ACF', 'api-alarm-manager'),
+                'menu_title'  => _x('Options', 'Alarm manager options', 'api-alarm-manager'),
+                'menu_slug'   => 'alarm-manager-options',
+                'parent_slug' => 'edit.php?post_type=alarm',
+                'capability'  => 'edit_users'
             ));
         }
 
@@ -47,7 +47,7 @@ class Options
     private function getNoSftpNotice(): string
     {
         $message = __('This server does not support SFTP connections. If you intend to utilize SFTP connection, please verify that you support the SSH PHP library', 'api-alarm-manager');
-        $notice = '<div class="notice notice-warning is-dismissible">';
+        $notice  = '<div class="notice notice-warning is-dismissible">';
         $notice .= '<p>' . $message . '</p>';
         $notice .= '</div>';
 
