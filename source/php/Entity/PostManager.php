@@ -167,23 +167,10 @@ abstract class PostManager
         $post['post_type'] = $this->post_type;
         $post['meta_input'] = $meta;
 
-        // Check if duplicate by matching "_alarm_manager_uid" meta value
-        if (isset($meta['_alarm_manager_uid'])) {
-            $duplicate = self::get(
-                1,
-                array(
-                    'relation' => 'OR',
-                    array(
-                        'key' => '_alarm_manager_uid',
-                        'value' => $meta['_alarm_manager_uid'],
-                        'compare' => '='
-                    )
-                ),
-                $this->post_type
-            );
-        } else {
-            $duplicate = false;
-        }
+        // An alarm/station UID identifies the source object. Re-use an
+        // existing object instead of inserting a second copy when a remote
+        // file is downloaded again before the daily archive job runs.
+        $duplicate = $this->findExistingPost($meta);
 
         // Update if duplicate
         if ($duplicate && isset($duplicate->ID)) {
@@ -199,5 +186,31 @@ abstract class PostManager
         }
 
         return $this->afterSave();
+    }
+
+    /**
+     * Find an existing source object by its import UID.
+     *
+     * @param array $meta
+     * @return object|array|false
+     */
+    private function findExistingPost(array $meta)
+    {
+        if (!isset($meta['_alarm_manager_uid']) || $meta['_alarm_manager_uid'] === '') {
+            return false;
+        }
+
+        return self::get(
+            1,
+            array(
+                array(
+                    'key'     => '_alarm_manager_uid',
+                    'value'   => $meta['_alarm_manager_uid'],
+                    'compare' => '='
+                )
+            ),
+            $this->post_type,
+            array('publish', 'draft', 'pending', 'private', 'future', 'trash')
+        );
     }
 }

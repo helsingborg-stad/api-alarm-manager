@@ -278,6 +278,33 @@ if (function_exists('acf_add_local_field_group')) {
             ),
         ),
         12 => array(
+            'default_value'     => 1,
+            'message'           => '',
+            'ui'                => 1,
+            'ui_on_text'        => '',
+            'ui_off_text'       => '',
+            'key'               => 'field_67483e5f4ea71',
+            'label'             => __('Archive remote files', 'api-alarm-manager'),
+            'name'              => 'ftp_archive_remote_files',
+            'type'              => 'true_false',
+            'instructions'      => __('Move imported files to the archive folder once daily. Disable this when another system manages remote files.', 'api-alarm-manager'),
+            'required'          => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field'    => 'field_58ca670c50b0d',
+                        'operator' => '==',
+                        'value'    => '1',
+                    ),
+                ),
+            ),
+            'wrapper'           => array(
+                'width' => '',
+                'class' => '',
+                'id'    => '',
+            ),
+        ),
+        13 => array(
             'default_value'     => 10,
             'min'               => 1,
             'max'               => '',

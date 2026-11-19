@@ -20,6 +20,7 @@ class Importer
     public function addHooks()
     {
         $this->wpService->addAction('cron_import_alarms', array($this, 'import'));
+        $this->wpService->addAction('cron_archive_alarms', array($this, 'archiveRemoteFiles'));
         $this->wpService->addFilter('cron_schedules', array($this, 'cronSchedules'));
 
         if (isset($_GET['alarmimport'])) {
@@ -79,7 +80,7 @@ class Importer
             return;
         }
 
-        $this->registerCron();
+        $this->registerImportCron();
     }
 
     /**
@@ -87,19 +88,52 @@ class Importer
      */
     public function checkCron()
     {
-        if (!$this->wpService->wpDoingAjax() && get_field('ftp_auto_import', 'option')) {
-            $this->registerCron();
+        if ($this->wpService->wpDoingAjax()) {
+            return;
         }
+
+        if (get_field('ftp_auto_import', 'option')) {
+            $this->registerImportCron();
+        }
+
+        $this->registerArchiveCron();
     }
 
     /**
      * Register import alarm cron
      */
-    public function registerCron()
+    public function registerImportCron()
     {
         if (!$this->wpService->wpNextScheduled('cron_import_alarms')) {
             $intervalMinutes = get_field('ftp_import_interval', 'option');
             $this->wpService->wpScheduleEvent(time(), $intervalMinutes . 'min', 'cron_import_alarms');
+        }
+    }
+
+    /**
+     * @deprecated 2.4.2 Use registerImportCron().
+     * @return void
+     */
+    public function registerCron()
+    {
+        $this->registerImportCron();
+    }
+
+    /**
+     * Register the once-daily remote archive job if it is missing.
+     *
+     * Keeping files in the source folder until this job runs allows all
+     * configured consumers to download the same alarm files.
+     *
+     * @return void
+     */
+    public function registerArchiveCron()
+    {
+        if (
+            $this->shouldArchiveRemoteFiles() &&
+            !$this->wpService->wpNextScheduled('cron_archive_alarms')
+        ) {
+            $this->wpService->wpScheduleEvent(time(), 'daily', 'cron_archive_alarms');
         }
     }
 
@@ -163,25 +197,50 @@ class Importer
         foreach ($fileList as $file) {
             $remoteFile = $this->wpService->trailingslashit($folder) . basename(ltrim($file, '/'));
             $localFile  = $this->wpService->trailingslashit($destination) . basename(ltrim($file, '/'));
-            $copied     = $this->remoteFileHandler->copy($remoteFile, $localFile);
+            $this->remoteFileHandler->copy($remoteFile, $localFile);
+        }
+    }
 
-            if ($this->shouldArchiveRemoteFiles() && $copied === true) {
-                $remoteArchiveDir = rtrim($this->getArchiveFolder(), '/');
+    /**
+     * Move source files to the archive directory.
+     *
+     * This is intentionally a separate daily operation. Importing must not
+     * consume a remote file, because several installations can import from
+     * the same FTP/SFTP folder.
+     *
+     * @return void
+     */
+    public function archiveRemoteFiles(): void
+    {
+        if (!$this->shouldArchiveRemoteFiles()) {
+            return;
+        }
 
-                if ($this->remoteFileHandler->fileExists($remoteArchiveDir) === false) {
-                    $this->remoteFileHandler->mkdir($remoteArchiveDir);
-                }
+        $this->remoteFileHandler->connect();
+        $fileList         = $this->remoteFileHandler->list($this->folder);
+        $remoteArchiveDir = rtrim($this->getArchiveFolder(), '/');
 
-                $this->remoteFileHandler->moveFile($remoteFile, $this->wpService->trailingslashit($remoteArchiveDir) . basename($file));
-            }
+        if ($this->remoteFileHandler->fileExists($remoteArchiveDir) === false) {
+            $this->remoteFileHandler->mkdir($remoteArchiveDir);
+        }
+
+        foreach ($fileList as $file) {
+            $remoteFile  = $this->wpService->trailingslashit($this->folder) . basename(ltrim($file, '/'));
+            $archiveFile = $this->wpService->trailingslashit($remoteArchiveDir) . basename($file);
+
+            $this->remoteFileHandler->moveFile($remoteFile, $archiveFile);
         }
     }
 
     private function shouldArchiveRemoteFiles(): bool
     {
+        if (!function_exists('get_field')) {
+            return true;
+        }
+
         return
-            defined('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE') &&
-            constant('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE') === true;
+            (bool) get_field('ftp_auto_import', 'option') &&
+            get_field('ftp_archive_remote_files', 'option') !== false;
     }
 
     /**

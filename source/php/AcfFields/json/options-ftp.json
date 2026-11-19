@@ -275,6 +275,33 @@
             }
         },
         {
+            "default_value": 1,
+            "message": "",
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "key": "field_67483e5f4ea71",
+            "label": "Archive remote files",
+            "name": "ftp_archive_remote_files",
+            "type": "true_false",
+            "instructions": "Move imported files to the archive folder once daily. Disable this when another system manages remote files.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_58ca670c50b0d",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
             "default_value": 10,
             "min": 1,
             "max": "",

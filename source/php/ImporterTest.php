@@ -11,8 +11,8 @@ use WpService\WpService;
 
 class ImporterTest extends TestCase
 {
-    #[TestDox("files are not archived on remote if production flag is not set")]
-    public function testFilesAreNotArchivedOnRemoteIfProductionFlagIsNotSet()
+    #[TestDox("imports do not archive remote files")]
+    public function testImportsDoNotArchiveRemoteFiles()
     {
         $remoteFileHandler = $this->getRemoteFileHandlerMock();
         $remoteFileHandler->expects($this->never())->method('moveFile');
@@ -22,16 +22,15 @@ class ImporterTest extends TestCase
         $importer->downloadFromRemote("");
     }
 
-    #[TestDox("files are archived on remote if production flag is set")]
-    public function testFilesAreArchivedOnRemoteIfProductionFlagIsSet()
+    #[TestDox("daily archive moves remote files by default")]
+    public function testDailyArchiveMovesRemoteFilesByDefault()
     {
-        define('API_ALARM_MANAGER_ARCHIVE_ALARMS_ON_REMOTE', true);
         $remoteFileHandler = $this->getRemoteFileHandlerMock();
         $remoteFileHandler->expects($this->once())->method('moveFile');
 
         $importer = new Importer($remoteFileHandler, "", "", $this->getWpService());
 
-        $importer->downloadFromRemote("");
+        $importer->archiveRemoteFiles();
     }
 
     private function getWpService(): WpService
