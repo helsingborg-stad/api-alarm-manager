@@ -4,7 +4,7 @@
  * Plugin Name:       Api Alarm Manager
  * Plugin URI:        https://github.com/helsingborg-stad/api-alarm-manager
  * Description:       Creates WordPress Rest API endpoint for contal alarms
- * Version: 2.5.1
+ * Version: 2.5.2
  * Author:            Kristoffer Svanmark
  * Author URI:        https://github.com/helsingborg-stad
  * License:           MIT
