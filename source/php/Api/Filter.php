@@ -19,6 +19,7 @@ class Filter
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
         add_filter('rest_prepare_alarm', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_station', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_post_dispatch', array($this, 'removeDuplicateStations'), 5000, 3);
     }
 
     /**
@@ -62,6 +63,104 @@ class Filter
 
         //Return santizied response
         return $response;
+    }
+
+    /**
+     * Remove repeated stations from collection responses without changing
+     * the imported station posts themselves.
+     *
+     * @param \WP_REST_Response $response
+     * @param \WP_REST_Server $server
+     * @param \WP_REST_Request $request
+     * @return \WP_REST_Response
+     */
+    public function removeDuplicateStations($response, $server, $request)
+    {
+        if (
+            $request->get_method() !== 'GET' ||
+            $request->get_route() !== '/wp/v2/station' ||
+            !is_array($response->get_data())
+        ) {
+            return $response;
+        }
+
+        $response->set_data(self::uniqueStations($response->get_data()));
+
+        return $response;
+    }
+
+    /**
+     * Keep the first response item for each source station ID. The REST
+     * controller orders items newest first, so this retains the current copy.
+     *
+     * A title is used only as a fallback for older station posts without an ID.
+     *
+     * @param array $stations
+     * @return array
+     */
+    public static function uniqueStations(array $stations): array
+    {
+        $uniqueStations = array();
+        $seen = array();
+
+        foreach ($stations as $station) {
+            if (!is_array($station)) {
+                $uniqueStations[] = $station;
+                continue;
+            }
+
+            $identity = self::stationIdentity($station);
+
+            if ($identity === '' || isset($seen[$identity])) {
+                if ($identity === '') {
+                    $uniqueStations[] = $station;
+                }
+                continue;
+            }
+
+            $seen[$identity] = true;
+            $uniqueStations[] = $station;
+        }
+
+        return $uniqueStations;
+    }
+
+    /**
+     * @param array $station
+     * @return string
+     */
+    private static function stationIdentity(array $station): string
+    {
+        $identity = $station['station_id'] ?? null;
+
+        if ($identity === null || $identity === '') {
+            $identity = self::stationTitle($station);
+        }
+
+        if (!is_string($identity) && !is_numeric($identity)) {
+            return '';
+        }
+
+        $identity = trim(preg_replace('/\s+/', ' ', (string) $identity));
+
+        return function_exists('mb_strtolower') ? mb_strtolower($identity) : strtolower($identity);
+    }
+
+    /**
+     * @param array $station
+     * @return string|null
+     */
+    private static function stationTitle(array $station): ?string
+    {
+        if (is_string($station['title'] ?? null)) {
+            return $station['title'];
+        }
+
+        if (is_array($station['title'] ?? null)) {
+            return $station['title']['plain_text'] ?? $station['title']['rendered'] ?? null;
+        }
+
+        return null;
     }
 
     public static function currentUrl()
