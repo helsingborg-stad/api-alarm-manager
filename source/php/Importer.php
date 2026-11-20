@@ -146,11 +146,7 @@ class Importer
         ini_set('max_execution_time', 600);
         $this->importStarted = time();
 
-        $destination = $this->maybeCreateFolder($this->wpService->wpUploadDir()['basedir'] . '/alarms');
-
-        if (!$destination) {
-            throw new \Error('Destination folder missing');
-        }
+        $destination = $this->createTemporaryDirectory();
 
         /**
          * Remove content from all alarms previous to this version
@@ -172,8 +168,12 @@ class Importer
             $this->wpService->addOption('api-alarm-manager-updated-content', true);
         }
 
-        $this->downloadFromRemote($destination);
-        $this->importFromXml($destination, true);
+        try {
+            $this->downloadFromRemote($destination);
+            $this->importFromXml($destination, true);
+        } finally {
+            $this->removeTemporaryDirectory($destination);
+        }
 
         //Update last import var
         $this->wpService->updateOption('api-alarm-manager-last-import', $this->remoteNewestFile);
@@ -487,5 +487,42 @@ class Importer
         }
 
         return $this->wpService->tralingslashit($path);
+    }
+
+    /**
+     * Create an isolated local directory for files downloaded during an import.
+     *
+     * Uploads can be backed by a remote stream wrapper such as S3. XML files are
+     * only needed while an import is running, so staging them there both leaves
+     * unwanted objects behind and prevents glob() from finding them reliably.
+     *
+     * @return string
+     */
+    private function createTemporaryDirectory(): string
+    {
+        $path = tempnam(sys_get_temp_dir(), 'api-alarm-manager-');
+
+        if ($path === false || !unlink($path) || !mkdir($path, 0700)) {
+            throw new \Error('Could not create temporary import directory');
+        }
+
+        return $path . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * Remove any files left when an import fails, then remove its directory.
+     *
+     * @param string $directory
+     * @return void
+     */
+    private function removeTemporaryDirectory(string $directory): void
+    {
+        foreach (glob($directory . '*') ?: array() as $file) {
+            if (is_file($file) || is_link($file)) {
+                unlink($file);
+            }
+        }
+
+        rmdir($directory);
     }
 }
