@@ -46,8 +46,17 @@ class App
             new Admin\FireDangerLevels();
         }
 
-        // Importer
+        // Importer (deferred until init, ACF fields cannot be read earlier)
+        add_action('init', array($this, 'setupImporter'));
+    }
 
+    /**
+     * Set up the remote file importer based on ACF option settings.
+     *
+     * @return void
+     */
+    public function setupImporter()
+    {
         $remoteFileHandler = null;
         $settings          = array(
             'enabled'            => get_field('ftp_enabled', 'option'),
